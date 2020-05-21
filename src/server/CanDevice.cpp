@@ -13,6 +13,7 @@ bool CanDevice::connect() {
     BOOST_LOG_TRIVIAL(trace) << "SOCKET FD: " << socket_fd;
     int soReuse = 1;
     setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &soReuse, sizeof(soReuse));
+    setsockopt(socket_fd, SOL_CAN_RAW, CAN_RAW_FD_FRAMES, &canFDEnabled, sizeof(canFDEnabled));
 
     // get interface index
     std::strcpy(ifr.ifr_name, canIfName.c_str());
@@ -30,7 +31,7 @@ bool CanDevice::connect() {
     addr.can_family = AF_CAN;
     addr.can_ifindex = ifr.ifr_ifindex;
     if (bind(socket_fd, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
-        BOOST_LOG_TRIVIAL(error) << "Failed to bind to interface " << canIfName << " with ifindex="<<ifr.ifr_ifindex;
+        BOOST_LOG_TRIVIAL(error) << "Failed to bind to interface " << canIfName << " with ifindex=" << ifr.ifr_ifindex;
         return false;
     }
 
@@ -43,8 +44,33 @@ bool CanDevice::connect() {
 }
 
 void CanDevice::run() {
-    running = true;
-    while(running) {
+    //BOOST_LOG_TRIVIAL(trace) << "Reading.";
+    boost::asio::async_read(*can_stream, boost::asio::buffer(canFrameBuffer),
+                            boost::asio::transfer_at_least(sizeof(struct can_frame)),
+                            [this](const boost::system::error_code &errorCode, std::size_t bytesTransferred) {
 
-    }
+                                CanFrame *canFrame;
+
+                                if(bytesTransferred == sizeof(struct can_frame)) {
+                                    struct can_frame frame = *reinterpret_cast<can_frame *>(canFrameBuffer);
+
+                                    canFrame = new CanFrame(frame);
+
+                                }else if(bytesTransferred == sizeof(struct canfd_frame)) {
+
+                                    struct canfd_frame frame = *reinterpret_cast<canfd_frame *>(canFrameBuffer);
+
+                                    canFrame = new CanFrame(frame);
+
+                                } else {
+                                    BOOST_LOG_TRIVIAL(error) << "Received unknown data with length=" << bytesTransferred;
+                                }
+
+                                BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
+
+                                delete canFrame;
+
+                                run();
+                            });
 }
+

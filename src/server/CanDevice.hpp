@@ -20,11 +20,14 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
+#include "CanFrame.hpp"
+
 class CanDevice {
 public:
-    CanDevice(std::string canIfName, boost::asio::io_service &ioService) : canIfName(std::move(canIfName)),
+    CanDevice(std::string canIfName, boost::asio::io_context &ioContext) : canIfName(std::move(canIfName)),
     can_stream(NULL) {
-        can_stream = new boost::asio::posix::stream_descriptor(ioService);
+        BOOST_LOG_TRIVIAL(trace) << "CONSTRUCTOR";
+        can_stream = new boost::asio::posix::stream_descriptor(ioContext);
     }
 
     bool connect();
@@ -33,6 +36,8 @@ public:
 
     bool isConnected() { return connected; }
 
+    std::string getCanIfName(){return canIfName;}
+
 private:
     std::string canIfName;
     bool connected;
@@ -40,11 +45,17 @@ private:
 
     // used for internal interactions with the socketcan socket.
     int socket_fd;
+    int canFDEnabled = 1;
     struct ifreq ifr;
     struct sockaddr_can addr;
+
     boost::asio::posix::stream_descriptor *can_stream;
 
+    uint8_t canFrameBuffer[sizeof(canfd_frame)];
+
 };
+
+
 
 
 #endif //RESOCA_CANDEVICE_HPP
