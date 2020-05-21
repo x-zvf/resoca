@@ -24,9 +24,11 @@
 
 class CanDevice {
 public:
-    CanDevice(std::string canIfName, boost::asio::io_context &ioContext) : canIfName(std::move(canIfName)),
-    can_stream(NULL) {
-        BOOST_LOG_TRIVIAL(trace) << "CONSTRUCTOR";
+    CanDevice(std::string canIfName, boost::asio::io_context &ioContext)
+            : ioContext(ioContext),
+              canIfName(std::move(canIfName)),
+              can_stream(NULL),
+              reconnectTimer(boost::asio::deadline_timer(ioContext, boost::posix_time::seconds(1))) {
         can_stream = new boost::asio::posix::stream_descriptor(ioContext);
     }
 
@@ -34,13 +36,21 @@ public:
 
     void run();
 
-    bool isConnected() { return connected; }
+    void reconnect();
 
-    std::string getCanIfName(){return canIfName;}
+
+    bool isConnected() { return _connected; }
+
+    std::string getCanIfName() { return canIfName; }
+
+    bool isInterfaceUp();
 
 private:
+
+    boost::asio::io_context &ioContext;
+
     std::string canIfName;
-    bool connected;
+    bool _connected;
     volatile bool running = false;
 
     // used for internal interactions with the socketcan socket.
@@ -53,9 +63,9 @@ private:
 
     uint8_t canFrameBuffer[sizeof(canfd_frame)];
 
+    boost::asio::deadline_timer reconnectTimer;
+
 };
-
-
 
 
 #endif //RESOCA_CANDEVICE_HPP
