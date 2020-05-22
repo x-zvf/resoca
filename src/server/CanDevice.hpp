@@ -24,10 +24,11 @@
 
 class CanDevice {
 public:
-    CanDevice(std::string canIfName, boost::asio::io_context &ioContext)
+    CanDevice(std::string canIfName, boost::asio::io_context &ioContext, bool (*handleCanFrame)(std::string ifname, CanFrame *cf))
             : ioContext(ioContext),
               canIfName(std::move(canIfName)),
-              can_stream(NULL),
+              can_stream(nullptr),
+              handleCanFrame(handleCanFrame),
               reconnectTimer(boost::asio::deadline_timer(ioContext, boost::posix_time::seconds(1))) {
         can_stream = new boost::asio::posix::stream_descriptor(ioContext);
     }
@@ -64,6 +65,8 @@ private:
     uint8_t canFrameBuffer[sizeof(canfd_frame)];
 
     boost::asio::deadline_timer reconnectTimer;
+
+    bool (*handleCanFrame)(std::string ifname, CanFrame *cf);
 
 };
 

@@ -10,7 +10,7 @@ bool CanDevice::connect() {
         BOOST_LOG_TRIVIAL(error) << "Failed to allocate socket for can device " << canIfName;
         return false;
     }
-    BOOST_LOG_TRIVIAL(trace) << "SOCKET FD: " << socket_fd;
+    //BOOST_LOG_TRIVIAL(trace) << "SOCKET FD: " << socket_fd;
     int soReuse = 1;
     setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &soReuse, sizeof(soReuse));
     setsockopt(socket_fd, SOL_CAN_RAW, CAN_RAW_FD_FRAMES, &canFDEnabled, sizeof(canFDEnabled));
@@ -23,8 +23,7 @@ bool CanDevice::connect() {
         return false;
 
     }
-    BOOST_LOG_TRIVIAL(trace) << "ifindex=" << ifr.ifr_ifindex;
-
+    //BOOST_LOG_TRIVIAL(trace) << "ifindex=" << ifr.ifr_ifindex;
 
     //bind to that socket.
     std::memset(&addr, 0, sizeof(addr));
@@ -80,9 +79,7 @@ void CanDevice::run() {
                                 }
 
                                 BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
-
-                                delete canFrame;
-
+                                handleCanFrame(canIfName, canFrame);
                                 run();
                             });
 }
