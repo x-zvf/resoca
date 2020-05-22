@@ -3,7 +3,7 @@
 #include <boost/asio.hpp>
 
 #include "CanDevice.hpp"
-#include "CanFrame.hpp"
+#include "../shared/CanFrame.hpp"
 
 bool handleCanFrame(std::string ifName, CanFrame *canFrame){
     BOOST_LOG_TRIVIAL(debug) << "Handling can message from " << ifName <<": "<<canFrame->toString();

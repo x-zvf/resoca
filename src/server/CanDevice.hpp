@@ -20,7 +20,7 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
-#include "CanFrame.hpp"
+#include "../shared/CanFrame.hpp"
 
 class CanDevice {
 public:

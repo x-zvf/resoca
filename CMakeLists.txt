@@ -11,5 +11,9 @@ file(GLOB server-src
         "src/server/*.cpp"
         "src/server/*.hpp")
 
-add_executable(resoca-server ${server-src})
+file(GLOB shared-src
+        "src/shared/*.cpp"
+        "src/shared/*.hpp")
+
+add_executable(resoca-server ${server-src} ${shared-src})
 target_link_libraries(resoca-server ${BOOST_LIBRARIES})
