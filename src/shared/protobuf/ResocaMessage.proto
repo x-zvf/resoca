@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+message ResocaMessage {
+    enum MessageType{
+        RESOCA_INFO = 0;
+        IF_CONNECTED = 1;
+        IF_DISCONNECTED = 2;
+        MESSAGE_RX = 3;
+        MESSAGE_TX = 4;
+    }
+    
+    message ResocaInfo {
+        string version = 1;
+        repeated string interfaces = 2;
+    }
+
+    message CanFrame {
+      uint32 canID = 1;
+      bool isCanFD = 2;
+      bool isEFFFRAME = 3;
+      bool isRTRFRAME = 4;
+      bool isERRFRAME = 5;
+      bool isCanFDESI = 6;
+      bool isCanFDBRS = 7;
+
+      bytes data = 10;
+    }
+
+    MessageType messageType = 1;
+    string interface = 2;
+    CanFrame canFrame = 3;
+    ResocaInfo resocaInfo = 4;
+}
