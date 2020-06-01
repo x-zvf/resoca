@@ -30,6 +30,27 @@ int main() {
         canDevice.run();
     }
 
+    /*
+    {
+        CanFrame frame;
+        frame.isCanFd = false;
+        std::string dta = "ABCDEFGH";
+        frame.copyData((const uint8_t *)dta.c_str(), dta.length());
+        frame.canID = 0x1d;
+
+        for(CanDevice &canDevice : canDevices){
+            try {
+canDevice.sendFrame(frame);
+                BOOST_LOG_TRIVIAL(trace) << "send success";
+            } catch (std::logic_error& e){
+
+                BOOST_LOG_TRIVIAL(trace) << "send fail: " << e.what();
+            }
+        }
+    }
+    */
+
+
     BOOST_LOG_TRIVIAL(info) << "Initialized. running ioService.";
     ioContext.run();
     return 0;

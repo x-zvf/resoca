@@ -109,4 +109,24 @@ bool CanDevice::isInterfaceUp() {
     return !!(ifr.ifr_flags & IFF_UP);
 }
 
+void CanDevice::sendFrame(const CanFrame &cf) {
+    BOOST_LOG_TRIVIAL(debug) << "Attempting to write frame: " << cf.toString();
+    auto frame = cf.asStruct();
+    writeFrame(frame, cf.getStructSize());
+    std::free(frame);
+}
+void CanDevice::sendFrame(const struct canfd_frame &cf) {
+    writeFrame(&cf, sizeof(cf));
+}
 
+void CanDevice::sendFrame(const struct can_frame &cf) {
+    writeFrame(&cf, sizeof(cf));
+}
+
+void CanDevice::writeFrame(const void *frame, int len) {
+    boost::asio::async_write(*can_stream, boost::asio::buffer(frame, len),
+            [this](boost::system::error_code ec, std::size_t len)
+        {
+            BOOST_LOG_TRIVIAL(trace) << "Wrote frame with length: " << len;
+        });
+}

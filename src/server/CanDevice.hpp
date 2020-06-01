@@ -35,6 +35,10 @@ public:
 
     bool connect();
 
+    void sendFrame(const CanFrame &cf);
+    void sendFrame(const struct can_frame &cf);
+    void sendFrame(const struct canfd_frame &cf);
+
     void run();
 
     void reconnect();
@@ -47,6 +51,8 @@ public:
     bool isInterfaceUp();
 
 private:
+
+    void writeFrame(const void *frame, int length);
 
     boost::asio::io_context &ioContext;
 

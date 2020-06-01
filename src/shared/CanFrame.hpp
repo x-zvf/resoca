@@ -21,6 +21,14 @@ public:
 
     explicit CanFrame(const struct canfd_frame &frame);
 
+    explicit CanFrame(){}
+
+    ~CanFrame();
+
+    int getStructSize() const;
+    void* asStruct() const;
+
+
     uint32_t canID = 0;
     bool isEFFFrame = false;
     bool isRTRFrame = false; // remote transmission request
@@ -34,17 +42,16 @@ public:
     bool isCanFdESI = false;
     bool isCanFdBRS = false;
 
-    uint8_t *data = nullptr;
-    uint8_t length = 0;
-
-    ~CanFrame();
-
-    void copyData(const uint8_t *src, uint8_t len);
 
     void setFlagsFromCanId(uint32_t _canID);
 
     std::string toString() const;
 
+    void copyData(const uint8_t *src, uint8_t len);
+
+private:
+    uint8_t *data = nullptr;
+    uint8_t length = 0;
 };
 
 
