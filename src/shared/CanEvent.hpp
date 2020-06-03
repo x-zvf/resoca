@@ -22,9 +22,9 @@ public:
 
     ~CanEvent() {  free(canFrame); }
 
-    CanEventType eventType;
-
     std::string ifName;
+
+    CanEventType eventType;
 
     CanFrame *canFrame = nullptr;
 

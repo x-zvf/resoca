@@ -5,31 +5,33 @@
 #ifndef RESOCA_CANDEVICE_HPP
 #define RESOCA_CANDEVICE_HPP
 
-#include <string>
-#include <utility>
-
-#include <boost/log/trivial.hpp>
-#include <boost/asio.hpp>
-
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <sys/uio.h>
-#include <net/if.h>
-
 #include <linux/can.h>
 #include <linux/can/raw.h>
+#include <net/if.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+
+#include <boost/asio.hpp>
+#include <boost/log/trivial.hpp>
+#include <string>
+#include <utility>
+#include <functional>
 
 #include "../shared/CanFrame.hpp"
+#include "../shared/CanEvent.hpp"
 
 class CanDevice {
-public:
-    CanDevice(std::string canIfName, boost::asio::io_context &ioContext, bool (*handleCanFrame)(std::string ifname, CanFrame *cf))
-            : ioContext(ioContext),
-              canIfName(std::move(canIfName)),
-              can_stream(nullptr),
-              handleCanFrame(handleCanFrame),
-              reconnectTimer(boost::asio::deadline_timer(ioContext, boost::posix_time::seconds(1))) {
+   public:
+    CanDevice(std::string canIfName, boost::asio::io_context &ioContext,
+              std::function<bool(CanEvent&)> handleCanEvent)
+        : ioContext(ioContext),
+          canIfName(std::move(canIfName)),
+          can_stream(nullptr),
+          handleCanEvent(handleCanEvent),
+          reconnectTimer(boost::asio::deadline_timer(
+              ioContext, boost::posix_time::seconds(1))) {
         can_stream = new boost::asio::posix::stream_descriptor(ioContext);
     }
 
@@ -43,15 +45,13 @@ public:
 
     void reconnect();
 
-
     bool isConnected() { return _connected; }
 
     std::string getCanIfName() { return canIfName; }
 
     bool isInterfaceUp();
 
-private:
-
+   private:
     void writeFrame(const void *frame, int length);
 
     boost::asio::io_context &ioContext;
@@ -70,11 +70,9 @@ private:
 
     uint8_t canFrameBuffer[sizeof(canfd_frame)];
 
+    std::function<bool(CanEvent&)> handleCanEvent;
+
     boost::asio::deadline_timer reconnectTimer;
-
-    bool (*handleCanFrame)(std::string ifname, CanFrame *cf);
-
 };
 
-
-#endif //RESOCA_CANDEVICE_HPP
+#endif  // RESOCA_CANDEVICE_HPP

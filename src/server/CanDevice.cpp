@@ -19,7 +19,7 @@ bool CanDevice::connect() {
     std::strcpy(ifr.ifr_name, canIfName.c_str());
     if (ioctl(socket_fd, SIOCGIFINDEX, &ifr) < 0) {
         BOOST_LOG_TRIVIAL(error) << "Failed to get interface index for interface name: " << ifr.ifr_name
-                                 << ". Does it exist? ; ifindex=" << ifr.ifr_ifindex;
+            << ". Does it exist? ; ifindex=" << ifr.ifr_ifindex;
         return false;
 
     }
@@ -45,53 +45,69 @@ bool CanDevice::connect() {
 
     BOOST_LOG_TRIVIAL(info) << "Connected successfully to can interface: " << canIfName;
     _connected = true;
+    auto event = CanEvent(canIfName, IF_CONNECTED);
+    handleCanEvent(event);
+
     return true;
 }
 
 void CanDevice::run() {
     //BOOST_LOG_TRIVIAL(trace) << "Reading.";
     boost::asio::async_read(*can_stream, boost::asio::buffer(canFrameBuffer),
-                            boost::asio::transfer_at_least(sizeof(struct can_frame)),
-                            [this](const boost::system::error_code &errorCode, std::size_t bytesTransferred) {
+            boost::asio::transfer_at_least(sizeof(struct can_frame)),
+            [this](const boost::system::error_code &errorCode, std::size_t bytesTransferred) {
 
-                                if (errorCode) {
-                                    BOOST_LOG_TRIVIAL(error) << "[ error @ " << canIfName << "]: " << errorCode;
-                                    reconnect();
-                                    return;
-                                }
+            if (errorCode) {
+            BOOST_LOG_TRIVIAL(error) << "[ error @ " << canIfName << "]: " << errorCode;
+            auto event = CanEvent(canIfName, IF_DISCONNECTED);
+            handleCanEvent(event);
+            reconnect();
+            return;
+            }
 
-                                CanFrame *canFrame;
 
-                                if (bytesTransferred == sizeof(struct can_frame)) {
-                                    struct can_frame frame = *reinterpret_cast<can_frame *>(canFrameBuffer);
+            if (bytesTransferred == sizeof(struct can_frame)) {
+            struct can_frame frame = *reinterpret_cast<can_frame *>(canFrameBuffer);
 
-                                    canFrame = new CanFrame(frame);
+            auto canFrame = new CanFrame(frame);
+            BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
 
-                                } else if (bytesTransferred == sizeof(struct canfd_frame)) {
+            auto event = CanEvent(canIfName, FRAME_RX);
+            event.canFrame = canFrame;
+            handleCanEvent(event);
 
-                                    struct canfd_frame frame = *reinterpret_cast<canfd_frame *>(canFrameBuffer);
+            } else if (bytesTransferred == sizeof(struct canfd_frame)) {
 
-                                    canFrame = new CanFrame(frame);
+                struct canfd_frame frame = *reinterpret_cast<canfd_frame *>(canFrameBuffer);
+                auto canFrame = new CanFrame(frame);
+                BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
 
-                                } else {
-                                    BOOST_LOG_TRIVIAL(error) << "Received unknown data with length="
-                                                             << bytesTransferred;
-                                }
+                auto event = CanEvent(canIfName, FRAME_RX);
+                event.canFrame = canFrame;
+                handleCanEvent(event);
 
-                                BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
-                                handleCanFrame(canIfName, canFrame);
-                                run();
-                            });
+            } else {
+                BOOST_LOG_TRIVIAL(error) << "Received unknown data with length="
+                    << bytesTransferred;
+            }
+
+            run();
+            });
 }
 
 void CanDevice::reconnect() {
     BOOST_LOG_TRIVIAL(trace) << "Attempting to reconnect.";
     auto reconnector = [this](const boost::system::error_code &errorCode) {
+        if(errorCode) {
+            BOOST_LOG_TRIVIAL(error) << "Encountered Error: " << errorCode;
+        }
         _connected = false;
         can_stream->close();
         close(socket_fd);
         if (connect()) {
             BOOST_LOG_TRIVIAL(info) << "Reconnection successfull.";
+            auto event = CanEvent(canIfName, IF_CONNECTED);
+            handleCanEvent(event);
             run();
         } else {
             BOOST_LOG_TRIVIAL(trace) << "Reconnection failed.";
@@ -125,8 +141,11 @@ void CanDevice::sendFrame(const struct can_frame &cf) {
 
 void CanDevice::writeFrame(const void *frame, int len) {
     boost::asio::async_write(*can_stream, boost::asio::buffer(frame, len),
-            [this](boost::system::error_code ec, std::size_t len)
-        {
-            BOOST_LOG_TRIVIAL(trace) << "Wrote frame with length: " << len;
-        });
+            [this](boost::system::error_code errorCode, std::size_t len)
+            {
+                if(errorCode) {
+                    BOOST_LOG_TRIVIAL(error) << "Encountered Error: " << errorCode;
+                }
+                BOOST_LOG_TRIVIAL(trace) << "Wrote frame with length: " << len;
+            });
 }

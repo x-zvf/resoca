@@ -3,9 +3,19 @@ project(resoca)
 
 set(CMAKE_CXX_STANDARD 17)
 # Fixes for Boost::log
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lboost_log -lpthread -DBOOST_LOG_DYN_LINK")
+set(CMAKE_EXE_LINKER_FLAGS -static)
+set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS FALSE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -lpthread")
 
-find_library(BOOST 1.7.0 REQUIRED)
+set(Boost_USE_STATIC_LIBS ON)
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
+
+
+#find_library(BOOST 1.7.3 REQUIRED)
+
 
 file(GLOB server-src
         "src/server/*.cpp"
@@ -16,4 +26,4 @@ file(GLOB shared-src
         "src/shared/*.hpp")
 
 add_executable(resoca-server ${server-src} ${shared-src})
-target_link_libraries(resoca-server ${BOOST_LIBRARIES})
+target_link_libraries(resoca-server ${CONAN_LIBS})
