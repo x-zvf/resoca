@@ -34,8 +34,8 @@ class TCPServer {
 public:
     TCPServer(std::string interface, int portNumber, boost::asio::io_context &ioContext)
         : interface(interface), portNumber(portNumber),
-            acceptor(boost::asio::ip::tcp::acceptor(ioContext,
-            boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), portNumber))) {}
+            acceptor(ioContext,
+            boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), portNumber)) {}
     //boost::asio::ip::address::from_string(interface)
 
     void listen();
