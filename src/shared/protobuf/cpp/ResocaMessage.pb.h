@@ -71,16 +71,20 @@ template<> ::ResocaMessage_ResocaInfo* Arena::CreateMaybeMessage<::ResocaMessage
 PROTOBUF_NAMESPACE_CLOSE
 
 enum ResocaMessage_MessageType : int {
-  ResocaMessage_MessageType_RESOCA_INFO = 0,
-  ResocaMessage_MessageType_IF_CONNECTED = 1,
-  ResocaMessage_MessageType_IF_DISCONNECTED = 2,
-  ResocaMessage_MessageType_MESSAGE_RX = 3,
-  ResocaMessage_MessageType_MESSAGE_TX = 4,
+  ResocaMessage_MessageType_OK = 0,
+  ResocaMessage_MessageType_ERR = 1,
+  ResocaMessage_MessageType_PONG = 2,
+  ResocaMessage_MessageType_PING = 3,
+  ResocaMessage_MessageType_RESOCA_INFO = 4,
+  ResocaMessage_MessageType_IF_CONNECTED = 5,
+  ResocaMessage_MessageType_IF_DISCONNECTED = 6,
+  ResocaMessage_MessageType_MESSAGE_RX = 7,
+  ResocaMessage_MessageType_MESSAGE_TX = 8,
   ResocaMessage_MessageType_ResocaMessage_MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   ResocaMessage_MessageType_ResocaMessage_MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool ResocaMessage_MessageType_IsValid(int value);
-constexpr ResocaMessage_MessageType ResocaMessage_MessageType_MessageType_MIN = ResocaMessage_MessageType_RESOCA_INFO;
+constexpr ResocaMessage_MessageType ResocaMessage_MessageType_MessageType_MIN = ResocaMessage_MessageType_OK;
 constexpr ResocaMessage_MessageType ResocaMessage_MessageType_MessageType_MAX = ResocaMessage_MessageType_MESSAGE_TX;
 constexpr int ResocaMessage_MessageType_MessageType_ARRAYSIZE = ResocaMessage_MessageType_MessageType_MAX + 1;
 
@@ -580,6 +584,14 @@ class ResocaMessage :
   typedef ResocaMessage_CanFrame CanFrame;
 
   typedef ResocaMessage_MessageType MessageType;
+  static constexpr MessageType OK =
+    ResocaMessage_MessageType_OK;
+  static constexpr MessageType ERR =
+    ResocaMessage_MessageType_ERR;
+  static constexpr MessageType PONG =
+    ResocaMessage_MessageType_PONG;
+  static constexpr MessageType PING =
+    ResocaMessage_MessageType_PING;
   static constexpr MessageType RESOCA_INFO =
     ResocaMessage_MessageType_RESOCA_INFO;
   static constexpr MessageType IF_CONNECTED =

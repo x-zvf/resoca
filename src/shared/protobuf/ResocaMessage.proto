@@ -2,13 +2,23 @@ syntax = "proto3";
 
 message ResocaMessage {
     enum MessageType{
-        RESOCA_INFO = 0;
-        IF_CONNECTED = 1;
-        IF_DISCONNECTED = 2;
-        MESSAGE_RX = 3;
-        MESSAGE_TX = 4;
+        //Responses
+        OK = 0;
+        ERR = 1;
+        PONG = 2;
+        //Session Specific
+        PING = 3;
+
+        // Handled by CanDeviceManager
+        RESOCA_INFO = 4;
+
+        // CanDevice Specific
+        IF_CONNECTED = 5;
+        IF_DISCONNECTED = 6;
+        MESSAGE_RX = 7;
+        MESSAGE_TX = 8;
     }
-    
+
     message ResocaInfo {
         string version = 1;
         repeated string interfaces = 2;

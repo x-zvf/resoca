@@ -19,8 +19,11 @@ void TCPSession::start() {
             async_read(socket, dataBuf,
             [=](const boost::system::error_code &errorCode, size_t bytes){
                 if (errorCode || bytes != messageLength) {
-                    BOOST_LOG_TRIVIAL(error) << "Other error:"
-                    << errorCode << " or failed to read correct length: "
+                    BOOST_LOG_TRIVIAL(error) << "Error reading body: "
+                    << errorCode.message();
+                    kill();
+                } else if(bytes != messageLength) {
+                    BOOST_LOG_TRIVIAL(error) <<"failed to read correct length: "
                     << bytes << " instead of: "
                     << messageLength;
                     kill();
@@ -40,8 +43,8 @@ void TCPSession::start() {
     });
 }
 
-bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rms) {
-
+bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
+    BOOST_LOG_TRIVIAL(debug) << "Handling RSM: " << rsm->DebugString();
     return true;
 }
 
@@ -63,7 +66,7 @@ void TCPServer::listen() {
             if (!errorCode)
             {
                 auto ts = new TCPSession(nextSid, std::move(socket), *this);
-                sessions[nextSid] = ts;
+                sessions[nextSid++] = ts;
                 ts->start();
             } else {
                 BOOST_LOG_TRIVIAL(error) << "Error in listen(): " << errorCode.message();

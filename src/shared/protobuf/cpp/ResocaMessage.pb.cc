@@ -120,7 +120,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_ResocaMessage_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\023ResocaMessage.proto\"\346\003\n\rResocaMessage\022"
+  "\n\023ResocaMessage.proto\"\214\004\n\rResocaMessage\022"
   "/\n\013messageType\030\001 \001(\0162\032.ResocaMessage.Mes"
   "sageType\022\021\n\tinterface\030\002 \001(\t\022)\n\010canFrame\030"
   "\003 \001(\0132\027.ResocaMessage.CanFrame\022-\n\nresoca"
@@ -130,9 +130,10 @@ const char descriptor_table_protodef_ResocaMessage_2eproto[] PROTOBUF_SECTION_VA
   "isCanFD\030\002 \001(\010\022\022\n\nisEFFFRAME\030\003 \001(\010\022\022\n\nisR"
   "TRFRAME\030\004 \001(\010\022\022\n\nisERRFRAME\030\005 \001(\010\022\022\n\nisC"
   "anFDESI\030\006 \001(\010\022\022\n\nisCanFDBRS\030\007 \001(\010\022\014\n\004dat"
-  "a\030\n \001(\014\"e\n\013MessageType\022\017\n\013RESOCA_INFO\020\000\022"
-  "\020\n\014IF_CONNECTED\020\001\022\023\n\017IF_DISCONNECTED\020\002\022\016"
-  "\n\nMESSAGE_RX\020\003\022\016\n\nMESSAGE_TX\020\004b\006proto3"
+  "a\030\n \001(\014\"\212\001\n\013MessageType\022\006\n\002OK\020\000\022\007\n\003ERR\020\001"
+  "\022\010\n\004PONG\020\002\022\010\n\004PING\020\003\022\017\n\013RESOCA_INFO\020\004\022\020\n"
+  "\014IF_CONNECTED\020\005\022\023\n\017IF_DISCONNECTED\020\006\022\016\n\n"
+  "MESSAGE_RX\020\007\022\016\n\nMESSAGE_TX\020\010b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_ResocaMessage_2eproto_deps[1] = {
 };
@@ -144,7 +145,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Res
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_ResocaMessage_2eproto_once;
 static bool descriptor_table_ResocaMessage_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_ResocaMessage_2eproto = {
-  &descriptor_table_ResocaMessage_2eproto_initialized, descriptor_table_protodef_ResocaMessage_2eproto, "ResocaMessage.proto", 518,
+  &descriptor_table_ResocaMessage_2eproto_initialized, descriptor_table_protodef_ResocaMessage_2eproto, "ResocaMessage.proto", 556,
   &descriptor_table_ResocaMessage_2eproto_once, descriptor_table_ResocaMessage_2eproto_sccs, descriptor_table_ResocaMessage_2eproto_deps, 3, 0,
   schemas, file_default_instances, TableStruct_ResocaMessage_2eproto::offsets,
   file_level_metadata_ResocaMessage_2eproto, 3, file_level_enum_descriptors_ResocaMessage_2eproto, file_level_service_descriptors_ResocaMessage_2eproto,
@@ -163,6 +164,10 @@ bool ResocaMessage_MessageType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
       return true;
     default:
       return false;
@@ -170,6 +175,10 @@ bool ResocaMessage_MessageType_IsValid(int value) {
 }
 
 #if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
+constexpr ResocaMessage_MessageType ResocaMessage::OK;
+constexpr ResocaMessage_MessageType ResocaMessage::ERR;
+constexpr ResocaMessage_MessageType ResocaMessage::PONG;
+constexpr ResocaMessage_MessageType ResocaMessage::PING;
 constexpr ResocaMessage_MessageType ResocaMessage::RESOCA_INFO;
 constexpr ResocaMessage_MessageType ResocaMessage::IF_CONNECTED;
 constexpr ResocaMessage_MessageType ResocaMessage::IF_DISCONNECTED;
