@@ -22,9 +22,12 @@ int main() {
 
     TCPServer tcpServer("0.0.0.0", 23636, ioContext);
 
+
     //plumb them up
     tcpServer.setHandleReceivePBMessage(std::bind(&CanDeviceManager::handlePBMessage, canDeviceManager, std::placeholders::_1));
     canDeviceManager.setSendPBMessage(std::bind(&TCPServer::handlePBMessage, tcpServer, std::placeholders::_1));
+
+    tcpServer.listen();
 
     BOOST_LOG_TRIVIAL(info) << "Initialized. running ioService.";
     ioContext.run();

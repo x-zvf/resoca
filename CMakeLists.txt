@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.15)
 project(resoca)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -23,7 +23,9 @@ file(GLOB server-src
 
 file(GLOB shared-src
         "src/shared/*.cpp"
-        "src/shared/*.hpp")
+        "src/shared/*.hpp"
+        "src/shared/protobuf/cpp/*.cc",
+        "src/shared/protobuf/cpp/*.h")
 
 add_executable(resoca-server ${server-src} ${shared-src})
 target_link_libraries(resoca-server ${CONAN_LIBS})

@@ -14,7 +14,7 @@ public:
 
     void start();
 
-    void handlePBMessage(std::shared_ptr<ResocaMessage> rms);
+    bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
 
     std::set<std::string> ifNotify;
 
@@ -33,14 +33,14 @@ private:
 class TCPServer {
 public:
     TCPServer(std::string interface, int portNumber, boost::asio::io_context &ioContext)
-        : inferface(interface), portNumber(portNumber),ioContext(ioContext) {
-            endpoint = new boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(interface), portNumber);
-            acceptor = new boost::asio::ip::tcp::acceptor(ioContext, endpoint);
-        }
+        : interface(interface), portNumber(portNumber),
+            acceptor(boost::asio::ip::tcp::acceptor(ioContext,
+            boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), portNumber))) {}
+    //boost::asio::ip::address::from_string(interface)
 
     void listen();
 
-    void handlePBMessage(std::shared_ptr<ResocaMessage> rms);
+    bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
 
     void setHandleReceivePBMessage(std::function<bool(std::shared_ptr<ResocaMessage> rms)> func) {
         handleReceivePBMessage = func;
@@ -54,13 +54,11 @@ private:
     uint32_t nextSid = 1;
     std::map<uint32_t,TCPSession*> sessions;
 
-    std::string inferface;
+    std::string interface;
     int portNumber;
-    boost::asio::io_context &ioContext;
+    //boost::asio::io_context &ioContext;
 
-    boost::asio::ip::tcp::endpoint *endpoint = nullptr;
-
-    boost::asio::ip::tcp::acceptor *acceptor = nullptr;
+    boost::asio::ip::tcp::acceptor acceptor;
 
     std::function<bool(std::shared_ptr<ResocaMessage> rms)> handleReceivePBMessage;
 };

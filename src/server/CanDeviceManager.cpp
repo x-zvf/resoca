@@ -18,7 +18,6 @@ bool CanDeviceManager::handleCanEvent(CanEvent &ce) {
     BOOST_LOG_TRIVIAL(debug) << "Handling CanEvent: " << ce.toString();
     return true;
 }
-bool CanDeviceManager::handlePBMessage(const ResocaMessage &msg) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in CanDevMgr: " << msg.DebugString();
-    return true;
+bool CanDeviceManager::handlePBMessage(std::shared_ptr<ResocaMessage> rms) {
+    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in CanDevMgr: " << rms->DebugString();
 }

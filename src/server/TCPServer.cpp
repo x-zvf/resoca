@@ -31,13 +31,18 @@ void TCPSession::start() {
                         BOOST_LOG_TRIVIAL(error) << "Failed to deserialize Protobuf stream";
                         kill();
                     } else {
-                        handlePBMessage(*rms);
+                        handlePBMessage(rms);
                         start();
                     }
                 }
             });
         }
     });
+}
+
+bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rms) {
+
+    return true;
 }
 
 void TCPServer::deleteSession(int sid) {
@@ -52,20 +57,23 @@ void TCPServer::deleteSession(int sid) {
 }
 
 void TCPServer::listen() {
-    acceptor->async_accept(
+    BOOST_LOG_TRIVIAL(info) << "Starting to listen on " << interface << ":" << portNumber;
+    acceptor.async_accept(
         [this](boost::system::error_code errorCode, boost::asio::ip::tcp::socket socket) {
             if (!errorCode)
             {
                 auto ts = new TCPSession(nextSid, std::move(socket), *this);
                 sessions[nextSid] = ts;
                 ts->start();
+            } else {
+                BOOST_LOG_TRIVIAL(error) << "Error in listen(): " << errorCode.message();
             }
             listen();
     });
 }
 
-bool TCPServer::handlePBMessage(const ResocaMessage &msg) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in TCPServer: " << msg.DebugString();
+bool TCPServer::handlePBMessage(std::shared_ptr<ResocaMessage> rms) {
+    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in TCPServer: " << rms->DebugString();
     return true;
 }
 

@@ -13,18 +13,18 @@ public:
 
     bool listen_on(std::string ifName);
 
-    bool handlePBMessage(const ResocaMessage &msg);
+    bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
 
     bool handleCanEvent(CanEvent &ce);
 
-    void setSendPBMessage(std::function<bool(const ResocaMessage&)> func) {
+    void setSendPBMessage(std::function<bool(std::shared_ptr<ResocaMessage> rms)> func) {
         sendPBMessage = func;
     }
 
 private:
     std::map<std::string, CanDevice*> canDevices;
 
-    std::function<bool(const ResocaMessage&)> sendPBMessage;
+    std::function<bool(std::shared_ptr<ResocaMessage> rms)> sendPBMessage;
 
     boost::asio::io_context &io_ctx;
 
