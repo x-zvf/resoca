@@ -14,6 +14,8 @@ public:
 
     void start();
 
+    void writeRSM(std::shared_ptr<ResocaMessage> msg);
+
     bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
 
     std::set<std::string> ifNotify;

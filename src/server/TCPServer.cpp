@@ -45,7 +45,38 @@ void TCPSession::start() {
 
 bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
     BOOST_LOG_TRIVIAL(debug) << "Handling RSM: " << rsm->DebugString();
+    switch(rsm->messagetype()) {
+        case ResocaMessage_MessageType_PING: {
+                auto respMsg = std::make_shared<ResocaMessage>();
+                respMsg->set_messagetype(rsm->PONG);
+                writeRSM(respMsg);
+                return true;
+            break;
+        }
+
+        default: {
+            server.handlePBMessage(rsm);
+        }
+    }
     return true;
+}
+
+void TCPSession::writeRSM(std::shared_ptr<ResocaMessage> msg) {
+    unsigned short len = msg->ByteSizeLong();
+    uint8_t msgData[2+len];
+    msg->SerializeToArray(&(msgData[2]), len);
+    boost::asio::async_write(socket, boost::asio::buffer(msgData,2),
+        [this](const boost::system::error_code &errorCode, size_t bytes){
+            if(errorCode) {
+                BOOST_LOG_TRIVIAL(error)
+                << "Failed to write message to client, terminating session. error: "
+                << errorCode.message();
+                kill();
+            } else {
+                BOOST_LOG_TRIVIAL(debug) << "Successfully send message (" << bytes << " bytes) to client.";
+            }
+        });
+
 }
 
 void TCPServer::deleteSession(int sid) {
@@ -55,7 +86,10 @@ void TCPServer::deleteSession(int sid) {
         delete s;
         BOOST_LOG_TRIVIAL(debug) << "Deleted session with sid: " << sid;
     } else {
-        BOOST_LOG_TRIVIAL(debug) << "Session with sid " << sid << " does not exist.";
+        BOOST_LOG_TRIVIAL(debug) << "Session with sid " << sid << " does not exist. known sessions (" << sessions.size() <<") :";
+        for( const auto &pair : sessions) {
+            BOOST_LOG_TRIVIAL(debug) << "- " << pair.first;
+        }
     }
 }
 
@@ -66,8 +100,9 @@ void TCPServer::listen() {
             if (!errorCode)
             {
                 auto ts = new TCPSession(nextSid, std::move(socket), *this);
-                sessions[nextSid++] = ts;
+                sessions[nextSid] = ts;
                 ts->start();
+                nextSid ++;
             } else {
                 BOOST_LOG_TRIVIAL(error) << "Error in listen(): " << errorCode.message();
             }
