@@ -24,8 +24,8 @@ public:
 private:
     std::map<std::string, CanDevice*> canDevices;
 
-    std::function<bool(std::shared_ptr<ResocaMessage> rms)> sendPBMessage;
-
     boost::asio::io_context &io_ctx;
+
+    std::function<bool(std::shared_ptr<ResocaMessage> rms)> sendPBMessage;
 
 };

@@ -54,6 +54,7 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
             break;
         }
 
+
         default: {
             server.handlePBMessage(rsm);
         }
@@ -110,8 +111,19 @@ void TCPServer::listen() {
     });
 }
 
-bool TCPServer::handlePBMessage(std::shared_ptr<ResocaMessage> rms) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in TCPServer: " << rms->DebugString();
+bool TCPServer::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
+    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in TCPServer: " << rsm->DebugString();
+    return true;
+}
+bool TCPServer::sendPBMessage(std::shared_ptr<ResocaMessage> rsm) {
+    BOOST_LOG_TRIVIAL(debug) << "sending PBMessage in TCPServer: " << rsm->DebugString();
+    for(auto &pair : sessions) {
+        auto session = pair.second;
+        if(session->ifNotify.find(rsm->interface()) != session->ifNotify.end()) {
+            BOOST_LOG_TRIVIAL(trace) << "Sent message to session: " << pair.first;
+            session->writeRSM(rsm);
+        }
+    }
     return true;
 }
 

@@ -44,6 +44,8 @@ public:
 
     bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
 
+    bool sendPBMessage(std::shared_ptr<ResocaMessage> rms);
+
     void setHandleReceivePBMessage(std::function<bool(std::shared_ptr<ResocaMessage> rms)> func) {
         handleReceivePBMessage = func;
     }

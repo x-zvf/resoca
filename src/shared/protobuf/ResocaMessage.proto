@@ -1,24 +1,6 @@
 syntax = "proto3";
 
 message ResocaMessage {
-    enum MessageType{
-        //Responses
-        OK = 0;
-        ERR = 1;
-        PONG = 2;
-        //Session Specific
-        PING = 3;
-
-        // Handled by CanDeviceManager
-        RESOCA_INFO = 4;
-
-        // CanDevice Specific
-        IF_CONNECTED = 5;
-        IF_DISCONNECTED = 6;
-        MESSAGE_RX = 7;
-        MESSAGE_TX = 8;
-    }
-
     message ResocaInfo {
         string version = 1;
         repeated string interfaces = 2;
@@ -36,8 +18,21 @@ message ResocaMessage {
       bytes data = 10;
     }
 
-    MessageType messageType = 1;
-    string interface = 2;
-    CanFrame canFrame = 3;
-    ResocaInfo resocaInfo = 4;
+    enum MessageType {
+        ACK = 0;
+        OK = 1;
+        ERR = 2;
+
+        PING = 3;
+        PONG = 4;
+
+        CAN_TX = 5;
+        CAN_RX = 6;
+        CAN_INFO = 7;
+        CAN_STAT = 8;
+
+        NOTIFY_START = 9;
+        NOTIFY_END = 10;
+    }
+
 }

@@ -25,7 +25,7 @@ int main() {
 
     //plumb them up
     tcpServer.setHandleReceivePBMessage(std::bind(&CanDeviceManager::handlePBMessage, std::ref(canDeviceManager), std::placeholders::_1));
-    canDeviceManager.setSendPBMessage(std::bind(&TCPServer::handlePBMessage, std::ref(tcpServer), std::placeholders::_1));
+    canDeviceManager.setSendPBMessage(std::bind(&TCPServer::sendPBMessage, std::ref(tcpServer), std::placeholders::_1));
 
     tcpServer.listen();
 

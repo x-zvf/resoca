@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 project(resoca)
 
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
-set(CMAKE_CXX_STANDARD 17)
 # Fixes for Boost::log
 set(CMAKE_EXE_LINKER_FLAGS -static)
 set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS FALSE)
