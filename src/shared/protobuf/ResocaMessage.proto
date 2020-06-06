@@ -1,10 +1,6 @@
 syntax = "proto3";
 
 message ResocaMessage {
-    message ResocaInfo {
-        string version = 1;
-        repeated string interfaces = 2;
-    }
 
     message CanFrame {
       uint32 canID = 1;
@@ -15,24 +11,60 @@ message ResocaMessage {
       bool isCanFDESI = 6;
       bool isCanFDBRS = 7;
 
-      bytes data = 10;
+      bytes data = 10; //this has a length parameter, no need to ecode that seperately
     }
 
-    enum MessageType {
-        ACK = 0;
-        OK = 1;
-        ERR = 2;
+    message Request {
+        enum RequestType {
+            PING = 0;
+            NOTIFY_START = 1;
+            NOTIFY_END = 2;
 
-        PING = 3;
-        PONG = 4;
+            CAN_TX = 3;
+            CAN_STAT = 4;
 
-        CAN_TX = 5;
-        CAN_RX = 6;
-        CAN_INFO = 7;
-        CAN_STAT = 8;
+            INFO = 5;
 
-        NOTIFY_START = 9;
-        NOTIFY_END = 10;
+        }
+
+        RequestType requestType = 1;
+        uint32 requestID = 2;
+        string ifName = 3;
+        CanFrame canFrame = 4;
+
     }
+
+    message Response {
+        enum ResponseType {
+            ACK = 0;
+            SUCCESS = 1;
+            ERR = 2;
+
+            PONG = 3;
+
+            CAN_RX = 5;
+            CAN_STAT = 6;
+
+            INFO = 7;
+        }
+
+        message ResocaInfo {
+            string version = 1;
+            repeated string interfaces = 2;
+            uint32 sessionMask = 3;
+        }
+
+        ResponseType responseType = 1;
+        uint32 responseID = 2;
+
+        string error = 3;
+        string ifName = 4;
+        CanFrame canFrame = 5;
+        ResocaInfo resocaInfo = 6;
+    }
+
+    bool isResponse = 1;
+    Request request = 2;
+    Response response = 3;
 
 }
