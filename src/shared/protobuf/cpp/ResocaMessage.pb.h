@@ -48,7 +48,7 @@ struct TableStruct_ResocaMessage_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -61,209 +61,87 @@ extern ResocaMessageDefaultTypeInternal _ResocaMessage_default_instance_;
 class ResocaMessage_CanFrame;
 class ResocaMessage_CanFrameDefaultTypeInternal;
 extern ResocaMessage_CanFrameDefaultTypeInternal _ResocaMessage_CanFrame_default_instance_;
-class ResocaMessage_ResocaInfo;
-class ResocaMessage_ResocaInfoDefaultTypeInternal;
-extern ResocaMessage_ResocaInfoDefaultTypeInternal _ResocaMessage_ResocaInfo_default_instance_;
+class ResocaMessage_Request;
+class ResocaMessage_RequestDefaultTypeInternal;
+extern ResocaMessage_RequestDefaultTypeInternal _ResocaMessage_Request_default_instance_;
+class ResocaMessage_Response;
+class ResocaMessage_ResponseDefaultTypeInternal;
+extern ResocaMessage_ResponseDefaultTypeInternal _ResocaMessage_Response_default_instance_;
+class ResocaMessage_Response_IfInfo;
+class ResocaMessage_Response_IfInfoDefaultTypeInternal;
+extern ResocaMessage_Response_IfInfoDefaultTypeInternal _ResocaMessage_Response_IfInfo_default_instance_;
+class ResocaMessage_Response_ResocaInfo;
+class ResocaMessage_Response_ResocaInfoDefaultTypeInternal;
+extern ResocaMessage_Response_ResocaInfoDefaultTypeInternal _ResocaMessage_Response_ResocaInfo_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::ResocaMessage* Arena::CreateMaybeMessage<::ResocaMessage>(Arena*);
 template<> ::ResocaMessage_CanFrame* Arena::CreateMaybeMessage<::ResocaMessage_CanFrame>(Arena*);
-template<> ::ResocaMessage_ResocaInfo* Arena::CreateMaybeMessage<::ResocaMessage_ResocaInfo>(Arena*);
+template<> ::ResocaMessage_Request* Arena::CreateMaybeMessage<::ResocaMessage_Request>(Arena*);
+template<> ::ResocaMessage_Response* Arena::CreateMaybeMessage<::ResocaMessage_Response>(Arena*);
+template<> ::ResocaMessage_Response_IfInfo* Arena::CreateMaybeMessage<::ResocaMessage_Response_IfInfo>(Arena*);
+template<> ::ResocaMessage_Response_ResocaInfo* Arena::CreateMaybeMessage<::ResocaMessage_Response_ResocaInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
-enum ResocaMessage_MessageType : int {
-  ResocaMessage_MessageType_OK = 0,
-  ResocaMessage_MessageType_ERR = 1,
-  ResocaMessage_MessageType_PONG = 2,
-  ResocaMessage_MessageType_PING = 3,
-  ResocaMessage_MessageType_RESOCA_INFO = 4,
-  ResocaMessage_MessageType_IF_CONNECTED = 5,
-  ResocaMessage_MessageType_IF_DISCONNECTED = 6,
-  ResocaMessage_MessageType_MESSAGE_RX = 7,
-  ResocaMessage_MessageType_MESSAGE_TX = 8,
-  ResocaMessage_MessageType_ResocaMessage_MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  ResocaMessage_MessageType_ResocaMessage_MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+enum ResocaMessage_Request_RequestType : int {
+  ResocaMessage_Request_RequestType_PING = 0,
+  ResocaMessage_Request_RequestType_NOTIFY_START = 1,
+  ResocaMessage_Request_RequestType_NOTIFY_END = 2,
+  ResocaMessage_Request_RequestType_CAN_TX = 3,
+  ResocaMessage_Request_RequestType_CAN_STAT = 4,
+  ResocaMessage_Request_RequestType_INFO = 5,
+  ResocaMessage_Request_RequestType_ResocaMessage_Request_RequestType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  ResocaMessage_Request_RequestType_ResocaMessage_Request_RequestType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
-bool ResocaMessage_MessageType_IsValid(int value);
-constexpr ResocaMessage_MessageType ResocaMessage_MessageType_MessageType_MIN = ResocaMessage_MessageType_OK;
-constexpr ResocaMessage_MessageType ResocaMessage_MessageType_MessageType_MAX = ResocaMessage_MessageType_MESSAGE_TX;
-constexpr int ResocaMessage_MessageType_MessageType_ARRAYSIZE = ResocaMessage_MessageType_MessageType_MAX + 1;
+bool ResocaMessage_Request_RequestType_IsValid(int value);
+constexpr ResocaMessage_Request_RequestType ResocaMessage_Request_RequestType_RequestType_MIN = ResocaMessage_Request_RequestType_PING;
+constexpr ResocaMessage_Request_RequestType ResocaMessage_Request_RequestType_RequestType_MAX = ResocaMessage_Request_RequestType_INFO;
+constexpr int ResocaMessage_Request_RequestType_RequestType_ARRAYSIZE = ResocaMessage_Request_RequestType_RequestType_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ResocaMessage_MessageType_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ResocaMessage_Request_RequestType_descriptor();
 template<typename T>
-inline const std::string& ResocaMessage_MessageType_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, ResocaMessage_MessageType>::value ||
+inline const std::string& ResocaMessage_Request_RequestType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ResocaMessage_Request_RequestType>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function ResocaMessage_MessageType_Name.");
+    "Incorrect type passed to function ResocaMessage_Request_RequestType_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    ResocaMessage_MessageType_descriptor(), enum_t_value);
+    ResocaMessage_Request_RequestType_descriptor(), enum_t_value);
 }
-inline bool ResocaMessage_MessageType_Parse(
-    const std::string& name, ResocaMessage_MessageType* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ResocaMessage_MessageType>(
-    ResocaMessage_MessageType_descriptor(), name, value);
+inline bool ResocaMessage_Request_RequestType_Parse(
+    const std::string& name, ResocaMessage_Request_RequestType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ResocaMessage_Request_RequestType>(
+    ResocaMessage_Request_RequestType_descriptor(), name, value);
+}
+enum ResocaMessage_Response_ResponseType : int {
+  ResocaMessage_Response_ResponseType_ACK = 0,
+  ResocaMessage_Response_ResponseType_SUCCESS = 1,
+  ResocaMessage_Response_ResponseType_ERR = 2,
+  ResocaMessage_Response_ResponseType_PONG = 3,
+  ResocaMessage_Response_ResponseType_CAN_RX = 4,
+  ResocaMessage_Response_ResponseType_CAN_STAT = 5,
+  ResocaMessage_Response_ResponseType_INFO = 6,
+  ResocaMessage_Response_ResponseType_ResocaMessage_Response_ResponseType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  ResocaMessage_Response_ResponseType_ResocaMessage_Response_ResponseType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool ResocaMessage_Response_ResponseType_IsValid(int value);
+constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response_ResponseType_ResponseType_MIN = ResocaMessage_Response_ResponseType_ACK;
+constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response_ResponseType_ResponseType_MAX = ResocaMessage_Response_ResponseType_INFO;
+constexpr int ResocaMessage_Response_ResponseType_ResponseType_ARRAYSIZE = ResocaMessage_Response_ResponseType_ResponseType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ResocaMessage_Response_ResponseType_descriptor();
+template<typename T>
+inline const std::string& ResocaMessage_Response_ResponseType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ResocaMessage_Response_ResponseType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function ResocaMessage_Response_ResponseType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    ResocaMessage_Response_ResponseType_descriptor(), enum_t_value);
+}
+inline bool ResocaMessage_Response_ResponseType_Parse(
+    const std::string& name, ResocaMessage_Response_ResponseType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ResocaMessage_Response_ResponseType>(
+    ResocaMessage_Response_ResponseType_descriptor(), name, value);
 }
 // ===================================================================
-
-class ResocaMessage_ResocaInfo :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage.ResocaInfo) */ {
- public:
-  ResocaMessage_ResocaInfo();
-  virtual ~ResocaMessage_ResocaInfo();
-
-  ResocaMessage_ResocaInfo(const ResocaMessage_ResocaInfo& from);
-  ResocaMessage_ResocaInfo(ResocaMessage_ResocaInfo&& from) noexcept
-    : ResocaMessage_ResocaInfo() {
-    *this = ::std::move(from);
-  }
-
-  inline ResocaMessage_ResocaInfo& operator=(const ResocaMessage_ResocaInfo& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResocaMessage_ResocaInfo& operator=(ResocaMessage_ResocaInfo&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const ResocaMessage_ResocaInfo& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const ResocaMessage_ResocaInfo* internal_default_instance() {
-    return reinterpret_cast<const ResocaMessage_ResocaInfo*>(
-               &_ResocaMessage_ResocaInfo_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    0;
-
-  friend void swap(ResocaMessage_ResocaInfo& a, ResocaMessage_ResocaInfo& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(ResocaMessage_ResocaInfo* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline ResocaMessage_ResocaInfo* New() const final {
-    return CreateMaybeMessage<ResocaMessage_ResocaInfo>(nullptr);
-  }
-
-  ResocaMessage_ResocaInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<ResocaMessage_ResocaInfo>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const ResocaMessage_ResocaInfo& from);
-  void MergeFrom(const ResocaMessage_ResocaInfo& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(ResocaMessage_ResocaInfo* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "ResocaMessage.ResocaInfo";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_ResocaMessage_2eproto);
-    return ::descriptor_table_ResocaMessage_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kInterfacesFieldNumber = 2,
-    kVersionFieldNumber = 1,
-  };
-  // repeated string interfaces = 2;
-  int interfaces_size() const;
-  private:
-  int _internal_interfaces_size() const;
-  public:
-  void clear_interfaces();
-  const std::string& interfaces(int index) const;
-  std::string* mutable_interfaces(int index);
-  void set_interfaces(int index, const std::string& value);
-  void set_interfaces(int index, std::string&& value);
-  void set_interfaces(int index, const char* value);
-  void set_interfaces(int index, const char* value, size_t size);
-  std::string* add_interfaces();
-  void add_interfaces(const std::string& value);
-  void add_interfaces(std::string&& value);
-  void add_interfaces(const char* value);
-  void add_interfaces(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& interfaces() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_interfaces();
-  private:
-  const std::string& _internal_interfaces(int index) const;
-  std::string* _internal_add_interfaces();
-  public:
-
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  void set_version(const std::string& value);
-  void set_version(std::string&& value);
-  void set_version(const char* value);
-  void set_version(const char* value, size_t size);
-  std::string* mutable_version();
-  std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // @@protoc_insertion_point(class_scope:ResocaMessage.ResocaInfo)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> interfaces_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_ResocaMessage_2eproto;
-};
-// -------------------------------------------------------------------
 
 class ResocaMessage_CanFrame :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage.CanFrame) */ {
@@ -307,7 +185,7 @@ class ResocaMessage_CanFrame :
                &_ResocaMessage_CanFrame_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    0;
 
   friend void swap(ResocaMessage_CanFrame& a, ResocaMessage_CanFrame& b) {
     a.Swap(&b);
@@ -477,6 +355,774 @@ class ResocaMessage_CanFrame :
 };
 // -------------------------------------------------------------------
 
+class ResocaMessage_Request :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage.Request) */ {
+ public:
+  ResocaMessage_Request();
+  virtual ~ResocaMessage_Request();
+
+  ResocaMessage_Request(const ResocaMessage_Request& from);
+  ResocaMessage_Request(ResocaMessage_Request&& from) noexcept
+    : ResocaMessage_Request() {
+    *this = ::std::move(from);
+  }
+
+  inline ResocaMessage_Request& operator=(const ResocaMessage_Request& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResocaMessage_Request& operator=(ResocaMessage_Request&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const ResocaMessage_Request& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ResocaMessage_Request* internal_default_instance() {
+    return reinterpret_cast<const ResocaMessage_Request*>(
+               &_ResocaMessage_Request_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(ResocaMessage_Request& a, ResocaMessage_Request& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ResocaMessage_Request* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ResocaMessage_Request* New() const final {
+    return CreateMaybeMessage<ResocaMessage_Request>(nullptr);
+  }
+
+  ResocaMessage_Request* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ResocaMessage_Request>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ResocaMessage_Request& from);
+  void MergeFrom(const ResocaMessage_Request& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ResocaMessage_Request* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ResocaMessage.Request";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_ResocaMessage_2eproto);
+    return ::descriptor_table_ResocaMessage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  typedef ResocaMessage_Request_RequestType RequestType;
+  static constexpr RequestType PING =
+    ResocaMessage_Request_RequestType_PING;
+  static constexpr RequestType NOTIFY_START =
+    ResocaMessage_Request_RequestType_NOTIFY_START;
+  static constexpr RequestType NOTIFY_END =
+    ResocaMessage_Request_RequestType_NOTIFY_END;
+  static constexpr RequestType CAN_TX =
+    ResocaMessage_Request_RequestType_CAN_TX;
+  static constexpr RequestType CAN_STAT =
+    ResocaMessage_Request_RequestType_CAN_STAT;
+  static constexpr RequestType INFO =
+    ResocaMessage_Request_RequestType_INFO;
+  static inline bool RequestType_IsValid(int value) {
+    return ResocaMessage_Request_RequestType_IsValid(value);
+  }
+  static constexpr RequestType RequestType_MIN =
+    ResocaMessage_Request_RequestType_RequestType_MIN;
+  static constexpr RequestType RequestType_MAX =
+    ResocaMessage_Request_RequestType_RequestType_MAX;
+  static constexpr int RequestType_ARRAYSIZE =
+    ResocaMessage_Request_RequestType_RequestType_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  RequestType_descriptor() {
+    return ResocaMessage_Request_RequestType_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& RequestType_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, RequestType>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function RequestType_Name.");
+    return ResocaMessage_Request_RequestType_Name(enum_t_value);
+  }
+  static inline bool RequestType_Parse(const std::string& name,
+      RequestType* value) {
+    return ResocaMessage_Request_RequestType_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIfNameFieldNumber = 3,
+    kCanFrameFieldNumber = 4,
+    kRequestTypeFieldNumber = 1,
+    kRequestIDFieldNumber = 2,
+  };
+  // string ifName = 3;
+  void clear_ifname();
+  const std::string& ifname() const;
+  void set_ifname(const std::string& value);
+  void set_ifname(std::string&& value);
+  void set_ifname(const char* value);
+  void set_ifname(const char* value, size_t size);
+  std::string* mutable_ifname();
+  std::string* release_ifname();
+  void set_allocated_ifname(std::string* ifname);
+  private:
+  const std::string& _internal_ifname() const;
+  void _internal_set_ifname(const std::string& value);
+  std::string* _internal_mutable_ifname();
+  public:
+
+  // .ResocaMessage.CanFrame canFrame = 4;
+  bool has_canframe() const;
+  private:
+  bool _internal_has_canframe() const;
+  public:
+  void clear_canframe();
+  const ::ResocaMessage_CanFrame& canframe() const;
+  ::ResocaMessage_CanFrame* release_canframe();
+  ::ResocaMessage_CanFrame* mutable_canframe();
+  void set_allocated_canframe(::ResocaMessage_CanFrame* canframe);
+  private:
+  const ::ResocaMessage_CanFrame& _internal_canframe() const;
+  ::ResocaMessage_CanFrame* _internal_mutable_canframe();
+  public:
+
+  // .ResocaMessage.Request.RequestType requestType = 1;
+  void clear_requesttype();
+  ::ResocaMessage_Request_RequestType requesttype() const;
+  void set_requesttype(::ResocaMessage_Request_RequestType value);
+  private:
+  ::ResocaMessage_Request_RequestType _internal_requesttype() const;
+  void _internal_set_requesttype(::ResocaMessage_Request_RequestType value);
+  public:
+
+  // uint32 requestID = 2;
+  void clear_requestid();
+  ::PROTOBUF_NAMESPACE_ID::uint32 requestid() const;
+  void set_requestid(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_requestid() const;
+  void _internal_set_requestid(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ResocaMessage.Request)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ifname_;
+  ::ResocaMessage_CanFrame* canframe_;
+  int requesttype_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 requestid_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_ResocaMessage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ResocaMessage_Response_ResocaInfo :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage.Response.ResocaInfo) */ {
+ public:
+  ResocaMessage_Response_ResocaInfo();
+  virtual ~ResocaMessage_Response_ResocaInfo();
+
+  ResocaMessage_Response_ResocaInfo(const ResocaMessage_Response_ResocaInfo& from);
+  ResocaMessage_Response_ResocaInfo(ResocaMessage_Response_ResocaInfo&& from) noexcept
+    : ResocaMessage_Response_ResocaInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline ResocaMessage_Response_ResocaInfo& operator=(const ResocaMessage_Response_ResocaInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResocaMessage_Response_ResocaInfo& operator=(ResocaMessage_Response_ResocaInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const ResocaMessage_Response_ResocaInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ResocaMessage_Response_ResocaInfo* internal_default_instance() {
+    return reinterpret_cast<const ResocaMessage_Response_ResocaInfo*>(
+               &_ResocaMessage_Response_ResocaInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(ResocaMessage_Response_ResocaInfo& a, ResocaMessage_Response_ResocaInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ResocaMessage_Response_ResocaInfo* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ResocaMessage_Response_ResocaInfo* New() const final {
+    return CreateMaybeMessage<ResocaMessage_Response_ResocaInfo>(nullptr);
+  }
+
+  ResocaMessage_Response_ResocaInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ResocaMessage_Response_ResocaInfo>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ResocaMessage_Response_ResocaInfo& from);
+  void MergeFrom(const ResocaMessage_Response_ResocaInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ResocaMessage_Response_ResocaInfo* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ResocaMessage.Response.ResocaInfo";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_ResocaMessage_2eproto);
+    return ::descriptor_table_ResocaMessage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kInterfacesFieldNumber = 2,
+    kVersionFieldNumber = 1,
+    kSessionPrefixFieldNumber = 3,
+  };
+  // repeated string interfaces = 2;
+  int interfaces_size() const;
+  private:
+  int _internal_interfaces_size() const;
+  public:
+  void clear_interfaces();
+  const std::string& interfaces(int index) const;
+  std::string* mutable_interfaces(int index);
+  void set_interfaces(int index, const std::string& value);
+  void set_interfaces(int index, std::string&& value);
+  void set_interfaces(int index, const char* value);
+  void set_interfaces(int index, const char* value, size_t size);
+  std::string* add_interfaces();
+  void add_interfaces(const std::string& value);
+  void add_interfaces(std::string&& value);
+  void add_interfaces(const char* value);
+  void add_interfaces(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& interfaces() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_interfaces();
+  private:
+  const std::string& _internal_interfaces(int index) const;
+  std::string* _internal_add_interfaces();
+  public:
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  void set_version(const std::string& value);
+  void set_version(std::string&& value);
+  void set_version(const char* value);
+  void set_version(const char* value, size_t size);
+  std::string* mutable_version();
+  std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // uint32 sessionPrefix = 3;
+  void clear_sessionprefix();
+  ::PROTOBUF_NAMESPACE_ID::uint32 sessionprefix() const;
+  void set_sessionprefix(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_sessionprefix() const;
+  void _internal_set_sessionprefix(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ResocaMessage.Response.ResocaInfo)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> interfaces_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 sessionprefix_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_ResocaMessage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ResocaMessage_Response_IfInfo :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage.Response.IfInfo) */ {
+ public:
+  ResocaMessage_Response_IfInfo();
+  virtual ~ResocaMessage_Response_IfInfo();
+
+  ResocaMessage_Response_IfInfo(const ResocaMessage_Response_IfInfo& from);
+  ResocaMessage_Response_IfInfo(ResocaMessage_Response_IfInfo&& from) noexcept
+    : ResocaMessage_Response_IfInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline ResocaMessage_Response_IfInfo& operator=(const ResocaMessage_Response_IfInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResocaMessage_Response_IfInfo& operator=(ResocaMessage_Response_IfInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const ResocaMessage_Response_IfInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ResocaMessage_Response_IfInfo* internal_default_instance() {
+    return reinterpret_cast<const ResocaMessage_Response_IfInfo*>(
+               &_ResocaMessage_Response_IfInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(ResocaMessage_Response_IfInfo& a, ResocaMessage_Response_IfInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ResocaMessage_Response_IfInfo* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ResocaMessage_Response_IfInfo* New() const final {
+    return CreateMaybeMessage<ResocaMessage_Response_IfInfo>(nullptr);
+  }
+
+  ResocaMessage_Response_IfInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ResocaMessage_Response_IfInfo>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ResocaMessage_Response_IfInfo& from);
+  void MergeFrom(const ResocaMessage_Response_IfInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ResocaMessage_Response_IfInfo* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ResocaMessage.Response.IfInfo";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_ResocaMessage_2eproto);
+    return ::descriptor_table_ResocaMessage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:ResocaMessage.Response.IfInfo)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_ResocaMessage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ResocaMessage_Response :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage.Response) */ {
+ public:
+  ResocaMessage_Response();
+  virtual ~ResocaMessage_Response();
+
+  ResocaMessage_Response(const ResocaMessage_Response& from);
+  ResocaMessage_Response(ResocaMessage_Response&& from) noexcept
+    : ResocaMessage_Response() {
+    *this = ::std::move(from);
+  }
+
+  inline ResocaMessage_Response& operator=(const ResocaMessage_Response& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ResocaMessage_Response& operator=(ResocaMessage_Response&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const ResocaMessage_Response& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ResocaMessage_Response* internal_default_instance() {
+    return reinterpret_cast<const ResocaMessage_Response*>(
+               &_ResocaMessage_Response_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(ResocaMessage_Response& a, ResocaMessage_Response& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ResocaMessage_Response* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ResocaMessage_Response* New() const final {
+    return CreateMaybeMessage<ResocaMessage_Response>(nullptr);
+  }
+
+  ResocaMessage_Response* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ResocaMessage_Response>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ResocaMessage_Response& from);
+  void MergeFrom(const ResocaMessage_Response& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ResocaMessage_Response* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ResocaMessage.Response";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_ResocaMessage_2eproto);
+    return ::descriptor_table_ResocaMessage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  typedef ResocaMessage_Response_ResocaInfo ResocaInfo;
+  typedef ResocaMessage_Response_IfInfo IfInfo;
+
+  typedef ResocaMessage_Response_ResponseType ResponseType;
+  static constexpr ResponseType ACK =
+    ResocaMessage_Response_ResponseType_ACK;
+  static constexpr ResponseType SUCCESS =
+    ResocaMessage_Response_ResponseType_SUCCESS;
+  static constexpr ResponseType ERR =
+    ResocaMessage_Response_ResponseType_ERR;
+  static constexpr ResponseType PONG =
+    ResocaMessage_Response_ResponseType_PONG;
+  static constexpr ResponseType CAN_RX =
+    ResocaMessage_Response_ResponseType_CAN_RX;
+  static constexpr ResponseType CAN_STAT =
+    ResocaMessage_Response_ResponseType_CAN_STAT;
+  static constexpr ResponseType INFO =
+    ResocaMessage_Response_ResponseType_INFO;
+  static inline bool ResponseType_IsValid(int value) {
+    return ResocaMessage_Response_ResponseType_IsValid(value);
+  }
+  static constexpr ResponseType ResponseType_MIN =
+    ResocaMessage_Response_ResponseType_ResponseType_MIN;
+  static constexpr ResponseType ResponseType_MAX =
+    ResocaMessage_Response_ResponseType_ResponseType_MAX;
+  static constexpr int ResponseType_ARRAYSIZE =
+    ResocaMessage_Response_ResponseType_ResponseType_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  ResponseType_descriptor() {
+    return ResocaMessage_Response_ResponseType_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& ResponseType_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, ResponseType>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function ResponseType_Name.");
+    return ResocaMessage_Response_ResponseType_Name(enum_t_value);
+  }
+  static inline bool ResponseType_Parse(const std::string& name,
+      ResponseType* value) {
+    return ResocaMessage_Response_ResponseType_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDescriptionFieldNumber = 3,
+    kIfNameFieldNumber = 4,
+    kCanFrameFieldNumber = 5,
+    kResocaInfoFieldNumber = 6,
+    kIfInfoFieldNumber = 7,
+    kResponseTypeFieldNumber = 1,
+    kResponseIDFieldNumber = 2,
+  };
+  // string description = 3;
+  void clear_description();
+  const std::string& description() const;
+  void set_description(const std::string& value);
+  void set_description(std::string&& value);
+  void set_description(const char* value);
+  void set_description(const char* value, size_t size);
+  std::string* mutable_description();
+  std::string* release_description();
+  void set_allocated_description(std::string* description);
+  private:
+  const std::string& _internal_description() const;
+  void _internal_set_description(const std::string& value);
+  std::string* _internal_mutable_description();
+  public:
+
+  // string ifName = 4;
+  void clear_ifname();
+  const std::string& ifname() const;
+  void set_ifname(const std::string& value);
+  void set_ifname(std::string&& value);
+  void set_ifname(const char* value);
+  void set_ifname(const char* value, size_t size);
+  std::string* mutable_ifname();
+  std::string* release_ifname();
+  void set_allocated_ifname(std::string* ifname);
+  private:
+  const std::string& _internal_ifname() const;
+  void _internal_set_ifname(const std::string& value);
+  std::string* _internal_mutable_ifname();
+  public:
+
+  // .ResocaMessage.CanFrame canFrame = 5;
+  bool has_canframe() const;
+  private:
+  bool _internal_has_canframe() const;
+  public:
+  void clear_canframe();
+  const ::ResocaMessage_CanFrame& canframe() const;
+  ::ResocaMessage_CanFrame* release_canframe();
+  ::ResocaMessage_CanFrame* mutable_canframe();
+  void set_allocated_canframe(::ResocaMessage_CanFrame* canframe);
+  private:
+  const ::ResocaMessage_CanFrame& _internal_canframe() const;
+  ::ResocaMessage_CanFrame* _internal_mutable_canframe();
+  public:
+
+  // .ResocaMessage.Response.ResocaInfo resocaInfo = 6;
+  bool has_resocainfo() const;
+  private:
+  bool _internal_has_resocainfo() const;
+  public:
+  void clear_resocainfo();
+  const ::ResocaMessage_Response_ResocaInfo& resocainfo() const;
+  ::ResocaMessage_Response_ResocaInfo* release_resocainfo();
+  ::ResocaMessage_Response_ResocaInfo* mutable_resocainfo();
+  void set_allocated_resocainfo(::ResocaMessage_Response_ResocaInfo* resocainfo);
+  private:
+  const ::ResocaMessage_Response_ResocaInfo& _internal_resocainfo() const;
+  ::ResocaMessage_Response_ResocaInfo* _internal_mutable_resocainfo();
+  public:
+
+  // .ResocaMessage.Response.IfInfo ifInfo = 7;
+  bool has_ifinfo() const;
+  private:
+  bool _internal_has_ifinfo() const;
+  public:
+  void clear_ifinfo();
+  const ::ResocaMessage_Response_IfInfo& ifinfo() const;
+  ::ResocaMessage_Response_IfInfo* release_ifinfo();
+  ::ResocaMessage_Response_IfInfo* mutable_ifinfo();
+  void set_allocated_ifinfo(::ResocaMessage_Response_IfInfo* ifinfo);
+  private:
+  const ::ResocaMessage_Response_IfInfo& _internal_ifinfo() const;
+  ::ResocaMessage_Response_IfInfo* _internal_mutable_ifinfo();
+  public:
+
+  // .ResocaMessage.Response.ResponseType responseType = 1;
+  void clear_responsetype();
+  ::ResocaMessage_Response_ResponseType responsetype() const;
+  void set_responsetype(::ResocaMessage_Response_ResponseType value);
+  private:
+  ::ResocaMessage_Response_ResponseType _internal_responsetype() const;
+  void _internal_set_responsetype(::ResocaMessage_Response_ResponseType value);
+  public:
+
+  // uint32 responseID = 2;
+  void clear_responseid();
+  ::PROTOBUF_NAMESPACE_ID::uint32 responseid() const;
+  void set_responseid(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_responseid() const;
+  void _internal_set_responseid(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ResocaMessage.Response)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr description_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr ifname_;
+  ::ResocaMessage_CanFrame* canframe_;
+  ::ResocaMessage_Response_ResocaInfo* resocainfo_;
+  ::ResocaMessage_Response_IfInfo* ifinfo_;
+  int responsetype_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 responseid_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_ResocaMessage_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ResocaMessage :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ResocaMessage) */ {
  public:
@@ -519,7 +1165,7 @@ class ResocaMessage :
                &_ResocaMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    5;
 
   friend void swap(ResocaMessage& a, ResocaMessage& b) {
     a.Swap(&b);
@@ -580,114 +1226,54 @@ class ResocaMessage :
 
   // nested types ----------------------------------------------------
 
-  typedef ResocaMessage_ResocaInfo ResocaInfo;
   typedef ResocaMessage_CanFrame CanFrame;
-
-  typedef ResocaMessage_MessageType MessageType;
-  static constexpr MessageType OK =
-    ResocaMessage_MessageType_OK;
-  static constexpr MessageType ERR =
-    ResocaMessage_MessageType_ERR;
-  static constexpr MessageType PONG =
-    ResocaMessage_MessageType_PONG;
-  static constexpr MessageType PING =
-    ResocaMessage_MessageType_PING;
-  static constexpr MessageType RESOCA_INFO =
-    ResocaMessage_MessageType_RESOCA_INFO;
-  static constexpr MessageType IF_CONNECTED =
-    ResocaMessage_MessageType_IF_CONNECTED;
-  static constexpr MessageType IF_DISCONNECTED =
-    ResocaMessage_MessageType_IF_DISCONNECTED;
-  static constexpr MessageType MESSAGE_RX =
-    ResocaMessage_MessageType_MESSAGE_RX;
-  static constexpr MessageType MESSAGE_TX =
-    ResocaMessage_MessageType_MESSAGE_TX;
-  static inline bool MessageType_IsValid(int value) {
-    return ResocaMessage_MessageType_IsValid(value);
-  }
-  static constexpr MessageType MessageType_MIN =
-    ResocaMessage_MessageType_MessageType_MIN;
-  static constexpr MessageType MessageType_MAX =
-    ResocaMessage_MessageType_MessageType_MAX;
-  static constexpr int MessageType_ARRAYSIZE =
-    ResocaMessage_MessageType_MessageType_ARRAYSIZE;
-  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
-  MessageType_descriptor() {
-    return ResocaMessage_MessageType_descriptor();
-  }
-  template<typename T>
-  static inline const std::string& MessageType_Name(T enum_t_value) {
-    static_assert(::std::is_same<T, MessageType>::value ||
-      ::std::is_integral<T>::value,
-      "Incorrect type passed to function MessageType_Name.");
-    return ResocaMessage_MessageType_Name(enum_t_value);
-  }
-  static inline bool MessageType_Parse(const std::string& name,
-      MessageType* value) {
-    return ResocaMessage_MessageType_Parse(name, value);
-  }
+  typedef ResocaMessage_Request Request;
+  typedef ResocaMessage_Response Response;
 
   // accessors -------------------------------------------------------
 
   enum : int {
-    kInterfaceFieldNumber = 2,
-    kCanFrameFieldNumber = 3,
-    kResocaInfoFieldNumber = 4,
-    kMessageTypeFieldNumber = 1,
+    kRequestFieldNumber = 2,
+    kResponseFieldNumber = 3,
+    kIsResponseFieldNumber = 1,
   };
-  // string interface = 2;
-  void clear_interface();
-  const std::string& interface() const;
-  void set_interface(const std::string& value);
-  void set_interface(std::string&& value);
-  void set_interface(const char* value);
-  void set_interface(const char* value, size_t size);
-  std::string* mutable_interface();
-  std::string* release_interface();
-  void set_allocated_interface(std::string* interface);
+  // .ResocaMessage.Request request = 2;
+  bool has_request() const;
   private:
-  const std::string& _internal_interface() const;
-  void _internal_set_interface(const std::string& value);
-  std::string* _internal_mutable_interface();
+  bool _internal_has_request() const;
+  public:
+  void clear_request();
+  const ::ResocaMessage_Request& request() const;
+  ::ResocaMessage_Request* release_request();
+  ::ResocaMessage_Request* mutable_request();
+  void set_allocated_request(::ResocaMessage_Request* request);
+  private:
+  const ::ResocaMessage_Request& _internal_request() const;
+  ::ResocaMessage_Request* _internal_mutable_request();
   public:
 
-  // .ResocaMessage.CanFrame canFrame = 3;
-  bool has_canframe() const;
+  // .ResocaMessage.Response response = 3;
+  bool has_response() const;
   private:
-  bool _internal_has_canframe() const;
+  bool _internal_has_response() const;
   public:
-  void clear_canframe();
-  const ::ResocaMessage_CanFrame& canframe() const;
-  ::ResocaMessage_CanFrame* release_canframe();
-  ::ResocaMessage_CanFrame* mutable_canframe();
-  void set_allocated_canframe(::ResocaMessage_CanFrame* canframe);
+  void clear_response();
+  const ::ResocaMessage_Response& response() const;
+  ::ResocaMessage_Response* release_response();
+  ::ResocaMessage_Response* mutable_response();
+  void set_allocated_response(::ResocaMessage_Response* response);
   private:
-  const ::ResocaMessage_CanFrame& _internal_canframe() const;
-  ::ResocaMessage_CanFrame* _internal_mutable_canframe();
-  public:
-
-  // .ResocaMessage.ResocaInfo resocaInfo = 4;
-  bool has_resocainfo() const;
-  private:
-  bool _internal_has_resocainfo() const;
-  public:
-  void clear_resocainfo();
-  const ::ResocaMessage_ResocaInfo& resocainfo() const;
-  ::ResocaMessage_ResocaInfo* release_resocainfo();
-  ::ResocaMessage_ResocaInfo* mutable_resocainfo();
-  void set_allocated_resocainfo(::ResocaMessage_ResocaInfo* resocainfo);
-  private:
-  const ::ResocaMessage_ResocaInfo& _internal_resocainfo() const;
-  ::ResocaMessage_ResocaInfo* _internal_mutable_resocainfo();
+  const ::ResocaMessage_Response& _internal_response() const;
+  ::ResocaMessage_Response* _internal_mutable_response();
   public:
 
-  // .ResocaMessage.MessageType messageType = 1;
-  void clear_messagetype();
-  ::ResocaMessage_MessageType messagetype() const;
-  void set_messagetype(::ResocaMessage_MessageType value);
+  // bool isResponse = 1;
+  void clear_isresponse();
+  bool isresponse() const;
+  void set_isresponse(bool value);
   private:
-  ::ResocaMessage_MessageType _internal_messagetype() const;
-  void _internal_set_messagetype(::ResocaMessage_MessageType value);
+  bool _internal_isresponse() const;
+  void _internal_set_isresponse(bool value);
   public:
 
   // @@protoc_insertion_point(class_scope:ResocaMessage)
@@ -695,10 +1281,9 @@ class ResocaMessage :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr interface_;
-  ::ResocaMessage_CanFrame* canframe_;
-  ::ResocaMessage_ResocaInfo* resocainfo_;
-  int messagetype_;
+  ::ResocaMessage_Request* request_;
+  ::ResocaMessage_Response* response_;
+  bool isresponse_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_ResocaMessage_2eproto;
 };
@@ -711,144 +1296,6 @@ class ResocaMessage :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// ResocaMessage_ResocaInfo
-
-// string version = 1;
-inline void ResocaMessage_ResocaInfo::clear_version() {
-  version_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline const std::string& ResocaMessage_ResocaInfo::version() const {
-  // @@protoc_insertion_point(field_get:ResocaMessage.ResocaInfo.version)
-  return _internal_version();
-}
-inline void ResocaMessage_ResocaInfo::set_version(const std::string& value) {
-  _internal_set_version(value);
-  // @@protoc_insertion_point(field_set:ResocaMessage.ResocaInfo.version)
-}
-inline std::string* ResocaMessage_ResocaInfo::mutable_version() {
-  // @@protoc_insertion_point(field_mutable:ResocaMessage.ResocaInfo.version)
-  return _internal_mutable_version();
-}
-inline const std::string& ResocaMessage_ResocaInfo::_internal_version() const {
-  return version_.GetNoArena();
-}
-inline void ResocaMessage_ResocaInfo::_internal_set_version(const std::string& value) {
-  
-  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-}
-inline void ResocaMessage_ResocaInfo::set_version(std::string&& value) {
-  
-  version_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:ResocaMessage.ResocaInfo.version)
-}
-inline void ResocaMessage_ResocaInfo::set_version(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  
-  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:ResocaMessage.ResocaInfo.version)
-}
-inline void ResocaMessage_ResocaInfo::set_version(const char* value, size_t size) {
-  
-  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.ResocaInfo.version)
-}
-inline std::string* ResocaMessage_ResocaInfo::_internal_mutable_version() {
-  
-  return version_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline std::string* ResocaMessage_ResocaInfo::release_version() {
-  // @@protoc_insertion_point(field_release:ResocaMessage.ResocaInfo.version)
-  
-  return version_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline void ResocaMessage_ResocaInfo::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  version_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), version);
-  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.ResocaInfo.version)
-}
-
-// repeated string interfaces = 2;
-inline int ResocaMessage_ResocaInfo::_internal_interfaces_size() const {
-  return interfaces_.size();
-}
-inline int ResocaMessage_ResocaInfo::interfaces_size() const {
-  return _internal_interfaces_size();
-}
-inline void ResocaMessage_ResocaInfo::clear_interfaces() {
-  interfaces_.Clear();
-}
-inline std::string* ResocaMessage_ResocaInfo::add_interfaces() {
-  // @@protoc_insertion_point(field_add_mutable:ResocaMessage.ResocaInfo.interfaces)
-  return _internal_add_interfaces();
-}
-inline const std::string& ResocaMessage_ResocaInfo::_internal_interfaces(int index) const {
-  return interfaces_.Get(index);
-}
-inline const std::string& ResocaMessage_ResocaInfo::interfaces(int index) const {
-  // @@protoc_insertion_point(field_get:ResocaMessage.ResocaInfo.interfaces)
-  return _internal_interfaces(index);
-}
-inline std::string* ResocaMessage_ResocaInfo::mutable_interfaces(int index) {
-  // @@protoc_insertion_point(field_mutable:ResocaMessage.ResocaInfo.interfaces)
-  return interfaces_.Mutable(index);
-}
-inline void ResocaMessage_ResocaInfo::set_interfaces(int index, const std::string& value) {
-  // @@protoc_insertion_point(field_set:ResocaMessage.ResocaInfo.interfaces)
-  interfaces_.Mutable(index)->assign(value);
-}
-inline void ResocaMessage_ResocaInfo::set_interfaces(int index, std::string&& value) {
-  // @@protoc_insertion_point(field_set:ResocaMessage.ResocaInfo.interfaces)
-  interfaces_.Mutable(index)->assign(std::move(value));
-}
-inline void ResocaMessage_ResocaInfo::set_interfaces(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  interfaces_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:ResocaMessage.ResocaInfo.interfaces)
-}
-inline void ResocaMessage_ResocaInfo::set_interfaces(int index, const char* value, size_t size) {
-  interfaces_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.ResocaInfo.interfaces)
-}
-inline std::string* ResocaMessage_ResocaInfo::_internal_add_interfaces() {
-  return interfaces_.Add();
-}
-inline void ResocaMessage_ResocaInfo::add_interfaces(const std::string& value) {
-  interfaces_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:ResocaMessage.ResocaInfo.interfaces)
-}
-inline void ResocaMessage_ResocaInfo::add_interfaces(std::string&& value) {
-  interfaces_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:ResocaMessage.ResocaInfo.interfaces)
-}
-inline void ResocaMessage_ResocaInfo::add_interfaces(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  interfaces_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:ResocaMessage.ResocaInfo.interfaces)
-}
-inline void ResocaMessage_ResocaInfo::add_interfaces(const char* value, size_t size) {
-  interfaces_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:ResocaMessage.ResocaInfo.interfaces)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-ResocaMessage_ResocaInfo::interfaces() const {
-  // @@protoc_insertion_point(field_list:ResocaMessage.ResocaInfo.interfaces)
-  return interfaces_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-ResocaMessage_ResocaInfo::mutable_interfaces() {
-  // @@protoc_insertion_point(field_mutable_list:ResocaMessage.ResocaInfo.interfaces)
-  return &interfaces_;
-}
-
-// -------------------------------------------------------------------
-
 // ResocaMessage_CanFrame
 
 // uint32 canID = 1;
@@ -1053,118 +1500,138 @@ inline void ResocaMessage_CanFrame::set_allocated_data(std::string* data) {
 
 // -------------------------------------------------------------------
 
-// ResocaMessage
+// ResocaMessage_Request
 
-// .ResocaMessage.MessageType messageType = 1;
-inline void ResocaMessage::clear_messagetype() {
-  messagetype_ = 0;
+// .ResocaMessage.Request.RequestType requestType = 1;
+inline void ResocaMessage_Request::clear_requesttype() {
+  requesttype_ = 0;
 }
-inline ::ResocaMessage_MessageType ResocaMessage::_internal_messagetype() const {
-  return static_cast< ::ResocaMessage_MessageType >(messagetype_);
+inline ::ResocaMessage_Request_RequestType ResocaMessage_Request::_internal_requesttype() const {
+  return static_cast< ::ResocaMessage_Request_RequestType >(requesttype_);
 }
-inline ::ResocaMessage_MessageType ResocaMessage::messagetype() const {
-  // @@protoc_insertion_point(field_get:ResocaMessage.messageType)
-  return _internal_messagetype();
+inline ::ResocaMessage_Request_RequestType ResocaMessage_Request::requesttype() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Request.requestType)
+  return _internal_requesttype();
 }
-inline void ResocaMessage::_internal_set_messagetype(::ResocaMessage_MessageType value) {
+inline void ResocaMessage_Request::_internal_set_requesttype(::ResocaMessage_Request_RequestType value) {
   
-  messagetype_ = value;
+  requesttype_ = value;
 }
-inline void ResocaMessage::set_messagetype(::ResocaMessage_MessageType value) {
-  _internal_set_messagetype(value);
-  // @@protoc_insertion_point(field_set:ResocaMessage.messageType)
+inline void ResocaMessage_Request::set_requesttype(::ResocaMessage_Request_RequestType value) {
+  _internal_set_requesttype(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Request.requestType)
 }
 
-// string interface = 2;
-inline void ResocaMessage::clear_interface() {
-  interface_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+// uint32 requestID = 2;
+inline void ResocaMessage_Request::clear_requestid() {
+  requestid_ = 0u;
 }
-inline const std::string& ResocaMessage::interface() const {
-  // @@protoc_insertion_point(field_get:ResocaMessage.interface)
-  return _internal_interface();
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ResocaMessage_Request::_internal_requestid() const {
+  return requestid_;
 }
-inline void ResocaMessage::set_interface(const std::string& value) {
-  _internal_set_interface(value);
-  // @@protoc_insertion_point(field_set:ResocaMessage.interface)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ResocaMessage_Request::requestid() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Request.requestID)
+  return _internal_requestid();
 }
-inline std::string* ResocaMessage::mutable_interface() {
-  // @@protoc_insertion_point(field_mutable:ResocaMessage.interface)
-  return _internal_mutable_interface();
-}
-inline const std::string& ResocaMessage::_internal_interface() const {
-  return interface_.GetNoArena();
-}
-inline void ResocaMessage::_internal_set_interface(const std::string& value) {
+inline void ResocaMessage_Request::_internal_set_requestid(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  interface_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  requestid_ = value;
 }
-inline void ResocaMessage::set_interface(std::string&& value) {
+inline void ResocaMessage_Request::set_requestid(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_requestid(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Request.requestID)
+}
+
+// string ifName = 3;
+inline void ResocaMessage_Request::clear_ifname() {
+  ifname_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& ResocaMessage_Request::ifname() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Request.ifName)
+  return _internal_ifname();
+}
+inline void ResocaMessage_Request::set_ifname(const std::string& value) {
+  _internal_set_ifname(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Request.ifName)
+}
+inline std::string* ResocaMessage_Request::mutable_ifname() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Request.ifName)
+  return _internal_mutable_ifname();
+}
+inline const std::string& ResocaMessage_Request::_internal_ifname() const {
+  return ifname_.GetNoArena();
+}
+inline void ResocaMessage_Request::_internal_set_ifname(const std::string& value) {
   
-  interface_.SetNoArena(
+  ifname_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void ResocaMessage_Request::set_ifname(std::string&& value) {
+  
+  ifname_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:ResocaMessage.interface)
+  // @@protoc_insertion_point(field_set_rvalue:ResocaMessage.Request.ifName)
 }
-inline void ResocaMessage::set_interface(const char* value) {
+inline void ResocaMessage_Request::set_ifname(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
-  interface_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:ResocaMessage.interface)
+  ifname_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:ResocaMessage.Request.ifName)
 }
-inline void ResocaMessage::set_interface(const char* value, size_t size) {
+inline void ResocaMessage_Request::set_ifname(const char* value, size_t size) {
   
-  interface_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  ifname_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.interface)
+  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.Request.ifName)
 }
-inline std::string* ResocaMessage::_internal_mutable_interface() {
+inline std::string* ResocaMessage_Request::_internal_mutable_ifname() {
   
-  return interface_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  return ifname_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* ResocaMessage::release_interface() {
-  // @@protoc_insertion_point(field_release:ResocaMessage.interface)
+inline std::string* ResocaMessage_Request::release_ifname() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Request.ifName)
   
-  return interface_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  return ifname_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void ResocaMessage::set_allocated_interface(std::string* interface) {
-  if (interface != nullptr) {
+inline void ResocaMessage_Request::set_allocated_ifname(std::string* ifname) {
+  if (ifname != nullptr) {
     
   } else {
     
   }
-  interface_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), interface);
-  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.interface)
+  ifname_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ifname);
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Request.ifName)
 }
 
-// .ResocaMessage.CanFrame canFrame = 3;
-inline bool ResocaMessage::_internal_has_canframe() const {
+// .ResocaMessage.CanFrame canFrame = 4;
+inline bool ResocaMessage_Request::_internal_has_canframe() const {
   return this != internal_default_instance() && canframe_ != nullptr;
 }
-inline bool ResocaMessage::has_canframe() const {
+inline bool ResocaMessage_Request::has_canframe() const {
   return _internal_has_canframe();
 }
-inline void ResocaMessage::clear_canframe() {
+inline void ResocaMessage_Request::clear_canframe() {
   if (GetArenaNoVirtual() == nullptr && canframe_ != nullptr) {
     delete canframe_;
   }
   canframe_ = nullptr;
 }
-inline const ::ResocaMessage_CanFrame& ResocaMessage::_internal_canframe() const {
+inline const ::ResocaMessage_CanFrame& ResocaMessage_Request::_internal_canframe() const {
   const ::ResocaMessage_CanFrame* p = canframe_;
   return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_CanFrame*>(
       &::_ResocaMessage_CanFrame_default_instance_);
 }
-inline const ::ResocaMessage_CanFrame& ResocaMessage::canframe() const {
-  // @@protoc_insertion_point(field_get:ResocaMessage.canFrame)
+inline const ::ResocaMessage_CanFrame& ResocaMessage_Request::canframe() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Request.canFrame)
   return _internal_canframe();
 }
-inline ::ResocaMessage_CanFrame* ResocaMessage::release_canframe() {
-  // @@protoc_insertion_point(field_release:ResocaMessage.canFrame)
+inline ::ResocaMessage_CanFrame* ResocaMessage_Request::release_canframe() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Request.canFrame)
   
   ::ResocaMessage_CanFrame* temp = canframe_;
   canframe_ = nullptr;
   return temp;
 }
-inline ::ResocaMessage_CanFrame* ResocaMessage::_internal_mutable_canframe() {
+inline ::ResocaMessage_CanFrame* ResocaMessage_Request::_internal_mutable_canframe() {
   
   if (canframe_ == nullptr) {
     auto* p = CreateMaybeMessage<::ResocaMessage_CanFrame>(GetArenaNoVirtual());
@@ -1172,11 +1639,11 @@ inline ::ResocaMessage_CanFrame* ResocaMessage::_internal_mutable_canframe() {
   }
   return canframe_;
 }
-inline ::ResocaMessage_CanFrame* ResocaMessage::mutable_canframe() {
-  // @@protoc_insertion_point(field_mutable:ResocaMessage.canFrame)
+inline ::ResocaMessage_CanFrame* ResocaMessage_Request::mutable_canframe() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Request.canFrame)
   return _internal_mutable_canframe();
 }
-inline void ResocaMessage::set_allocated_canframe(::ResocaMessage_CanFrame* canframe) {
+inline void ResocaMessage_Request::set_allocated_canframe(::ResocaMessage_CanFrame* canframe) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
     delete canframe_;
@@ -1192,51 +1659,437 @@ inline void ResocaMessage::set_allocated_canframe(::ResocaMessage_CanFrame* canf
     
   }
   canframe_ = canframe;
-  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.canFrame)
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Request.canFrame)
 }
 
-// .ResocaMessage.ResocaInfo resocaInfo = 4;
-inline bool ResocaMessage::_internal_has_resocainfo() const {
+// -------------------------------------------------------------------
+
+// ResocaMessage_Response_ResocaInfo
+
+// string version = 1;
+inline void ResocaMessage_Response_ResocaInfo::clear_version() {
+  version_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& ResocaMessage_Response_ResocaInfo::version() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.ResocaInfo.version)
+  return _internal_version();
+}
+inline void ResocaMessage_Response_ResocaInfo::set_version(const std::string& value) {
+  _internal_set_version(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.ResocaInfo.version)
+}
+inline std::string* ResocaMessage_Response_ResocaInfo::mutable_version() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.ResocaInfo.version)
+  return _internal_mutable_version();
+}
+inline const std::string& ResocaMessage_Response_ResocaInfo::_internal_version() const {
+  return version_.GetNoArena();
+}
+inline void ResocaMessage_Response_ResocaInfo::_internal_set_version(const std::string& value) {
+  
+  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void ResocaMessage_Response_ResocaInfo::set_version(std::string&& value) {
+  
+  version_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:ResocaMessage.Response.ResocaInfo.version)
+}
+inline void ResocaMessage_Response_ResocaInfo::set_version(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:ResocaMessage.Response.ResocaInfo.version)
+}
+inline void ResocaMessage_Response_ResocaInfo::set_version(const char* value, size_t size) {
+  
+  version_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.Response.ResocaInfo.version)
+}
+inline std::string* ResocaMessage_Response_ResocaInfo::_internal_mutable_version() {
+  
+  return version_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* ResocaMessage_Response_ResocaInfo::release_version() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Response.ResocaInfo.version)
+  
+  return version_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void ResocaMessage_Response_ResocaInfo::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  version_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), version);
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Response.ResocaInfo.version)
+}
+
+// repeated string interfaces = 2;
+inline int ResocaMessage_Response_ResocaInfo::_internal_interfaces_size() const {
+  return interfaces_.size();
+}
+inline int ResocaMessage_Response_ResocaInfo::interfaces_size() const {
+  return _internal_interfaces_size();
+}
+inline void ResocaMessage_Response_ResocaInfo::clear_interfaces() {
+  interfaces_.Clear();
+}
+inline std::string* ResocaMessage_Response_ResocaInfo::add_interfaces() {
+  // @@protoc_insertion_point(field_add_mutable:ResocaMessage.Response.ResocaInfo.interfaces)
+  return _internal_add_interfaces();
+}
+inline const std::string& ResocaMessage_Response_ResocaInfo::_internal_interfaces(int index) const {
+  return interfaces_.Get(index);
+}
+inline const std::string& ResocaMessage_Response_ResocaInfo::interfaces(int index) const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.ResocaInfo.interfaces)
+  return _internal_interfaces(index);
+}
+inline std::string* ResocaMessage_Response_ResocaInfo::mutable_interfaces(int index) {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.ResocaInfo.interfaces)
+  return interfaces_.Mutable(index);
+}
+inline void ResocaMessage_Response_ResocaInfo::set_interfaces(int index, const std::string& value) {
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.ResocaInfo.interfaces)
+  interfaces_.Mutable(index)->assign(value);
+}
+inline void ResocaMessage_Response_ResocaInfo::set_interfaces(int index, std::string&& value) {
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.ResocaInfo.interfaces)
+  interfaces_.Mutable(index)->assign(std::move(value));
+}
+inline void ResocaMessage_Response_ResocaInfo::set_interfaces(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  interfaces_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:ResocaMessage.Response.ResocaInfo.interfaces)
+}
+inline void ResocaMessage_Response_ResocaInfo::set_interfaces(int index, const char* value, size_t size) {
+  interfaces_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.Response.ResocaInfo.interfaces)
+}
+inline std::string* ResocaMessage_Response_ResocaInfo::_internal_add_interfaces() {
+  return interfaces_.Add();
+}
+inline void ResocaMessage_Response_ResocaInfo::add_interfaces(const std::string& value) {
+  interfaces_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:ResocaMessage.Response.ResocaInfo.interfaces)
+}
+inline void ResocaMessage_Response_ResocaInfo::add_interfaces(std::string&& value) {
+  interfaces_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:ResocaMessage.Response.ResocaInfo.interfaces)
+}
+inline void ResocaMessage_Response_ResocaInfo::add_interfaces(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  interfaces_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:ResocaMessage.Response.ResocaInfo.interfaces)
+}
+inline void ResocaMessage_Response_ResocaInfo::add_interfaces(const char* value, size_t size) {
+  interfaces_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:ResocaMessage.Response.ResocaInfo.interfaces)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+ResocaMessage_Response_ResocaInfo::interfaces() const {
+  // @@protoc_insertion_point(field_list:ResocaMessage.Response.ResocaInfo.interfaces)
+  return interfaces_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+ResocaMessage_Response_ResocaInfo::mutable_interfaces() {
+  // @@protoc_insertion_point(field_mutable_list:ResocaMessage.Response.ResocaInfo.interfaces)
+  return &interfaces_;
+}
+
+// uint32 sessionPrefix = 3;
+inline void ResocaMessage_Response_ResocaInfo::clear_sessionprefix() {
+  sessionprefix_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ResocaMessage_Response_ResocaInfo::_internal_sessionprefix() const {
+  return sessionprefix_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ResocaMessage_Response_ResocaInfo::sessionprefix() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.ResocaInfo.sessionPrefix)
+  return _internal_sessionprefix();
+}
+inline void ResocaMessage_Response_ResocaInfo::_internal_set_sessionprefix(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  sessionprefix_ = value;
+}
+inline void ResocaMessage_Response_ResocaInfo::set_sessionprefix(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_sessionprefix(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.ResocaInfo.sessionPrefix)
+}
+
+// -------------------------------------------------------------------
+
+// ResocaMessage_Response_IfInfo
+
+// -------------------------------------------------------------------
+
+// ResocaMessage_Response
+
+// .ResocaMessage.Response.ResponseType responseType = 1;
+inline void ResocaMessage_Response::clear_responsetype() {
+  responsetype_ = 0;
+}
+inline ::ResocaMessage_Response_ResponseType ResocaMessage_Response::_internal_responsetype() const {
+  return static_cast< ::ResocaMessage_Response_ResponseType >(responsetype_);
+}
+inline ::ResocaMessage_Response_ResponseType ResocaMessage_Response::responsetype() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.responseType)
+  return _internal_responsetype();
+}
+inline void ResocaMessage_Response::_internal_set_responsetype(::ResocaMessage_Response_ResponseType value) {
+  
+  responsetype_ = value;
+}
+inline void ResocaMessage_Response::set_responsetype(::ResocaMessage_Response_ResponseType value) {
+  _internal_set_responsetype(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.responseType)
+}
+
+// uint32 responseID = 2;
+inline void ResocaMessage_Response::clear_responseid() {
+  responseid_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ResocaMessage_Response::_internal_responseid() const {
+  return responseid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ResocaMessage_Response::responseid() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.responseID)
+  return _internal_responseid();
+}
+inline void ResocaMessage_Response::_internal_set_responseid(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  responseid_ = value;
+}
+inline void ResocaMessage_Response::set_responseid(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_responseid(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.responseID)
+}
+
+// string description = 3;
+inline void ResocaMessage_Response::clear_description() {
+  description_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& ResocaMessage_Response::description() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.description)
+  return _internal_description();
+}
+inline void ResocaMessage_Response::set_description(const std::string& value) {
+  _internal_set_description(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.description)
+}
+inline std::string* ResocaMessage_Response::mutable_description() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.description)
+  return _internal_mutable_description();
+}
+inline const std::string& ResocaMessage_Response::_internal_description() const {
+  return description_.GetNoArena();
+}
+inline void ResocaMessage_Response::_internal_set_description(const std::string& value) {
+  
+  description_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void ResocaMessage_Response::set_description(std::string&& value) {
+  
+  description_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:ResocaMessage.Response.description)
+}
+inline void ResocaMessage_Response::set_description(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  description_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:ResocaMessage.Response.description)
+}
+inline void ResocaMessage_Response::set_description(const char* value, size_t size) {
+  
+  description_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.Response.description)
+}
+inline std::string* ResocaMessage_Response::_internal_mutable_description() {
+  
+  return description_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* ResocaMessage_Response::release_description() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Response.description)
+  
+  return description_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void ResocaMessage_Response::set_allocated_description(std::string* description) {
+  if (description != nullptr) {
+    
+  } else {
+    
+  }
+  description_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), description);
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Response.description)
+}
+
+// string ifName = 4;
+inline void ResocaMessage_Response::clear_ifname() {
+  ifname_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& ResocaMessage_Response::ifname() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.ifName)
+  return _internal_ifname();
+}
+inline void ResocaMessage_Response::set_ifname(const std::string& value) {
+  _internal_set_ifname(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.Response.ifName)
+}
+inline std::string* ResocaMessage_Response::mutable_ifname() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.ifName)
+  return _internal_mutable_ifname();
+}
+inline const std::string& ResocaMessage_Response::_internal_ifname() const {
+  return ifname_.GetNoArena();
+}
+inline void ResocaMessage_Response::_internal_set_ifname(const std::string& value) {
+  
+  ifname_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void ResocaMessage_Response::set_ifname(std::string&& value) {
+  
+  ifname_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:ResocaMessage.Response.ifName)
+}
+inline void ResocaMessage_Response::set_ifname(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  ifname_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:ResocaMessage.Response.ifName)
+}
+inline void ResocaMessage_Response::set_ifname(const char* value, size_t size) {
+  
+  ifname_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:ResocaMessage.Response.ifName)
+}
+inline std::string* ResocaMessage_Response::_internal_mutable_ifname() {
+  
+  return ifname_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* ResocaMessage_Response::release_ifname() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Response.ifName)
+  
+  return ifname_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void ResocaMessage_Response::set_allocated_ifname(std::string* ifname) {
+  if (ifname != nullptr) {
+    
+  } else {
+    
+  }
+  ifname_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ifname);
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Response.ifName)
+}
+
+// .ResocaMessage.CanFrame canFrame = 5;
+inline bool ResocaMessage_Response::_internal_has_canframe() const {
+  return this != internal_default_instance() && canframe_ != nullptr;
+}
+inline bool ResocaMessage_Response::has_canframe() const {
+  return _internal_has_canframe();
+}
+inline void ResocaMessage_Response::clear_canframe() {
+  if (GetArenaNoVirtual() == nullptr && canframe_ != nullptr) {
+    delete canframe_;
+  }
+  canframe_ = nullptr;
+}
+inline const ::ResocaMessage_CanFrame& ResocaMessage_Response::_internal_canframe() const {
+  const ::ResocaMessage_CanFrame* p = canframe_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_CanFrame*>(
+      &::_ResocaMessage_CanFrame_default_instance_);
+}
+inline const ::ResocaMessage_CanFrame& ResocaMessage_Response::canframe() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.canFrame)
+  return _internal_canframe();
+}
+inline ::ResocaMessage_CanFrame* ResocaMessage_Response::release_canframe() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Response.canFrame)
+  
+  ::ResocaMessage_CanFrame* temp = canframe_;
+  canframe_ = nullptr;
+  return temp;
+}
+inline ::ResocaMessage_CanFrame* ResocaMessage_Response::_internal_mutable_canframe() {
+  
+  if (canframe_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ResocaMessage_CanFrame>(GetArenaNoVirtual());
+    canframe_ = p;
+  }
+  return canframe_;
+}
+inline ::ResocaMessage_CanFrame* ResocaMessage_Response::mutable_canframe() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.canFrame)
+  return _internal_mutable_canframe();
+}
+inline void ResocaMessage_Response::set_allocated_canframe(::ResocaMessage_CanFrame* canframe) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete canframe_;
+  }
+  if (canframe) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      canframe = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, canframe, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  canframe_ = canframe;
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Response.canFrame)
+}
+
+// .ResocaMessage.Response.ResocaInfo resocaInfo = 6;
+inline bool ResocaMessage_Response::_internal_has_resocainfo() const {
   return this != internal_default_instance() && resocainfo_ != nullptr;
 }
-inline bool ResocaMessage::has_resocainfo() const {
+inline bool ResocaMessage_Response::has_resocainfo() const {
   return _internal_has_resocainfo();
 }
-inline void ResocaMessage::clear_resocainfo() {
+inline void ResocaMessage_Response::clear_resocainfo() {
   if (GetArenaNoVirtual() == nullptr && resocainfo_ != nullptr) {
     delete resocainfo_;
   }
   resocainfo_ = nullptr;
 }
-inline const ::ResocaMessage_ResocaInfo& ResocaMessage::_internal_resocainfo() const {
-  const ::ResocaMessage_ResocaInfo* p = resocainfo_;
-  return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_ResocaInfo*>(
-      &::_ResocaMessage_ResocaInfo_default_instance_);
+inline const ::ResocaMessage_Response_ResocaInfo& ResocaMessage_Response::_internal_resocainfo() const {
+  const ::ResocaMessage_Response_ResocaInfo* p = resocainfo_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_Response_ResocaInfo*>(
+      &::_ResocaMessage_Response_ResocaInfo_default_instance_);
 }
-inline const ::ResocaMessage_ResocaInfo& ResocaMessage::resocainfo() const {
-  // @@protoc_insertion_point(field_get:ResocaMessage.resocaInfo)
+inline const ::ResocaMessage_Response_ResocaInfo& ResocaMessage_Response::resocainfo() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.resocaInfo)
   return _internal_resocainfo();
 }
-inline ::ResocaMessage_ResocaInfo* ResocaMessage::release_resocainfo() {
-  // @@protoc_insertion_point(field_release:ResocaMessage.resocaInfo)
+inline ::ResocaMessage_Response_ResocaInfo* ResocaMessage_Response::release_resocainfo() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Response.resocaInfo)
   
-  ::ResocaMessage_ResocaInfo* temp = resocainfo_;
+  ::ResocaMessage_Response_ResocaInfo* temp = resocainfo_;
   resocainfo_ = nullptr;
   return temp;
 }
-inline ::ResocaMessage_ResocaInfo* ResocaMessage::_internal_mutable_resocainfo() {
+inline ::ResocaMessage_Response_ResocaInfo* ResocaMessage_Response::_internal_mutable_resocainfo() {
   
   if (resocainfo_ == nullptr) {
-    auto* p = CreateMaybeMessage<::ResocaMessage_ResocaInfo>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::ResocaMessage_Response_ResocaInfo>(GetArenaNoVirtual());
     resocainfo_ = p;
   }
   return resocainfo_;
 }
-inline ::ResocaMessage_ResocaInfo* ResocaMessage::mutable_resocainfo() {
-  // @@protoc_insertion_point(field_mutable:ResocaMessage.resocaInfo)
+inline ::ResocaMessage_Response_ResocaInfo* ResocaMessage_Response::mutable_resocainfo() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.resocaInfo)
   return _internal_mutable_resocainfo();
 }
-inline void ResocaMessage::set_allocated_resocainfo(::ResocaMessage_ResocaInfo* resocainfo) {
+inline void ResocaMessage_Response::set_allocated_resocainfo(::ResocaMessage_Response_ResocaInfo* resocainfo) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
     delete resocainfo_;
@@ -1252,12 +2105,222 @@ inline void ResocaMessage::set_allocated_resocainfo(::ResocaMessage_ResocaInfo* 
     
   }
   resocainfo_ = resocainfo;
-  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.resocaInfo)
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Response.resocaInfo)
+}
+
+// .ResocaMessage.Response.IfInfo ifInfo = 7;
+inline bool ResocaMessage_Response::_internal_has_ifinfo() const {
+  return this != internal_default_instance() && ifinfo_ != nullptr;
+}
+inline bool ResocaMessage_Response::has_ifinfo() const {
+  return _internal_has_ifinfo();
+}
+inline void ResocaMessage_Response::clear_ifinfo() {
+  if (GetArenaNoVirtual() == nullptr && ifinfo_ != nullptr) {
+    delete ifinfo_;
+  }
+  ifinfo_ = nullptr;
+}
+inline const ::ResocaMessage_Response_IfInfo& ResocaMessage_Response::_internal_ifinfo() const {
+  const ::ResocaMessage_Response_IfInfo* p = ifinfo_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_Response_IfInfo*>(
+      &::_ResocaMessage_Response_IfInfo_default_instance_);
+}
+inline const ::ResocaMessage_Response_IfInfo& ResocaMessage_Response::ifinfo() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.Response.ifInfo)
+  return _internal_ifinfo();
+}
+inline ::ResocaMessage_Response_IfInfo* ResocaMessage_Response::release_ifinfo() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.Response.ifInfo)
+  
+  ::ResocaMessage_Response_IfInfo* temp = ifinfo_;
+  ifinfo_ = nullptr;
+  return temp;
+}
+inline ::ResocaMessage_Response_IfInfo* ResocaMessage_Response::_internal_mutable_ifinfo() {
+  
+  if (ifinfo_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ResocaMessage_Response_IfInfo>(GetArenaNoVirtual());
+    ifinfo_ = p;
+  }
+  return ifinfo_;
+}
+inline ::ResocaMessage_Response_IfInfo* ResocaMessage_Response::mutable_ifinfo() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.Response.ifInfo)
+  return _internal_mutable_ifinfo();
+}
+inline void ResocaMessage_Response::set_allocated_ifinfo(::ResocaMessage_Response_IfInfo* ifinfo) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete ifinfo_;
+  }
+  if (ifinfo) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      ifinfo = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, ifinfo, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  ifinfo_ = ifinfo;
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.Response.ifInfo)
+}
+
+// -------------------------------------------------------------------
+
+// ResocaMessage
+
+// bool isResponse = 1;
+inline void ResocaMessage::clear_isresponse() {
+  isresponse_ = false;
+}
+inline bool ResocaMessage::_internal_isresponse() const {
+  return isresponse_;
+}
+inline bool ResocaMessage::isresponse() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.isResponse)
+  return _internal_isresponse();
+}
+inline void ResocaMessage::_internal_set_isresponse(bool value) {
+  
+  isresponse_ = value;
+}
+inline void ResocaMessage::set_isresponse(bool value) {
+  _internal_set_isresponse(value);
+  // @@protoc_insertion_point(field_set:ResocaMessage.isResponse)
+}
+
+// .ResocaMessage.Request request = 2;
+inline bool ResocaMessage::_internal_has_request() const {
+  return this != internal_default_instance() && request_ != nullptr;
+}
+inline bool ResocaMessage::has_request() const {
+  return _internal_has_request();
+}
+inline void ResocaMessage::clear_request() {
+  if (GetArenaNoVirtual() == nullptr && request_ != nullptr) {
+    delete request_;
+  }
+  request_ = nullptr;
+}
+inline const ::ResocaMessage_Request& ResocaMessage::_internal_request() const {
+  const ::ResocaMessage_Request* p = request_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_Request*>(
+      &::_ResocaMessage_Request_default_instance_);
+}
+inline const ::ResocaMessage_Request& ResocaMessage::request() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.request)
+  return _internal_request();
+}
+inline ::ResocaMessage_Request* ResocaMessage::release_request() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.request)
+  
+  ::ResocaMessage_Request* temp = request_;
+  request_ = nullptr;
+  return temp;
+}
+inline ::ResocaMessage_Request* ResocaMessage::_internal_mutable_request() {
+  
+  if (request_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ResocaMessage_Request>(GetArenaNoVirtual());
+    request_ = p;
+  }
+  return request_;
+}
+inline ::ResocaMessage_Request* ResocaMessage::mutable_request() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.request)
+  return _internal_mutable_request();
+}
+inline void ResocaMessage::set_allocated_request(::ResocaMessage_Request* request) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete request_;
+  }
+  if (request) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      request = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, request, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  request_ = request;
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.request)
+}
+
+// .ResocaMessage.Response response = 3;
+inline bool ResocaMessage::_internal_has_response() const {
+  return this != internal_default_instance() && response_ != nullptr;
+}
+inline bool ResocaMessage::has_response() const {
+  return _internal_has_response();
+}
+inline void ResocaMessage::clear_response() {
+  if (GetArenaNoVirtual() == nullptr && response_ != nullptr) {
+    delete response_;
+  }
+  response_ = nullptr;
+}
+inline const ::ResocaMessage_Response& ResocaMessage::_internal_response() const {
+  const ::ResocaMessage_Response* p = response_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::ResocaMessage_Response*>(
+      &::_ResocaMessage_Response_default_instance_);
+}
+inline const ::ResocaMessage_Response& ResocaMessage::response() const {
+  // @@protoc_insertion_point(field_get:ResocaMessage.response)
+  return _internal_response();
+}
+inline ::ResocaMessage_Response* ResocaMessage::release_response() {
+  // @@protoc_insertion_point(field_release:ResocaMessage.response)
+  
+  ::ResocaMessage_Response* temp = response_;
+  response_ = nullptr;
+  return temp;
+}
+inline ::ResocaMessage_Response* ResocaMessage::_internal_mutable_response() {
+  
+  if (response_ == nullptr) {
+    auto* p = CreateMaybeMessage<::ResocaMessage_Response>(GetArenaNoVirtual());
+    response_ = p;
+  }
+  return response_;
+}
+inline ::ResocaMessage_Response* ResocaMessage::mutable_response() {
+  // @@protoc_insertion_point(field_mutable:ResocaMessage.response)
+  return _internal_mutable_response();
+}
+inline void ResocaMessage::set_allocated_response(::ResocaMessage_Response* response) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete response_;
+  }
+  if (response) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      response = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, response, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  response_ = response;
+  // @@protoc_insertion_point(field_set_allocated:ResocaMessage.response)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -1268,10 +2331,15 @@ inline void ResocaMessage::set_allocated_resocainfo(::ResocaMessage_ResocaInfo* 
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::ResocaMessage_MessageType> : ::std::true_type {};
+template <> struct is_proto_enum< ::ResocaMessage_Request_RequestType> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::ResocaMessage_MessageType>() {
-  return ::ResocaMessage_MessageType_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::ResocaMessage_Request_RequestType>() {
+  return ::ResocaMessage_Request_RequestType_descriptor();
+}
+template <> struct is_proto_enum< ::ResocaMessage_Response_ResponseType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::ResocaMessage_Response_ResponseType>() {
+  return ::ResocaMessage_Response_ResponseType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

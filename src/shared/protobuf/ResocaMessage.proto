@@ -42,25 +42,31 @@ message ResocaMessage {
 
             PONG = 3;
 
-            CAN_RX = 5;
-            CAN_STAT = 6;
+            CAN_RX = 4;
+            CAN_STAT = 5;
 
-            INFO = 7;
+            INFO = 6;
         }
 
         message ResocaInfo {
             string version = 1;
             repeated string interfaces = 2;
-            uint32 sessionMask = 3;
+            uint32 sessionPrefix = 3;
+        }
+
+        message IfInfo {
+
+
         }
 
         ResponseType responseType = 1;
         uint32 responseID = 2;
 
-        string error = 3;
+        string description = 3;
         string ifName = 4;
         CanFrame canFrame = 5;
         ResocaInfo resocaInfo = 6;
+        IfInfo ifInfo = 7;
     }
 
     bool isResponse = 1;

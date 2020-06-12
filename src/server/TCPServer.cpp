@@ -45,28 +45,51 @@ void TCPSession::start() {
 
 bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
     BOOST_LOG_TRIVIAL(debug) << "Handling RSM: " << rsm->DebugString();
-    switch(rsm->messagetype()) {
-        case ResocaMessage_MessageType_PING: {
+    if(!rsm->isresponse()) {
+        switch(rsm->request().requesttype()) {
+            case ResocaMessage_Request_RequestType_PING: {
                 auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_messagetype(rsm->PONG);
+                respMsg->set_isresponse(true);
+                auto resp = respMsg->response();
+                resp.set_responsetype(ResocaMessage_Response_ResponseType_PONG);
+                resp.set_responseid(rsm->request().requestid());
+
                 writeRSM(respMsg);
                 return true;
-            break;
+                break;
+            }
+            case ResocaMessage_Request_RequestType_NOTIFY_START: {
+
+            }
+            case ResocaMessage_Request_RequestType_NOTIFY_END: {
+
+            }
+            default: {
+                server.handlePBMessage(rsm);
+            }
+
         }
 
-
-        default: {
-            server.handlePBMessage(rsm);
-        }
+    } else {
+        writeRSM(rsm);
     }
     return true;
 }
 
 void TCPSession::writeRSM(std::shared_ptr<ResocaMessage> msg) {
     unsigned short len = msg->ByteSizeLong();
+    BOOST_LOG_TRIVIAL(debug) << "Serialized rsm is " << len << " bytes long";
     uint8_t msgData[2+len];
+    *(unsigned short *) msgData = len;
     msg->SerializeToArray(&(msgData[2]), len);
-    boost::asio::async_write(socket, boost::asio::buffer(msgData,2),
+    std::stringstream ss;
+    for(uint8_t a : msgData) {
+        ss << std::hex << (int) a << " ";
+    }
+
+    BOOST_LOG_TRIVIAL(debug) << "SENDING: " << ss.str();
+
+    boost::asio::async_write(socket, boost::asio::buffer(msgData,2+len),
         [this](const boost::system::error_code &errorCode, size_t bytes){
             if(errorCode) {
                 BOOST_LOG_TRIVIAL(error)
@@ -119,7 +142,7 @@ bool TCPServer::sendPBMessage(std::shared_ptr<ResocaMessage> rsm) {
     BOOST_LOG_TRIVIAL(debug) << "sending PBMessage in TCPServer: " << rsm->DebugString();
     for(auto &pair : sessions) {
         auto session = pair.second;
-        if(session->ifNotify.find(rsm->interface()) != session->ifNotify.end()) {
+        if(rsm->response().ifname() == "" || session->ifNotify.find(rsm->response().ifname()) != session->ifNotify.end()) {
             BOOST_LOG_TRIVIAL(trace) << "Sent message to session: " << pair.first;
             session->writeRSM(rsm);
         }

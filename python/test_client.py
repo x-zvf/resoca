@@ -35,3 +35,17 @@ def stress():
             x = a.pop()
             x.close()
 
+def readRSM(sock):
+    lr = sock.recv(2)
+    l = struct.unpack("<h", lr)[0]
+    b = sock.recv(l)
+    return ResocaMessage_pb2.ResocaMessage().FromString(b)
+
+sock = socket.socket()
+sock.connect(hp)
+
+pingMsg = ResocaMessage_pb2.ResocaMessage()
+pingMsg.isResponse = False
+pingMsg.request.requestID = 12345
+pingMsg.request.requestType = rsm.request.PING
+
