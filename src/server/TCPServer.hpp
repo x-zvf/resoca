@@ -1,5 +1,5 @@
 #pragma once
-
+#include "config.h"
 #include "../shared/protobuf/cpp/ResocaMessage.pb.h"
 #include <boost/log/trivial.hpp>
 #include <boost/asio.hpp>
@@ -9,7 +9,6 @@
 
 #define PROTOBUF_MAX_DATA_LEN 1024
 
-#define VERSION "0.1.0"
 
 class TCPServer;
 class CanDeviceManager;
