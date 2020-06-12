@@ -1,11 +1,18 @@
+#pragma once
+
 #include "../shared/protobuf/cpp/ResocaMessage.pb.h"
 #include <boost/log/trivial.hpp>
 #include <boost/asio.hpp>
 #include <functional>
 
+#include "CanDeviceManager.hpp"
+
 #define PROTOBUF_MAX_DATA_LEN 1024
 
+#define VERSION "0.1.0"
+
 class TCPServer;
+class CanDeviceManager;
 
 class TCPSession {
 public:
@@ -42,17 +49,20 @@ public:
 
     void listen();
 
-    bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
-
     bool sendPBMessage(std::shared_ptr<ResocaMessage> rms);
-
-    void setHandleReceivePBMessage(std::function<bool(std::shared_ptr<ResocaMessage> rms)> func) {
-        handleReceivePBMessage = func;
-    }
 
     void deleteSession(int sid);
 
+    std::vector<std::string> getIfList();
+
+    void setCDM(CanDeviceManager *cdm) {
+        this->cdm = cdm;
+    }
+
 private:
+
+    CanDeviceManager *cdm;
+
 
     // next session id to be assigned.
     uint32_t nextSid = 1;
@@ -60,9 +70,6 @@ private:
 
     std::string interface;
     int portNumber;
-    //boost::asio::io_context &ioContext;
 
     boost::asio::ip::tcp::acceptor acceptor;
-
-    std::function<bool(std::shared_ptr<ResocaMessage> rms)> handleReceivePBMessage;
 };

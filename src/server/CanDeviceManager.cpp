@@ -18,6 +18,11 @@ bool CanDeviceManager::handleCanEvent(CanEvent &ce) {
     BOOST_LOG_TRIVIAL(debug) << "Handling CanEvent: " << ce.toString();
     return true;
 }
-bool CanDeviceManager::handlePBMessage(std::shared_ptr<ResocaMessage> rms) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in CanDevMgr: " << rms->DebugString();
+
+std::vector<std::string> CanDeviceManager::getIfList() {
+    std::vector<std::string> ifl;
+    for(auto pair : canDevices) {
+        ifl.push_back(pair.first);
+    }
+    return ifl;
 }

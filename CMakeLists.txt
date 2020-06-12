@@ -7,7 +7,7 @@ set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 # Fixes for Boost::log
 set(CMAKE_EXE_LINKER_FLAGS -static)
 set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS FALSE)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -g -Wno-c11-extensions -Wno-vla-extension -Wno-zero-length-array")
 
 set(Boost_USE_STATIC_LIBS ON)
 

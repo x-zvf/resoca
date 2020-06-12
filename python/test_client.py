@@ -1,5 +1,6 @@
 import ResocaMessage_pb2
 import struct
+import time
 
 rsm = ResocaMessage_pb2.ResocaMessage()
 
@@ -7,45 +8,54 @@ import socket
 
 hp = ("0.0.0.0", 23636)
 
-def send(sock, msg):
-    s = msg.SerializeToString()
-    l = struct.pack("<h", len(s))
-    sock.send(l)
-    sock.send(s)
-
-def stress():
-    a = []
-    rsm.messageType = rsm.PING
-    while True:
-        print("creating")
-        while len(a) < 100:
-            s = socket.socket()
-            s.connect(hp)
-
-            for i in range(10):
-                send(s, rsm)
-                s.recv(4)
-            a.append(s)
-        print("sending some more")
-        for x in a:
-            send(x,rsm)
-            x.recv(4)
-        print("deleting")
-        while len(a)>0:
-            x = a.pop()
-            x.close()
-
-def readRSM(sock):
-    lr = sock.recv(2)
-    l = struct.unpack("<h", lr)[0]
-    b = sock.recv(l)
-    return ResocaMessage_pb2.ResocaMessage().FromString(b)
-
 sock = socket.socket()
 sock.connect(hp)
 
-pingMsg = ResocaMessage_pb2.ResocaMessage()
-pingMsg.isResponse = False
-pingMsg.request.requestID = 12345
-pingMsg.request.requestType = rsm.request.PING
+class ResocaClient():
+    def __init__(self, hp):
+        self.sock = socket.socket()
+        self.sock.connect(hp)
+        self.pending = dict()
+        self.nr = 0
+        self.sessionPrefix = 0
+
+    def send(self, msg):
+        s = msg.SerializeToString()
+        l = struct.pack("<h", len(s))
+        self.sock.send(l)
+        self.sock.send(s)
+
+    def sendWS(self, msg):
+        rid = self.sessionPrefix + ( self.nr & 0xFFFF)
+        self.nr += 1
+        self.pending[rid] = time.monotonic()
+        msg.request.requestID = rid
+        self.send(msg)
+
+    def readRSM(self):
+        lr = self.sock.recv(2)
+        l = struct.unpack("<h", lr)[0]
+        b = self.sock.recv(l)
+        rsm = ResocaMessage_pb2.ResocaMessage().FromString(b)
+        self.pending.pop(rsm.response.responseID, None)
+        print("RECV: ", str(rsm))
+        return rsm
+
+    def getInfo(self):
+        infoMsg = ResocaMessage_pb2.ResocaMessage()
+        infoMsg.isResponse = False
+        infoMsg.request.requestType = infoMsg.request.INFO
+        self.send(infoMsg)
+        resMsg = self.readRSM()
+        self.interface = resMsg.response.resocaInfo.interfaces
+        self.sversion = resMsg.response.resocaInfo.version
+        self.sessionPrefix = resMsg.response.resocaInfo.sessionPrefix
+
+    def sendPing(self):
+        msg = ResocaMessage_pb2.ResocaMessage()
+        msg.isResponse = False
+        msg.request.requestType = msg.request.PING
+        self.sendWS(msg)
+
+
 

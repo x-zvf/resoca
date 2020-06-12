@@ -46,17 +46,56 @@ void TCPSession::start() {
 bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
     BOOST_LOG_TRIVIAL(debug) << "Handling RSM: " << rsm->DebugString();
     if(!rsm->isresponse()) {
+        if(rsm->request().requesttype() == ResocaMessage_Request_RequestType_INFO) {
+                BOOST_LOG_TRIVIAL(debug) << "Info Request";
+                auto respMsg = std::make_shared<ResocaMessage>();
+                auto resp = new ResocaMessage_Response();
+
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_INFO);
+                auto info = new ResocaMessage_Response_ResocaInfo();
+                info->set_version(VERSION);
+                info->set_sessionprefix(sid << 16);
+                for(auto itf : server.getIfList()) {
+                    info->add_interfaces(itf);
+                }
+                resp->set_allocated_resocainfo(info);
+                respMsg->set_allocated_response(resp);
+                writeRSM(respMsg);
+                return true;
+
+        } else if (!rsm->request().requestid()) {
+                auto respMsg = std::make_shared<ResocaMessage>();
+                respMsg->set_isresponse(true);
+                auto resp = new ResocaMessage_Response();
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
+                resp->set_description("No RequestID specified.");
+                respMsg->set_allocated_response(resp);
+                writeRSM(respMsg);
+                return true;
+        } else if ((rsm->request().requestid() >> 16) != sid) {
+                auto respMsg = std::make_shared<ResocaMessage>();
+                respMsg->set_isresponse(true);
+                auto resp = new ResocaMessage_Response();
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
+                resp->set_description("RequestID SID mask invalid.");
+                respMsg->set_allocated_response(resp);
+
+                //BOOST_LOG_TRIVIAL(debug) << "RESPONSE: " << respMsg->DebugString();
+
+                writeRSM(respMsg);
+                return true;
+        }
+
         switch(rsm->request().requesttype()) {
             case ResocaMessage_Request_RequestType_PING: {
                 auto respMsg = std::make_shared<ResocaMessage>();
                 respMsg->set_isresponse(true);
-                auto resp = respMsg->response();
-                resp.set_responsetype(ResocaMessage_Response_ResponseType_PONG);
-                resp.set_responseid(rsm->request().requestid());
-
+                auto resp = new ResocaMessage_Response();
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_PONG);
+                resp->set_responseid(rsm->request().requestid());
+                respMsg->set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
-                break;
             }
             case ResocaMessage_Request_RequestType_NOTIFY_START: {
 
@@ -65,7 +104,6 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
 
             }
             default: {
-                server.handlePBMessage(rsm);
             }
 
         }
@@ -134,10 +172,6 @@ void TCPServer::listen() {
     });
 }
 
-bool TCPServer::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling PBMessage in TCPServer: " << rsm->DebugString();
-    return true;
-}
 bool TCPServer::sendPBMessage(std::shared_ptr<ResocaMessage> rsm) {
     BOOST_LOG_TRIVIAL(debug) << "sending PBMessage in TCPServer: " << rsm->DebugString();
     for(auto &pair : sessions) {
@@ -149,4 +183,6 @@ bool TCPServer::sendPBMessage(std::shared_ptr<ResocaMessage> rsm) {
     }
     return true;
 }
-
+std::vector<std::string> TCPServer::getIfList() {
+    return cdm->getIfList();
+}

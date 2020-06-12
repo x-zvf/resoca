@@ -16,18 +16,16 @@ int main() {
 
     BOOST_LOG_TRIVIAL(trace) << "creating and connecting to can_devices" << std::endl;
 
-    CanDeviceManager canDeviceManager(ioContext);
+    auto canDeviceManager = new CanDeviceManager(ioContext);
 
-    canDeviceManager.listen_on("vcan0");
+    auto tcpServer = new TCPServer("0.0.0.0", 23636, ioContext);
 
-    TCPServer tcpServer("0.0.0.0", 23636, ioContext);
+    canDeviceManager->setServer(tcpServer);
+    tcpServer->setCDM(canDeviceManager);
 
+    canDeviceManager->listen_on("vcan0");
 
-    //plumb them up
-    tcpServer.setHandleReceivePBMessage(std::bind(&CanDeviceManager::handlePBMessage, std::ref(canDeviceManager), std::placeholders::_1));
-    canDeviceManager.setSendPBMessage(std::bind(&TCPServer::sendPBMessage, std::ref(tcpServer), std::placeholders::_1));
-
-    tcpServer.listen();
+    tcpServer->listen();
 
     BOOST_LOG_TRIVIAL(info) << "Initialized. running ioService.";
     ioContext.run();
