@@ -49,7 +49,6 @@ public:
 
     void copyData(const uint8_t *src, uint8_t len);
 
-private:
     uint8_t *data = nullptr;
     uint8_t length = 0;
 };

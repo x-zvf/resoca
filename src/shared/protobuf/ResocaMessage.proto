@@ -54,11 +54,6 @@ message ResocaMessage {
             uint32 sessionPrefix = 3;
         }
 
-        message IfInfo {
-
-
-        }
-
         ResponseType responseType = 1;
         uint32 responseID = 2;
 
@@ -66,7 +61,6 @@ message ResocaMessage {
         string ifName = 4;
         CanFrame canFrame = 5;
         ResocaInfo resocaInfo = 6;
-        IfInfo ifInfo = 7;
     }
 
     bool isResponse = 1;

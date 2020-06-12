@@ -14,11 +14,6 @@ bool CanDeviceManager::listen_on(std::string ifName) {
     return s;
 }
 
-bool CanDeviceManager::handleCanEvent(CanEvent &ce) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling CanEvent: " << ce.toString();
-    return true;
-}
-
 std::vector<std::string> CanDeviceManager::getIfList() {
     std::vector<std::string> ifl;
     for(auto pair : canDevices) {
@@ -26,3 +21,4 @@ std::vector<std::string> CanDeviceManager::getIfList() {
     }
     return ifl;
 }
+

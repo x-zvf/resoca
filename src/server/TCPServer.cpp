@@ -140,8 +140,7 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 respMsg->set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
-            }
-            default: {
+            } default: {
                 BOOST_LOG_TRIVIAL(warning) << "Unknown Message";
             }
 
@@ -223,6 +222,45 @@ bool TCPServer::sendPBMessage(std::shared_ptr<ResocaMessage> rsm) {
     }
     return true;
 }
+
 std::vector<std::string> TCPServer::getIfList() {
     return cdm->getIfList();
+}
+
+void TCPServer::handleCanEvent(CanEvent &ce) {
+    switch(ce.eventType) {
+        case FRAME_RX: {
+            auto respMsg = std::make_shared<ResocaMessage>();
+            respMsg->set_isresponse(true);
+            auto resp = new ResocaMessage_Response();
+            resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_RX);
+            auto cf = new ResocaMessage_CanFrame();
+            cf->set_canid(ce.canFrame->canID);
+            cf->set_iscanfd(ce.canFrame->isCanFd);
+            cf->set_iseffframe(ce.canFrame->isEFFFrame);
+            cf->set_isrtrframe(ce.canFrame->isRTRFrame);
+            cf->set_iserrframe(ce.canFrame->isERRFrame);
+            cf->set_iscanfdesi(ce.canFrame->isCanFdESI);
+            cf->set_iscanfdbrs(ce.canFrame->isCanFdBRS);
+            cf->set_data((const char *)ce.canFrame->data, ce.canFrame->length);
+
+            resp->set_allocated_canframe(cf);
+            resp->set_ifname(ce.ifName);
+            respMsg->set_allocated_response(resp);
+
+            BOOST_LOG_TRIVIAL(debug) << "Message created for CAN_RX: "
+                << respMsg->DebugString();
+            sendPBMessage(respMsg);
+        }
+
+        default: {
+            BOOST_LOG_TRIVIAL(error) << "NOT IMPLEMENTED: " << (int) ce.eventType;
+        }
+    }
+}
+
+bool CanDeviceManager::handleCanEvent(CanEvent &ce) {
+    BOOST_LOG_TRIVIAL(debug) << "Handling CanEvent: " << ce.toString();
+    server->handleCanEvent(ce);
+    return true;
 }

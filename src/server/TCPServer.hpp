@@ -59,6 +59,8 @@ public:
         this->cdm = cdm;
     }
 
+    void handleCanEvent(CanEvent &ce);
+
 private:
 
     CanDeviceManager *cdm;

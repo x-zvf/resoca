@@ -58,23 +58,23 @@ void CanDevice::run() {
             [this](const boost::system::error_code &errorCode, std::size_t bytesTransferred) {
 
             if (errorCode) {
-            BOOST_LOG_TRIVIAL(error) << "[ error @ " << canIfName << "]: " << errorCode;
-            auto event = CanEvent(canIfName, IF_DISCONNECTED);
-            handleCanEvent(event);
-            reconnect();
-            return;
+                BOOST_LOG_TRIVIAL(error) << "[ error @ " << canIfName << "]: " << errorCode;
+                auto event = CanEvent(canIfName, IF_DISCONNECTED);
+                handleCanEvent(event);
+                reconnect();
+                return;
             }
 
 
             if (bytesTransferred == sizeof(struct can_frame)) {
-            struct can_frame frame = *reinterpret_cast<can_frame *>(canFrameBuffer);
+                struct can_frame frame = *reinterpret_cast<can_frame *>(canFrameBuffer);
 
-            auto canFrame = new CanFrame(frame);
-            BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
+                auto canFrame = new CanFrame(frame);
+                BOOST_LOG_TRIVIAL(trace) << "[ RX @ " << canIfName << " ]: " << canFrame->toString();
 
-            auto event = CanEvent(canIfName, FRAME_RX);
-            event.canFrame = canFrame;
-            handleCanEvent(event);
+                auto event = CanEvent(canIfName, FRAME_RX);
+                event.canFrame = canFrame;
+                handleCanEvent(event);
 
             } else if (bytesTransferred == sizeof(struct canfd_frame)) {
 
