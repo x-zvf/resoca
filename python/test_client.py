@@ -1,6 +1,7 @@
 import ResocaMessage_pb2
 import struct
 import time
+import multiprocessing
 
 rsm = ResocaMessage_pb2.ResocaMessage()
 
@@ -18,6 +19,10 @@ class ResocaClient():
         self.pending = dict()
         self.nr = 0
         self.sessionPrefix = 0
+
+    def start(self):
+        self.getInfo()
+        self.listen()
 
     def send(self, msg):
         s = msg.SerializeToString()
@@ -38,7 +43,6 @@ class ResocaClient():
         b = self.sock.recv(l)
         rsm = ResocaMessage_pb2.ResocaMessage().FromString(b)
         self.pending.pop(rsm.response.responseID, None)
-        print("RECV: ", str(rsm))
         return rsm
 
     def getInfo(self):
@@ -47,15 +51,39 @@ class ResocaClient():
         infoMsg.request.requestType = infoMsg.request.INFO
         self.send(infoMsg)
         resMsg = self.readRSM()
-        self.interface = resMsg.response.resocaInfo.interfaces
+        self.interfaces = resMsg.response.resocaInfo.interfaces
         self.sversion = resMsg.response.resocaInfo.version
         self.sessionPrefix = resMsg.response.resocaInfo.sessionPrefix
+        print(f"SW: {self.sversion} ; prefix: {hex(self.sessionPrefix)}; ifs: {self.interfaces}")
 
     def sendPing(self):
         msg = ResocaMessage_pb2.ResocaMessage()
         msg.isResponse = False
         msg.request.requestType = msg.request.PING
         self.sendWS(msg)
+
+    def lf(self):
+        while True:
+            print(self.readRSM())
+
+    def listen(self):
+        p = multiprocessing.Process(target=self.lf)
+        p.start()
+
+    def notifyStart(self, ifname):
+        msg = ResocaMessage_pb2.ResocaMessage()
+        msg.isResponse = False
+        msg.request.requestType = msg.request.NOTIFY_START
+        msg.request.ifName = ifname
+        self.sendWS(msg)
+
+    def notifyStop(self, ifname):
+        msg = ResocaMessage_pb2.ResocaMessage()
+        msg.isResponse = False
+        msg.request.requestType = msg.request.NOTIFY_END
+        msg.request.ifName = ifname
+        self.sendWS(msg)
+
 
 
 

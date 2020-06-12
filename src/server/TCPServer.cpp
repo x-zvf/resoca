@@ -98,17 +98,57 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 return true;
             }
             case ResocaMessage_Request_RequestType_NOTIFY_START: {
+                auto respMsg = std::make_shared<ResocaMessage>();
+                respMsg->set_isresponse(true);
+                auto resp = new ResocaMessage_Response();
 
+                std::string ifn = rsm->request().ifname();
+                auto exists = ifNotify.count(ifn) == 0;
+
+                if(exists) {
+                    ifNotify.insert(ifn);
+                    BOOST_LOG_TRIVIAL(debug) << "NOTIFY START ON: " << ifn;
+                } else {
+                    BOOST_LOG_TRIVIAL(debug) << "NOTIFY START ON (was already listening): " << ifn;
+                    resp->set_description("Was already notifying.");
+                }
+
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_SUCCESS);
+                resp->set_responseid(rsm->request().requestid());
+                respMsg->set_allocated_response(resp);
+                writeRSM(respMsg);
+                return true;
             }
             case ResocaMessage_Request_RequestType_NOTIFY_END: {
+                auto respMsg = std::make_shared<ResocaMessage>();
+                respMsg->set_isresponse(true);
+                auto resp = new ResocaMessage_Response();
 
+                std::string ifn = rsm->request().ifname();
+                auto exists = ifNotify.count(ifn) > 0;
+
+                if(exists) {
+                    ifNotify.erase(ifn);
+                    BOOST_LOG_TRIVIAL(debug) << "NOTIFY END ON: " << ifn;
+                } else {
+                    BOOST_LOG_TRIVIAL(debug) << "NOTIFY END ON (was not listening): " << ifn;
+                    resp->set_description("Was not notifying.");
+                }
+
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_SUCCESS);
+                resp->set_responseid(rsm->request().requestid());
+                respMsg->set_allocated_response(resp);
+                writeRSM(respMsg);
+                return true;
             }
             default: {
+                BOOST_LOG_TRIVIAL(warning) << "Unknown Message";
             }
 
         }
 
     } else {
+        BOOST_LOG_TRIVIAL(warning) << "We don't deal with no responses 'round here!";
         writeRSM(rsm);
     }
     return true;
