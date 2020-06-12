@@ -251,10 +251,37 @@ void TCPServer::handleCanEvent(CanEvent &ce) {
             BOOST_LOG_TRIVIAL(debug) << "Message created for CAN_RX: "
                 << respMsg->DebugString();
             sendPBMessage(respMsg);
+            return;
         }
+        case IF_CONNECTED: {
+            auto respMsg = std::make_shared<ResocaMessage>();
+            respMsg->set_isresponse(true);
+            auto resp = new ResocaMessage_Response();
+            resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_IF_CONNECTED);
+            resp->set_ifname(ce.ifName);
+            respMsg->set_allocated_response(resp);
 
+            BOOST_LOG_TRIVIAL(debug) << "Message created for IF_CONNECTED: "
+                << respMsg->DebugString();
+            sendPBMessage(respMsg);
+            return;
+        }
+        case IF_DISCONNECTED: {
+            auto respMsg = std::make_shared<ResocaMessage>();
+            respMsg->set_isresponse(true);
+            auto resp = new ResocaMessage_Response();
+            resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_IF_DISCONNECTED);
+            resp->set_ifname(ce.ifName);
+            respMsg->set_allocated_response(resp);
+
+            BOOST_LOG_TRIVIAL(debug) << "Message created for IF_DISCONNECTED: "
+                << respMsg->DebugString();
+            sendPBMessage(respMsg);
+            return;
+        }
         default: {
             BOOST_LOG_TRIVIAL(error) << "NOT IMPLEMENTED: " << (int) ce.eventType;
+            return;
         }
     }
 }

@@ -45,7 +45,10 @@ message ResocaMessage {
             CAN_RX = 4;
             CAN_STAT = 5;
 
-            INFO = 6;
+            CAN_IF_CONNECTED = 6;
+            CAN_IF_DISCONNECTED = 7;
+
+            INFO = 8;
         }
 
         message ResocaInfo {

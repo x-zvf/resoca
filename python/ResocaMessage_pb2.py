@@ -18,8 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\'src/shared/protobuf/ResocaMessage.proto\"\xce\x07\n\rResocaMessage\x12\x12\n\nisResponse\x18\x01 \x01(\x08\x12\'\n\x07request\x18\x02 \x01(\x0b\x32\x16.ResocaMessage.Request\x12)\n\x08response\x18\x03 \x01(\x0b\x32\x17.ResocaMessage.Response\x1a\x9c\x01\n\x08\x43\x61nFrame\x12\r\n\x05\x63\x61nID\x18\x01 \x01(\r\x12\x0f\n\x07isCanFD\x18\x02 \x01(\x08\x12\x12\n\nisEFFFRAME\x18\x03 \x01(\x08\x12\x12\n\nisRTRFRAME\x18\x04 \x01(\x08\x12\x12\n\nisERRFRAME\x18\x05 \x01(\x08\x12\x12\n\nisCanFDESI\x18\x06 \x01(\x08\x12\x12\n\nisCanFDBRS\x18\x07 \x01(\x08\x12\x0c\n\x04\x64\x61ta\x18\n \x01(\x0c\x1a\xef\x01\n\x07Request\x12\x37\n\x0brequestType\x18\x01 \x01(\x0e\x32\".ResocaMessage.Request.RequestType\x12\x11\n\trequestID\x18\x02 \x01(\r\x12\x0e\n\x06ifName\x18\x03 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x04 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\"]\n\x0bRequestType\x12\x08\n\x04PING\x10\x00\x12\x10\n\x0cNOTIFY_START\x10\x01\x12\x0e\n\nNOTIFY_END\x10\x02\x12\n\n\x06\x43\x41N_TX\x10\x03\x12\x0c\n\x08\x43\x41N_STAT\x10\x04\x12\x08\n\x04INFO\x10\x05\x1a\xc3\x03\n\x08Response\x12:\n\x0cresponseType\x18\x01 \x01(\x0e\x32$.ResocaMessage.Response.ResponseType\x12\x12\n\nresponseID\x18\x02 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06ifName\x18\x04 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x05 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\x12\x36\n\nresocaInfo\x18\x06 \x01(\x0b\x32\".ResocaMessage.Response.ResocaInfo\x12.\n\x06ifInfo\x18\x07 \x01(\x0b\x32\x1e.ResocaMessage.Response.IfInfo\x1aH\n\nResocaInfo\x12\x0f\n\x07version\x18\x01 \x01(\t\x12\x12\n\ninterfaces\x18\x02 \x03(\t\x12\x15\n\rsessionPrefix\x18\x03 \x01(\r\x1a\x08\n\x06IfInfo\"[\n\x0cResponseType\x12\x07\n\x03\x41\x43K\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x07\n\x03\x45RR\x10\x02\x12\x08\n\x04PONG\x10\x03\x12\n\n\x06\x43\x41N_RX\x10\x04\x12\x0c\n\x08\x43\x41N_STAT\x10\x05\x12\x08\n\x04INFO\x10\x06\x62\x06proto3'
+  serialized_pb=b'\n\'src/shared/protobuf/ResocaMessage.proto\"\xc4\x07\n\rResocaMessage\x12\x12\n\nisResponse\x18\x01 \x01(\x08\x12\'\n\x07request\x18\x02 \x01(\x0b\x32\x16.ResocaMessage.Request\x12)\n\x08response\x18\x03 \x01(\x0b\x32\x17.ResocaMessage.Response\x1a\x9c\x01\n\x08\x43\x61nFrame\x12\r\n\x05\x63\x61nID\x18\x01 \x01(\r\x12\x0f\n\x07isCanFD\x18\x02 \x01(\x08\x12\x12\n\nisEFFFRAME\x18\x03 \x01(\x08\x12\x12\n\nisRTRFRAME\x18\x04 \x01(\x08\x12\x12\n\nisERRFRAME\x18\x05 \x01(\x08\x12\x12\n\nisCanFDESI\x18\x06 \x01(\x08\x12\x12\n\nisCanFDBRS\x18\x07 \x01(\x08\x12\x0c\n\x04\x64\x61ta\x18\n \x01(\x0c\x1a\xef\x01\n\x07Request\x12\x37\n\x0brequestType\x18\x01 \x01(\x0e\x32\".ResocaMessage.Request.RequestType\x12\x11\n\trequestID\x18\x02 \x01(\r\x12\x0e\n\x06ifName\x18\x03 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x04 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\"]\n\x0bRequestType\x12\x08\n\x04PING\x10\x00\x12\x10\n\x0cNOTIFY_START\x10\x01\x12\x0e\n\nNOTIFY_END\x10\x02\x12\n\n\x06\x43\x41N_TX\x10\x03\x12\x0c\n\x08\x43\x41N_STAT\x10\x04\x12\x08\n\x04INFO\x10\x05\x1a\xb9\x03\n\x08Response\x12:\n\x0cresponseType\x18\x01 \x01(\x0e\x32$.ResocaMessage.Response.ResponseType\x12\x12\n\nresponseID\x18\x02 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06ifName\x18\x04 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x05 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\x12\x36\n\nresocaInfo\x18\x06 \x01(\x0b\x32\".ResocaMessage.Response.ResocaInfo\x1aH\n\nResocaInfo\x12\x0f\n\x07version\x18\x01 \x01(\t\x12\x12\n\ninterfaces\x18\x02 \x03(\t\x12\x15\n\rsessionPrefix\x18\x03 \x01(\r\"\x8a\x01\n\x0cResponseType\x12\x07\n\x03\x41\x43K\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x07\n\x03\x45RR\x10\x02\x12\x08\n\x04PONG\x10\x03\x12\n\n\x06\x43\x41N_RX\x10\x04\x12\x0c\n\x08\x43\x41N_STAT\x10\x05\x12\x14\n\x10\x43\x41N_IF_CONNECTED\x10\x06\x12\x17\n\x13\x43\x41N_IF_DISCONNECTED\x10\x07\x12\x08\n\x04INFO\x10\x08\x62\x06proto3'
 )
 
 
@@ -29,38 +28,31 @@ _RESOCAMESSAGE_REQUEST_REQUESTTYPE = _descriptor.EnumDescriptor(
   full_name='ResocaMessage.Request.RequestType',
   filename=None,
   file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
   values=[
     _descriptor.EnumValueDescriptor(
       name='PING', index=0, number=0,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='NOTIFY_START', index=1, number=1,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='NOTIFY_END', index=2, number=2,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='CAN_TX', index=3, number=3,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='CAN_STAT', index=4, number=4,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='INFO', index=5, number=5,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
   ],
   containing_type=None,
   serialized_options=None,
@@ -74,48 +66,48 @@ _RESOCAMESSAGE_RESPONSE_RESPONSETYPE = _descriptor.EnumDescriptor(
   full_name='ResocaMessage.Response.ResponseType',
   filename=None,
   file=DESCRIPTOR,
-  create_key=_descriptor._internal_create_key,
   values=[
     _descriptor.EnumValueDescriptor(
       name='ACK', index=0, number=0,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='SUCCESS', index=1, number=1,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='ERR', index=2, number=2,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='PONG', index=3, number=3,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='CAN_RX', index=4, number=4,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
       name='CAN_STAT', index=5, number=5,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
     _descriptor.EnumValueDescriptor(
-      name='INFO', index=6, number=6,
+      name='CAN_IF_CONNECTED', index=6, number=6,
       serialized_options=None,
-      type=None,
-      create_key=_descriptor._internal_create_key),
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='CAN_IF_DISCONNECTED', index=7, number=7,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='INFO', index=8, number=8,
+      serialized_options=None,
+      type=None),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=927,
-  serialized_end=1018,
+  serialized_start=870,
+  serialized_end=1008,
 )
 _sym_db.RegisterEnumDescriptor(_RESOCAMESSAGE_RESPONSE_RESPONSETYPE)
 
@@ -126,7 +118,6 @@ _RESOCAMESSAGE_CANFRAME = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='canID', full_name='ResocaMessage.CanFrame.canID', index=0,
@@ -134,56 +125,56 @@ _RESOCAMESSAGE_CANFRAME = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='isCanFD', full_name='ResocaMessage.CanFrame.isCanFD', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='isEFFFRAME', full_name='ResocaMessage.CanFrame.isEFFFRAME', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='isRTRFRAME', full_name='ResocaMessage.CanFrame.isRTRFRAME', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='isERRFRAME', full_name='ResocaMessage.CanFrame.isERRFRAME', index=4,
       number=5, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='isCanFDESI', full_name='ResocaMessage.CanFrame.isCanFDESI', index=5,
       number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='isCanFDBRS', full_name='ResocaMessage.CanFrame.isCanFDBRS', index=6,
       number=7, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='data', full_name='ResocaMessage.CanFrame.data', index=7,
       number=10, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=b"",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -206,7 +197,6 @@ _RESOCAMESSAGE_REQUEST = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='requestType', full_name='ResocaMessage.Request.requestType', index=0,
@@ -214,28 +204,28 @@ _RESOCAMESSAGE_REQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='requestID', full_name='ResocaMessage.Request.requestID', index=1,
       number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='ifName', full_name='ResocaMessage.Request.ifName', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='canFrame', full_name='ResocaMessage.Request.canFrame', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -259,7 +249,6 @@ _RESOCAMESSAGE_RESPONSE_RESOCAINFO = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='version', full_name='ResocaMessage.Response.ResocaInfo.version', index=0,
@@ -267,21 +256,21 @@ _RESOCAMESSAGE_RESPONSE_RESOCAINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='interfaces', full_name='ResocaMessage.Response.ResocaInfo.interfaces', index=1,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='sessionPrefix', full_name='ResocaMessage.Response.ResocaInfo.sessionPrefix', index=2,
       number=3, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -294,32 +283,8 @@ _RESOCAMESSAGE_RESPONSE_RESOCAINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=843,
-  serialized_end=915,
-)
-
-_RESOCAMESSAGE_RESPONSE_IFINFO = _descriptor.Descriptor(
-  name='IfInfo',
-  full_name='ResocaMessage.Response.IfInfo',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=917,
-  serialized_end=925,
+  serialized_start=795,
+  serialized_end=867,
 )
 
 _RESOCAMESSAGE_RESPONSE = _descriptor.Descriptor(
@@ -328,7 +293,6 @@ _RESOCAMESSAGE_RESPONSE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='responseType', full_name='ResocaMessage.Response.responseType', index=0,
@@ -336,53 +300,46 @@ _RESOCAMESSAGE_RESPONSE = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='responseID', full_name='ResocaMessage.Response.responseID', index=1,
       number=2, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='description', full_name='ResocaMessage.Response.description', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='ifName', full_name='ResocaMessage.Response.ifName', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='canFrame', full_name='ResocaMessage.Response.canFrame', index=4,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='resocaInfo', full_name='ResocaMessage.Response.resocaInfo', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ifInfo', full_name='ResocaMessage.Response.ifInfo', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
-  nested_types=[_RESOCAMESSAGE_RESPONSE_RESOCAINFO, _RESOCAMESSAGE_RESPONSE_IFINFO, ],
+  nested_types=[_RESOCAMESSAGE_RESPONSE_RESOCAINFO, ],
   enum_types=[
     _RESOCAMESSAGE_RESPONSE_RESPONSETYPE,
   ],
@@ -393,7 +350,7 @@ _RESOCAMESSAGE_RESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=567,
-  serialized_end=1018,
+  serialized_end=1008,
 )
 
 _RESOCAMESSAGE = _descriptor.Descriptor(
@@ -402,7 +359,6 @@ _RESOCAMESSAGE = _descriptor.Descriptor(
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
-  create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
       name='isResponse', full_name='ResocaMessage.isResponse', index=0,
@@ -410,21 +366,21 @@ _RESOCAMESSAGE = _descriptor.Descriptor(
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='request', full_name='ResocaMessage.request', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='response', full_name='ResocaMessage.response', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -438,7 +394,7 @@ _RESOCAMESSAGE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=44,
-  serialized_end=1018,
+  serialized_end=1008,
 )
 
 _RESOCAMESSAGE_CANFRAME.containing_type = _RESOCAMESSAGE
@@ -447,11 +403,9 @@ _RESOCAMESSAGE_REQUEST.fields_by_name['canFrame'].message_type = _RESOCAMESSAGE_
 _RESOCAMESSAGE_REQUEST.containing_type = _RESOCAMESSAGE
 _RESOCAMESSAGE_REQUEST_REQUESTTYPE.containing_type = _RESOCAMESSAGE_REQUEST
 _RESOCAMESSAGE_RESPONSE_RESOCAINFO.containing_type = _RESOCAMESSAGE_RESPONSE
-_RESOCAMESSAGE_RESPONSE_IFINFO.containing_type = _RESOCAMESSAGE_RESPONSE
 _RESOCAMESSAGE_RESPONSE.fields_by_name['responseType'].enum_type = _RESOCAMESSAGE_RESPONSE_RESPONSETYPE
 _RESOCAMESSAGE_RESPONSE.fields_by_name['canFrame'].message_type = _RESOCAMESSAGE_CANFRAME
 _RESOCAMESSAGE_RESPONSE.fields_by_name['resocaInfo'].message_type = _RESOCAMESSAGE_RESPONSE_RESOCAINFO
-_RESOCAMESSAGE_RESPONSE.fields_by_name['ifInfo'].message_type = _RESOCAMESSAGE_RESPONSE_IFINFO
 _RESOCAMESSAGE_RESPONSE.containing_type = _RESOCAMESSAGE
 _RESOCAMESSAGE_RESPONSE_RESPONSETYPE.containing_type = _RESOCAMESSAGE_RESPONSE
 _RESOCAMESSAGE.fields_by_name['request'].message_type = _RESOCAMESSAGE_REQUEST
@@ -483,13 +437,6 @@ ResocaMessage = _reflection.GeneratedProtocolMessageType('ResocaMessage', (_mess
       # @@protoc_insertion_point(class_scope:ResocaMessage.Response.ResocaInfo)
       })
     ,
-
-    'IfInfo' : _reflection.GeneratedProtocolMessageType('IfInfo', (_message.Message,), {
-      'DESCRIPTOR' : _RESOCAMESSAGE_RESPONSE_IFINFO,
-      '__module__' : 'src.shared.protobuf.ResocaMessage_pb2'
-      # @@protoc_insertion_point(class_scope:ResocaMessage.Response.IfInfo)
-      })
-    ,
     'DESCRIPTOR' : _RESOCAMESSAGE_RESPONSE,
     '__module__' : 'src.shared.protobuf.ResocaMessage_pb2'
     # @@protoc_insertion_point(class_scope:ResocaMessage.Response)
@@ -504,7 +451,6 @@ _sym_db.RegisterMessage(ResocaMessage.CanFrame)
 _sym_db.RegisterMessage(ResocaMessage.Request)
 _sym_db.RegisterMessage(ResocaMessage.Response)
 _sym_db.RegisterMessage(ResocaMessage.Response.ResocaInfo)
-_sym_db.RegisterMessage(ResocaMessage.Response.IfInfo)
 
 
 # @@protoc_insertion_point(module_scope)
