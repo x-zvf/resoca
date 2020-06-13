@@ -1,0 +1,22 @@
+﻿<Window x:Class="ResocaClientGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ResocaClientGUI"
+        mc:Ignorable="d"
+        Title="Resoca Cient" Height="450" Width="800">
+    <Grid>
+        <GroupBox Header="Connection" HorizontalAlignment="Left" Height="114" Margin="10,10,0,0" VerticalAlignment="Top" Width="192">
+            <Grid Margin="0,0,0,-12">
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="62,10,-2,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="62,38,-2,0" TextWrapping="Wrap" Text="23636" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.597,-3.659"/>
+                <Label Content="Host:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="Port:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="ConnectBtn" Content="Connect" HorizontalAlignment="Left" Margin="62,66,0,0" VerticalAlignment="Top" Width="118" Click="ConnectBtn_Click"/>
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="62,38,-2,0" TextWrapping="Wrap" Text="23636" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.597,-3.659"/>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>
