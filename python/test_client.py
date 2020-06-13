@@ -9,10 +9,6 @@ import socket
 
 hp = ("0.0.0.0", 23636)
 
-sock = socket.socket()
-sock.connect(hp)
-
-
 #canID=None, isCanFd=False, isEFFFrame=False, isRTRFrame=False, isERRFrame=False,
 #            isCanFDESI=False, isCanFDBRS=False, data=bytes()):
 testFrame = {
