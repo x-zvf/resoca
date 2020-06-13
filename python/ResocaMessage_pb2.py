@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\'src/shared/protobuf/ResocaMessage.proto\"\xc4\x07\n\rResocaMessage\x12\x12\n\nisResponse\x18\x01 \x01(\x08\x12\'\n\x07request\x18\x02 \x01(\x0b\x32\x16.ResocaMessage.Request\x12)\n\x08response\x18\x03 \x01(\x0b\x32\x17.ResocaMessage.Response\x1a\x9c\x01\n\x08\x43\x61nFrame\x12\r\n\x05\x63\x61nID\x18\x01 \x01(\r\x12\x0f\n\x07isCanFD\x18\x02 \x01(\x08\x12\x12\n\nisEFFFRAME\x18\x03 \x01(\x08\x12\x12\n\nisRTRFRAME\x18\x04 \x01(\x08\x12\x12\n\nisERRFRAME\x18\x05 \x01(\x08\x12\x12\n\nisCanFDESI\x18\x06 \x01(\x08\x12\x12\n\nisCanFDBRS\x18\x07 \x01(\x08\x12\x0c\n\x04\x64\x61ta\x18\n \x01(\x0c\x1a\xef\x01\n\x07Request\x12\x37\n\x0brequestType\x18\x01 \x01(\x0e\x32\".ResocaMessage.Request.RequestType\x12\x11\n\trequestID\x18\x02 \x01(\r\x12\x0e\n\x06ifName\x18\x03 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x04 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\"]\n\x0bRequestType\x12\x08\n\x04PING\x10\x00\x12\x10\n\x0cNOTIFY_START\x10\x01\x12\x0e\n\nNOTIFY_END\x10\x02\x12\n\n\x06\x43\x41N_TX\x10\x03\x12\x0c\n\x08\x43\x41N_STAT\x10\x04\x12\x08\n\x04INFO\x10\x05\x1a\xb9\x03\n\x08Response\x12:\n\x0cresponseType\x18\x01 \x01(\x0e\x32$.ResocaMessage.Response.ResponseType\x12\x12\n\nresponseID\x18\x02 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06ifName\x18\x04 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x05 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\x12\x36\n\nresocaInfo\x18\x06 \x01(\x0b\x32\".ResocaMessage.Response.ResocaInfo\x1aH\n\nResocaInfo\x12\x0f\n\x07version\x18\x01 \x01(\t\x12\x12\n\ninterfaces\x18\x02 \x03(\t\x12\x15\n\rsessionPrefix\x18\x03 \x01(\r\"\x8a\x01\n\x0cResponseType\x12\x07\n\x03\x41\x43K\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x07\n\x03\x45RR\x10\x02\x12\x08\n\x04PONG\x10\x03\x12\n\n\x06\x43\x41N_RX\x10\x04\x12\x0c\n\x08\x43\x41N_STAT\x10\x05\x12\x14\n\x10\x43\x41N_IF_CONNECTED\x10\x06\x12\x17\n\x13\x43\x41N_IF_DISCONNECTED\x10\x07\x12\x08\n\x04INFO\x10\x08\x62\x06proto3'
+  serialized_pb=b'\n\'src/shared/protobuf/ResocaMessage.proto\"\xc4\x07\n\rResocaMessage\x12\x12\n\nisResponse\x18\x01 \x01(\x08\x12\'\n\x07request\x18\x02 \x01(\x0b\x32\x16.ResocaMessage.Request\x12)\n\x08response\x18\x03 \x01(\x0b\x32\x17.ResocaMessage.Response\x1a\x9c\x01\n\x08\x43\x61nFrame\x12\r\n\x05\x63\x61nID\x18\x01 \x01(\r\x12\x0f\n\x07isCanFD\x18\x02 \x01(\x08\x12\x12\n\nisEFFFRAME\x18\x03 \x01(\x08\x12\x12\n\nisRTRFRAME\x18\x04 \x01(\x08\x12\x12\n\nisERRFRAME\x18\x05 \x01(\x08\x12\x12\n\nisCanFDESI\x18\x06 \x01(\x08\x12\x12\n\nisCanFDBRS\x18\x07 \x01(\x08\x12\x0c\n\x04\x64\x61ta\x18\n \x01(\x0c\x1a\xe1\x01\n\x07Request\x12\x37\n\x0brequestType\x18\x01 \x01(\x0e\x32\".ResocaMessage.Request.RequestType\x12\x11\n\trequestID\x18\x02 \x01(\r\x12\x0e\n\x06ifName\x18\x03 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x04 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\"O\n\x0bRequestType\x12\x08\n\x04PING\x10\x00\x12\x10\n\x0cNOTIFY_START\x10\x01\x12\x0e\n\nNOTIFY_END\x10\x02\x12\n\n\x06\x43\x41N_TX\x10\x03\x12\x08\n\x04INFO\x10\x04\x1a\xc7\x03\n\x08Response\x12:\n\x0cresponseType\x18\x01 \x01(\x0e\x32$.ResocaMessage.Response.ResponseType\x12\x12\n\nresponseID\x18\x02 \x01(\r\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06ifName\x18\x04 \x01(\t\x12)\n\x08\x63\x61nFrame\x18\x05 \x01(\x0b\x32\x17.ResocaMessage.CanFrame\x12\x36\n\nresocaInfo\x18\x06 \x01(\x0b\x32\".ResocaMessage.Response.ResocaInfo\x1aH\n\nResocaInfo\x12\x0f\n\x07version\x18\x01 \x01(\t\x12\x12\n\ninterfaces\x18\x02 \x03(\t\x12\x15\n\rsessionPrefix\x18\x03 \x01(\r\"\x98\x01\n\x0cResponseType\x12\x07\n\x03\x41\x43K\x10\x00\x12\x0b\n\x07SUCCESS\x10\x01\x12\x07\n\x03\x45RR\x10\x02\x12\x08\n\x04PONG\x10\x03\x12\n\n\x06\x43\x41N_RX\x10\x04\x12\n\n\x06\x43\x41N_TX\x10\x05\x12\x0e\n\nCAN_TX_ERR\x10\x06\x12\x14\n\x10\x43\x41N_IF_CONNECTED\x10\x07\x12\x17\n\x13\x43\x41N_IF_DISCONNECTED\x10\x08\x12\x08\n\x04INFO\x10\tb\x06proto3'
 )
 
 
@@ -46,18 +46,14 @@ _RESOCAMESSAGE_REQUEST_REQUESTTYPE = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='CAN_STAT', index=4, number=4,
-      serialized_options=None,
-      type=None),
-    _descriptor.EnumValueDescriptor(
-      name='INFO', index=5, number=5,
+      name='INFO', index=4, number=4,
       serialized_options=None,
       type=None),
   ],
   containing_type=None,
   serialized_options=None,
   serialized_start=471,
-  serialized_end=564,
+  serialized_end=550,
 )
 _sym_db.RegisterEnumDescriptor(_RESOCAMESSAGE_REQUEST_REQUESTTYPE)
 
@@ -88,25 +84,29 @@ _RESOCAMESSAGE_RESPONSE_RESPONSETYPE = _descriptor.EnumDescriptor(
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='CAN_STAT', index=5, number=5,
+      name='CAN_TX', index=5, number=5,
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='CAN_IF_CONNECTED', index=6, number=6,
+      name='CAN_TX_ERR', index=6, number=6,
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='CAN_IF_DISCONNECTED', index=7, number=7,
+      name='CAN_IF_CONNECTED', index=7, number=7,
       serialized_options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
-      name='INFO', index=8, number=8,
+      name='CAN_IF_DISCONNECTED', index=8, number=8,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='INFO', index=9, number=9,
       serialized_options=None,
       type=None),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=870,
+  serialized_start=856,
   serialized_end=1008,
 )
 _sym_db.RegisterEnumDescriptor(_RESOCAMESSAGE_RESPONSE_RESPONSETYPE)
@@ -240,7 +240,7 @@ _RESOCAMESSAGE_REQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=325,
-  serialized_end=564,
+  serialized_end=550,
 )
 
 _RESOCAMESSAGE_RESPONSE_RESOCAINFO = _descriptor.Descriptor(
@@ -283,8 +283,8 @@ _RESOCAMESSAGE_RESPONSE_RESOCAINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=795,
-  serialized_end=867,
+  serialized_start=781,
+  serialized_end=853,
 )
 
 _RESOCAMESSAGE_RESPONSE = _descriptor.Descriptor(
@@ -349,7 +349,7 @@ _RESOCAMESSAGE_RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=567,
+  serialized_start=553,
   serialized_end=1008,
 )
 

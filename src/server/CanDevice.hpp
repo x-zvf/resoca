@@ -37,7 +37,7 @@ class CanDevice {
 
     bool connect();
 
-    void sendFrame(const CanFrame &cf);
+    void sendFrame(const CanFrame &cf, int cbid);
     void sendFrame(const struct can_frame &cf);
     void sendFrame(const struct canfd_frame &cf);
 
@@ -52,7 +52,7 @@ class CanDevice {
     bool isInterfaceUp();
 
    private:
-    void writeFrame(const void *frame, int length);
+    void writeFrame(const void *frame, int length, int cbid);
 
     boost::asio::io_context &ioContext;
 
@@ -73,6 +73,10 @@ class CanDevice {
     std::function<bool(CanEvent&)> handleCanEvent;
 
     boost::asio::deadline_timer reconnectTimer;
+
+    void txCb(int cbid, int error);
+
+    std::map<int,CanFrame *> sentFrames;
 };
 
 #endif  // RESOCA_CANDEVICE_HPP

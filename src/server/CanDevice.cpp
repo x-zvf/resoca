@@ -125,27 +125,53 @@ bool CanDevice::isInterfaceUp() {
     return !!(ifr.ifr_flags & IFF_UP);
 }
 
-void CanDevice::sendFrame(const CanFrame &cf) {
-    BOOST_LOG_TRIVIAL(debug) << "Attempting to write frame: " << cf.toString();
+void CanDevice::sendFrame(const CanFrame &cf, int cbid) {
+    BOOST_LOG_TRIVIAL(debug) << "SENDFRAME Attempting to write frame: " << cf.toString();
     auto frame = cf.asStruct();
-    writeFrame(frame, cf.getStructSize());
-    std::free(frame);
+    auto cfcb = new CanFrame(cf);
+    writeFrame(frame, cf.getStructSize(), cbid);
+    sentFrames[cbid] = cfcb;
+    BOOST_LOG_TRIVIAL(debug) << "SENDFRAME DONEN " << cf.toString();
+    //std::free(frame);
 }
 void CanDevice::sendFrame(const struct canfd_frame &cf) {
-    writeFrame(&cf, sizeof(cf));
+    writeFrame(&cf, sizeof(cf), 0);
 }
 
 void CanDevice::sendFrame(const struct can_frame &cf) {
-    writeFrame(&cf, sizeof(cf));
+    writeFrame(&cf, sizeof(cf), 0);
 }
 
-void CanDevice::writeFrame(const void *frame, int len) {
+void CanDevice::writeFrame(const void *frame, int len, int cbid) {
     boost::asio::async_write(*can_stream, boost::asio::buffer(frame, len),
-            [this](boost::system::error_code errorCode, std::size_t len)
+            [this, cbid](boost::system::error_code errorCode, std::size_t len)
             {
                 if(errorCode) {
                     BOOST_LOG_TRIVIAL(error) << "Encountered Error: " << errorCode;
                 }
                 BOOST_LOG_TRIVIAL(trace) << "Wrote frame with length: " << len;
+                if(cbid) {
+
+                    BOOST_LOG_TRIVIAL(trace) << "CALlING txCb";
+                    txCb(cbid, (int)errorCode.value());
+                }
             });
+}
+
+void CanDevice::txCb(int cbid, int error) {
+    BOOST_LOG_TRIVIAL(trace) << "CB for CBID: " << cbid;
+    if(!sentFrames.count(cbid)) {
+        BOOST_LOG_TRIVIAL(error) << "Non-existant CBID: " << cbid;
+        return;
+    }
+    auto cf = sentFrames[cbid];
+    sentFrames.erase(cbid);
+
+    CanEvent ce(canIfName, FRAME_TX);
+    ce.err = error;
+    ce.id = cbid;
+    ce.sent = true;
+    ce.canFrame = cf;
+    BOOST_LOG_TRIVIAL(trace) << "SENDING CALLBACK EVENT: " << ce.toString();
+    handleCanEvent(ce);
 }

@@ -192,24 +192,24 @@ const char descriptor_table_protodef_ResocaMessage_2eproto[] PROTOBUF_SECTION_VA
   "canID\030\001 \001(\r\022\017\n\007isCanFD\030\002 \001(\010\022\022\n\nisEFFFRA"
   "ME\030\003 \001(\010\022\022\n\nisRTRFRAME\030\004 \001(\010\022\022\n\nisERRFRA"
   "ME\030\005 \001(\010\022\022\n\nisCanFDESI\030\006 \001(\010\022\022\n\nisCanFDB"
-  "RS\030\007 \001(\010\022\014\n\004data\030\n \001(\014\032\357\001\n\007Request\0227\n\013re"
+  "RS\030\007 \001(\010\022\014\n\004data\030\n \001(\014\032\341\001\n\007Request\0227\n\013re"
   "questType\030\001 \001(\0162\".ResocaMessage.Request."
   "RequestType\022\021\n\trequestID\030\002 \001(\r\022\016\n\006ifName"
   "\030\003 \001(\t\022)\n\010canFrame\030\004 \001(\0132\027.ResocaMessage"
-  ".CanFrame\"]\n\013RequestType\022\010\n\004PING\020\000\022\020\n\014NO"
+  ".CanFrame\"O\n\013RequestType\022\010\n\004PING\020\000\022\020\n\014NO"
   "TIFY_START\020\001\022\016\n\nNOTIFY_END\020\002\022\n\n\006CAN_TX\020\003"
-  "\022\014\n\010CAN_STAT\020\004\022\010\n\004INFO\020\005\032\271\003\n\010Response\022:\n"
-  "\014responseType\030\001 \001(\0162$.ResocaMessage.Resp"
-  "onse.ResponseType\022\022\n\nresponseID\030\002 \001(\r\022\023\n"
-  "\013description\030\003 \001(\t\022\016\n\006ifName\030\004 \001(\t\022)\n\010ca"
-  "nFrame\030\005 \001(\0132\027.ResocaMessage.CanFrame\0226\n"
-  "\nresocaInfo\030\006 \001(\0132\".ResocaMessage.Respon"
-  "se.ResocaInfo\032H\n\nResocaInfo\022\017\n\007version\030\001"
-  " \001(\t\022\022\n\ninterfaces\030\002 \003(\t\022\025\n\rsessionPrefi"
-  "x\030\003 \001(\r\"\212\001\n\014ResponseType\022\007\n\003ACK\020\000\022\013\n\007SUC"
-  "CESS\020\001\022\007\n\003ERR\020\002\022\010\n\004PONG\020\003\022\n\n\006CAN_RX\020\004\022\014\n"
-  "\010CAN_STAT\020\005\022\024\n\020CAN_IF_CONNECTED\020\006\022\027\n\023CAN"
-  "_IF_DISCONNECTED\020\007\022\010\n\004INFO\020\010b\006proto3"
+  "\022\010\n\004INFO\020\004\032\307\003\n\010Response\022:\n\014responseType\030"
+  "\001 \001(\0162$.ResocaMessage.Response.ResponseT"
+  "ype\022\022\n\nresponseID\030\002 \001(\r\022\023\n\013description\030\003"
+  " \001(\t\022\016\n\006ifName\030\004 \001(\t\022)\n\010canFrame\030\005 \001(\0132\027"
+  ".ResocaMessage.CanFrame\0226\n\nresocaInfo\030\006 "
+  "\001(\0132\".ResocaMessage.Response.ResocaInfo\032"
+  "H\n\nResocaInfo\022\017\n\007version\030\001 \001(\t\022\022\n\ninterf"
+  "aces\030\002 \003(\t\022\025\n\rsessionPrefix\030\003 \001(\r\"\230\001\n\014Re"
+  "sponseType\022\007\n\003ACK\020\000\022\013\n\007SUCCESS\020\001\022\007\n\003ERR\020"
+  "\002\022\010\n\004PONG\020\003\022\n\n\006CAN_RX\020\004\022\n\n\006CAN_TX\020\005\022\016\n\nC"
+  "AN_TX_ERR\020\006\022\024\n\020CAN_IF_CONNECTED\020\007\022\027\n\023CAN"
+  "_IF_DISCONNECTED\020\010\022\010\n\004INFO\020\tb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_ResocaMessage_2eproto_deps[1] = {
 };
@@ -242,7 +242,6 @@ bool ResocaMessage_Request_RequestType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
-    case 5:
       return true;
     default:
       return false;
@@ -254,7 +253,6 @@ constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::PING;
 constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::NOTIFY_START;
 constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::NOTIFY_END;
 constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::CAN_TX;
-constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::CAN_STAT;
 constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::INFO;
 constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::RequestType_MIN;
 constexpr ResocaMessage_Request_RequestType ResocaMessage_Request::RequestType_MAX;
@@ -275,6 +273,7 @@ bool ResocaMessage_Response_ResponseType_IsValid(int value) {
     case 6:
     case 7:
     case 8:
+    case 9:
       return true;
     default:
       return false;
@@ -287,7 +286,8 @@ constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::SUCCESS;
 constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::ERR;
 constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::PONG;
 constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::CAN_RX;
-constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::CAN_STAT;
+constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::CAN_TX;
+constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::CAN_TX_ERR;
 constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::CAN_IF_CONNECTED;
 constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::CAN_IF_DISCONNECTED;
 constexpr ResocaMessage_Response_ResponseType ResocaMessage_Response::INFO;

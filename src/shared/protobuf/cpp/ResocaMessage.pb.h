@@ -83,8 +83,7 @@ enum ResocaMessage_Request_RequestType : int {
   ResocaMessage_Request_RequestType_NOTIFY_START = 1,
   ResocaMessage_Request_RequestType_NOTIFY_END = 2,
   ResocaMessage_Request_RequestType_CAN_TX = 3,
-  ResocaMessage_Request_RequestType_CAN_STAT = 4,
-  ResocaMessage_Request_RequestType_INFO = 5,
+  ResocaMessage_Request_RequestType_INFO = 4,
   ResocaMessage_Request_RequestType_ResocaMessage_Request_RequestType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   ResocaMessage_Request_RequestType_ResocaMessage_Request_RequestType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
@@ -113,10 +112,11 @@ enum ResocaMessage_Response_ResponseType : int {
   ResocaMessage_Response_ResponseType_ERR = 2,
   ResocaMessage_Response_ResponseType_PONG = 3,
   ResocaMessage_Response_ResponseType_CAN_RX = 4,
-  ResocaMessage_Response_ResponseType_CAN_STAT = 5,
-  ResocaMessage_Response_ResponseType_CAN_IF_CONNECTED = 6,
-  ResocaMessage_Response_ResponseType_CAN_IF_DISCONNECTED = 7,
-  ResocaMessage_Response_ResponseType_INFO = 8,
+  ResocaMessage_Response_ResponseType_CAN_TX = 5,
+  ResocaMessage_Response_ResponseType_CAN_TX_ERR = 6,
+  ResocaMessage_Response_ResponseType_CAN_IF_CONNECTED = 7,
+  ResocaMessage_Response_ResponseType_CAN_IF_DISCONNECTED = 8,
+  ResocaMessage_Response_ResponseType_INFO = 9,
   ResocaMessage_Response_ResponseType_ResocaMessage_Response_ResponseType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   ResocaMessage_Response_ResponseType_ResocaMessage_Response_ResponseType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
@@ -465,8 +465,6 @@ class ResocaMessage_Request :
     ResocaMessage_Request_RequestType_NOTIFY_END;
   static constexpr RequestType CAN_TX =
     ResocaMessage_Request_RequestType_CAN_TX;
-  static constexpr RequestType CAN_STAT =
-    ResocaMessage_Request_RequestType_CAN_STAT;
   static constexpr RequestType INFO =
     ResocaMessage_Request_RequestType_INFO;
   static inline bool RequestType_IsValid(int value) {
@@ -853,8 +851,10 @@ class ResocaMessage_Response :
     ResocaMessage_Response_ResponseType_PONG;
   static constexpr ResponseType CAN_RX =
     ResocaMessage_Response_ResponseType_CAN_RX;
-  static constexpr ResponseType CAN_STAT =
-    ResocaMessage_Response_ResponseType_CAN_STAT;
+  static constexpr ResponseType CAN_TX =
+    ResocaMessage_Response_ResponseType_CAN_TX;
+  static constexpr ResponseType CAN_TX_ERR =
+    ResocaMessage_Response_ResponseType_CAN_TX_ERR;
   static constexpr ResponseType CAN_IF_CONNECTED =
     ResocaMessage_Response_ResponseType_CAN_IF_CONNECTED;
   static constexpr ResponseType CAN_IF_DISCONNECTED =

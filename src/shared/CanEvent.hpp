@@ -28,8 +28,11 @@ public:
 
     CanFrame *canFrame = nullptr;
 
-    std::string toString();
+    int id = 0;
+    bool sent = false;
+    int err = 0;
 
+    std::string toString();
 };
 
 

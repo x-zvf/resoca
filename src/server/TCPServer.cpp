@@ -140,7 +140,61 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 respMsg->set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
-            } default: {
+            }
+            case ResocaMessage_Request_RequestType_CAN_TX: {
+                auto respMsg = std::make_shared<ResocaMessage>();
+                respMsg->set_isresponse(true);
+                auto resp = new ResocaMessage_Response();
+
+                auto rscf = rsm->request().canframe();
+
+                if(!rsm->request().ifname().length()) {
+                    resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
+                    resp->set_responseid(rsm->request().requestid());
+                    resp->set_description("No ifname provided");
+                    respMsg->set_allocated_response(resp);
+                    writeRSM(respMsg);
+                    return false;
+                }
+                CanEvent ce(rsm->request().ifname(), FRAME_TX);
+                ce.id = rsm->request().requestid();
+                ce.sent = false;
+                try {
+                    auto cf = new CanFrame();
+                    cf->canID = (uint32_t)rscf.canid();
+                    cf->isEFFFrame = rscf.iseffframe();
+                    cf->isRTRFrame = rscf.isrtrframe();
+                    cf->isERRFrame = rscf.iserrframe();
+                    cf->isCanFd = rscf.iscanfd();
+                    cf->isCanFdESI = rscf.iscanfdesi();
+                    cf->isCanFdBRS = rscf.iscanfdbrs();
+
+                    auto dataStr = rscf.data();
+                    cf->copyData((uint8_t *)dataStr.c_str(), dataStr.length());
+                    ce.canFrame = cf;
+
+                BOOST_LOG_TRIVIAL(trace) << "TCPSESSION: constructed CanEvent: " << ce.toString();
+                } catch(...) {
+                    BOOST_LOG_TRIVIAL(error) << "Error deserializing";
+                    resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
+                    resp->set_responseid(rsm->request().requestid());
+                    resp->set_description("Error deserializing CanFrame");
+                    respMsg->set_allocated_response(resp);
+                    writeRSM(respMsg);
+                    return false;
+                }
+
+                bool success = server.handleCanEvent(ce);
+
+                resp->set_responsetype(
+                        success ? ResocaMessage_Response_ResponseType_ACK
+                        : ResocaMessage_Response_ResponseType_ERR);
+                resp->set_responseid(rsm->request().requestid());
+                respMsg->set_allocated_response(resp);
+                writeRSM(respMsg);
+                return true;
+            }
+            default: {
                 BOOST_LOG_TRIVIAL(warning) << "Unknown Message";
             }
 
@@ -227,8 +281,43 @@ std::vector<std::string> TCPServer::getIfList() {
     return cdm->getIfList();
 }
 
-void TCPServer::handleCanEvent(CanEvent &ce) {
+bool TCPServer::handleCanEvent(CanEvent &ce) {
     switch(ce.eventType) {
+        case FRAME_TX: {
+            if(!ce.sent){
+                BOOST_LOG_TRIVIAL(trace) << "TCPSERVER: passing CanEvent to CDM: " << ce.toString();
+                return cdm->handleCanEvent(ce);
+            }
+            BOOST_LOG_TRIVIAL(trace) << "TCPSERVER: handling CanEvent: " << ce.toString();
+
+            auto respMsg = std::make_shared<ResocaMessage>();
+            respMsg->set_isresponse(true);
+            auto resp = new ResocaMessage_Response();
+            if(!ce.err){
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_TX);
+            } else {
+                resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_TX_ERR);
+                resp->set_description(std::to_string(ce.err));
+            }
+            resp->set_responseid(ce.id);
+            auto cf = new ResocaMessage_CanFrame();
+            cf->set_canid(ce.canFrame->canID);
+            cf->set_iscanfd(ce.canFrame->isCanFd);
+            cf->set_iseffframe(ce.canFrame->isEFFFrame);
+            cf->set_isrtrframe(ce.canFrame->isRTRFrame);
+            cf->set_iserrframe(ce.canFrame->isERRFrame);
+            cf->set_iscanfdesi(ce.canFrame->isCanFdESI);
+            cf->set_iscanfdbrs(ce.canFrame->isCanFdBRS);
+            cf->set_data((const char *)ce.canFrame->data, ce.canFrame->length);
+
+            resp->set_allocated_canframe(cf);
+            resp->set_ifname(ce.ifName);
+            respMsg->set_allocated_response(resp);
+
+            BOOST_LOG_TRIVIAL(trace) << "Wrote response for FRAME_TX";
+            sendPBMessage(respMsg);
+            return true;
+        }
         case FRAME_RX: {
             auto respMsg = std::make_shared<ResocaMessage>();
             respMsg->set_isresponse(true);
@@ -251,7 +340,7 @@ void TCPServer::handleCanEvent(CanEvent &ce) {
             BOOST_LOG_TRIVIAL(debug) << "Message created for CAN_RX: "
                 << respMsg->DebugString();
             sendPBMessage(respMsg);
-            return;
+            return true;
         }
         case IF_CONNECTED: {
             auto respMsg = std::make_shared<ResocaMessage>();
@@ -264,7 +353,7 @@ void TCPServer::handleCanEvent(CanEvent &ce) {
             BOOST_LOG_TRIVIAL(debug) << "Message created for IF_CONNECTED: "
                 << respMsg->DebugString();
             sendPBMessage(respMsg);
-            return;
+            return true;
         }
         case IF_DISCONNECTED: {
             auto respMsg = std::make_shared<ResocaMessage>();
@@ -277,17 +366,28 @@ void TCPServer::handleCanEvent(CanEvent &ce) {
             BOOST_LOG_TRIVIAL(debug) << "Message created for IF_DISCONNECTED: "
                 << respMsg->DebugString();
             sendPBMessage(respMsg);
-            return;
+            return true;
         }
         default: {
             BOOST_LOG_TRIVIAL(error) << "NOT IMPLEMENTED: " << (int) ce.eventType;
-            return;
+            return false;
         }
     }
 }
 
 bool CanDeviceManager::handleCanEvent(CanEvent &ce) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling CanEvent: " << ce.toString();
-    server->handleCanEvent(ce);
+    if(ce.eventType == FRAME_TX && !ce.sent) {
+        BOOST_LOG_TRIVIAL(debug) << "CDM: Handling CanEvent: " << ce.toString();
+        if(!canDevices.count(ce.ifName)) {
+            BOOST_LOG_TRIVIAL(error) << "CDM: Unknown interface: " << ce.ifName;
+            return false;
+        }
+        BOOST_LOG_TRIVIAL(trace) << "CDM: CALLING SENDFRAME";
+        canDevices[ce.ifName]->sendFrame(*ce.canFrame, ce.id);
+        return true;
+    } else {
+        BOOST_LOG_TRIVIAL(debug) << "Passing CanEvent to server: " << ce.toString();
+        server->handleCanEvent(ce);
+    }
     return true;
 }

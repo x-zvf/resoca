@@ -58,7 +58,7 @@ public:
         this->cdm = cdm;
     }
 
-    void handleCanEvent(CanEvent &ce);
+    bool handleCanEvent(CanEvent &ce);
 
 private:
 

@@ -21,9 +21,8 @@ message ResocaMessage {
             NOTIFY_END = 2;
 
             CAN_TX = 3;
-            CAN_STAT = 4;
 
-            INFO = 5;
+            INFO = 4;
 
         }
 
@@ -43,12 +42,13 @@ message ResocaMessage {
             PONG = 3;
 
             CAN_RX = 4;
-            CAN_STAT = 5;
+            CAN_TX = 5;
+            CAN_TX_ERR = 6;
 
-            CAN_IF_CONNECTED = 6;
-            CAN_IF_DISCONNECTED = 7;
+            CAN_IF_CONNECTED = 7;
+            CAN_IF_DISCONNECTED = 8;
 
-            INFO = 8;
+            INFO = 9;
         }
 
         message ResocaInfo {

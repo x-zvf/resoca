@@ -12,6 +12,16 @@ hp = ("0.0.0.0", 23636)
 sock = socket.socket()
 sock.connect(hp)
 
+
+#canID=None, isCanFd=False, isEFFFrame=False, isRTRFrame=False, isERRFrame=False,
+#            isCanFDESI=False, isCanFDBRS=False, data=bytes()):
+testFrame = {
+    "canID":0xabcdef,
+    "isCanFD": True,
+    "isEFFFrame": True,
+    "data": bytes(b"ABCDEFGHIJKL")
+}
+
 class ResocaClient():
     def __init__(self, hp):
         self.sock = socket.socket()
@@ -82,6 +92,25 @@ class ResocaClient():
         msg.isResponse = False
         msg.request.requestType = msg.request.NOTIFY_END
         msg.request.ifName = ifname
+        self.sendWS(msg)
+
+    def sendCanFrame(self, ifname,
+            canID=None, isCanFD=False, isEFFFrame=False, isRTRFrame=False, isERRFrame=False,
+            isCanFDESI=False, isCanFDBRS=False, data=bytes()):
+        msg = ResocaMessage_pb2.ResocaMessage()
+        msg.isResponse = False
+        msg.request.requestType = msg.request.CAN_TX
+        msg.request.ifName = ifname
+
+        msg.request.canFrame.canID = canID
+        msg.request.canFrame.isCanFD = isCanFD
+        msg.request.canFrame.isEFFFRAME = isEFFFrame
+        msg.request.canFrame.isRTRFRAME = isRTRFrame
+        msg.request.canFrame.isERRFRAME = isERRFrame
+        msg.request.canFrame.isCanFDESI = isCanFDESI
+        msg.request.canFrame.isCanFDBRS = isCanFDBRS
+        msg.request.canFrame.data = data
+
         self.sendWS(msg)
 
 

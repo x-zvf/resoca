@@ -6,7 +6,7 @@
 
 std::string CanEvent::toString() {
     std::stringstream ss;
-    ss << "[ ";
+    ss << "[ {" << "ID: " << id << " ERR: " << err << "sent: " << sent << " } ";
     switch (eventType) {
 
         case IF_CONNECTED:
@@ -17,10 +17,11 @@ std::string CanEvent::toString() {
             break;
         case FRAME_TX:
             ss << "FRAME_TX";
-            ss << " @ " << ifName << " ]: ";
+            ss << " @ " << ifName << " ]: " << canFrame->toString();
             break;
         case FRAME_RX:
             ss << "FRAME_RX";
+            ss << " @ " << ifName << " ]: " << canFrame->toString();
             break;
     }
     return ss.str();
