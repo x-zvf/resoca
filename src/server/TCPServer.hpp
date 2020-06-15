@@ -20,9 +20,9 @@ public:
 
     void start();
 
-    void writeRSM(std::shared_ptr<ResocaMessage> msg);
+    void writeRSM(ResocaMessage &msg);
 
-    bool handlePBMessage(std::shared_ptr<ResocaMessage> rms);
+    bool handlePBMessage(ResocaMessage &rms);
 
     std::set<std::string> ifNotify;
 
@@ -48,7 +48,7 @@ public:
 
     void listen();
 
-    bool sendPBMessage(std::shared_ptr<ResocaMessage> rms);
+    bool sendPBMessage(ResocaMessage &rms);
 
     void deleteSession(int sid);
 

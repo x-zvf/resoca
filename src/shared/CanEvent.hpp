@@ -5,6 +5,8 @@
 #ifndef RESOCA_CANEVENT_HPP
 #define RESOCA_CANEVENT_HPP
 
+#include <boost/log/trivial.hpp>
+
 #include "CanFrame.hpp"
 
 enum CanEventType {
@@ -20,7 +22,9 @@ class CanEvent {
 public:
     CanEvent(std::string ifName, CanEventType eventType) : ifName(ifName), eventType(eventType) {}
 
-    ~CanEvent() {  free(canFrame); }
+    ~CanEvent() {  
+        delete canFrame; 
+    }
 
     std::string ifName;
 
