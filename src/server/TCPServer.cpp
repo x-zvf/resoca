@@ -29,12 +29,12 @@ void TCPSession::start() {
                     kill();
                 } else {
                     // Deserialize data
-                    auto rms = std::make_shared<ResocaMessage>();
-                    if(!rms->ParseFromArray(data, messageLength)) {
+                    ResocaMessage rsm;
+                    if(!rsm.ParseFromArray(data, messageLength)) {
                         BOOST_LOG_TRIVIAL(error) << "Failed to deserialize Protobuf stream";
                         kill();
                     } else {
-                        handlePBMessage(rms);
+                        handlePBMessage(rsm);
                         start();
                     }
                 }
@@ -43,12 +43,13 @@ void TCPSession::start() {
     });
 }
 
-bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
-    BOOST_LOG_TRIVIAL(debug) << "Handling RSM: " << rsm->DebugString();
-    if(!rsm->isresponse()) {
-        if(rsm->request().requesttype() == ResocaMessage_Request_RequestType_INFO) {
+bool TCPSession::handlePBMessage(ResocaMessage &rsm) {
+    BOOST_LOG_TRIVIAL(debug) << "Handling RSM: " << rsm.DebugString();
+    if(!rsm.isresponse()) {
+        if(rsm.request().requesttype() == ResocaMessage_Request_RequestType_INFO) {
                 BOOST_LOG_TRIVIAL(debug) << "Info Request";
-                auto respMsg = std::make_shared<ResocaMessage>();
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
 
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_INFO);
@@ -59,50 +60,50 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                     info->add_interfaces(itf);
                 }
                 resp->set_allocated_resocainfo(info);
-                respMsg->set_allocated_response(resp);
+                respMsg.set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
 
-        } else if (!rsm->request().requestid()) {
-                auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_isresponse(true);
+        } else if (!rsm.request().requestid()) {
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
                 resp->set_description("No RequestID specified.");
-                respMsg->set_allocated_response(resp);
+                respMsg.set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
-        } else if ((rsm->request().requestid() >> 16) != sid) {
-                auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_isresponse(true);
+        } else if ((rsm.request().requestid() >> 16) != sid) {
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
                 resp->set_description("RequestID SID mask invalid.");
-                respMsg->set_allocated_response(resp);
+                respMsg.set_allocated_response(resp);
 
-                //BOOST_LOG_TRIVIAL(debug) << "RESPONSE: " << respMsg->DebugString();
+                //BOOST_LOG_TRIVIAL(debug) << "RESPONSE: " << respMsg.DebugString();
 
                 writeRSM(respMsg);
                 return true;
         }
 
-        switch(rsm->request().requesttype()) {
+        switch(rsm.request().requesttype()) {
             case ResocaMessage_Request_RequestType_PING: {
-                auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_isresponse(true);
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_PONG);
-                resp->set_responseid(rsm->request().requestid());
-                respMsg->set_allocated_response(resp);
+                resp->set_responseid(rsm.request().requestid());
+                respMsg.set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
             }
             case ResocaMessage_Request_RequestType_NOTIFY_START: {
-                auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_isresponse(true);
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
 
-                std::string ifn = rsm->request().ifname();
+                std::string ifn = rsm.request().ifname();
                 auto exists = ifNotify.count(ifn) == 0;
 
                 if(exists) {
@@ -114,17 +115,17 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 }
 
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_SUCCESS);
-                resp->set_responseid(rsm->request().requestid());
-                respMsg->set_allocated_response(resp);
+                resp->set_responseid(rsm.request().requestid());
+                respMsg.set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
             }
             case ResocaMessage_Request_RequestType_NOTIFY_END: {
-                auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_isresponse(true);
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
 
-                std::string ifn = rsm->request().ifname();
+                std::string ifn = rsm.request().ifname();
                 auto exists = ifNotify.count(ifn) > 0;
 
                 if(exists) {
@@ -136,28 +137,28 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 }
 
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_SUCCESS);
-                resp->set_responseid(rsm->request().requestid());
-                respMsg->set_allocated_response(resp);
+                resp->set_responseid(rsm.request().requestid());
+                respMsg.set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
             }
             case ResocaMessage_Request_RequestType_CAN_TX: {
-                auto respMsg = std::make_shared<ResocaMessage>();
-                respMsg->set_isresponse(true);
+                ResocaMessage respMsg;
+                respMsg.set_isresponse(true);
                 auto resp = new ResocaMessage_Response();
 
-                auto rscf = rsm->request().canframe();
+                auto rscf = rsm.request().canframe();
 
-                if(!rsm->request().ifname().length()) {
+                if(!rsm.request().ifname().length()) {
                     resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
-                    resp->set_responseid(rsm->request().requestid());
+                    resp->set_responseid(rsm.request().requestid());
                     resp->set_description("No ifname provided");
-                    respMsg->set_allocated_response(resp);
+                    respMsg.set_allocated_response(resp);
                     writeRSM(respMsg);
                     return false;
                 }
-                CanEvent ce(rsm->request().ifname(), FRAME_TX);
-                ce.id = rsm->request().requestid();
+                CanEvent ce(rsm.request().ifname(), FRAME_TX);
+                ce.id = rsm.request().requestid();
                 ce.sent = false;
                 try {
                     auto cf = new CanFrame();
@@ -177,9 +178,9 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 } catch(...) {
                     BOOST_LOG_TRIVIAL(error) << "Error deserializing";
                     resp->set_responsetype(ResocaMessage_Response_ResponseType_ERR);
-                    resp->set_responseid(rsm->request().requestid());
+                    resp->set_responseid(rsm.request().requestid());
                     resp->set_description("Error deserializing CanFrame");
-                    respMsg->set_allocated_response(resp);
+                    respMsg.set_allocated_response(resp);
                     writeRSM(respMsg);
                     return false;
                 }
@@ -189,8 +190,8 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
                 resp->set_responsetype(
                         success ? ResocaMessage_Response_ResponseType_ACK
                         : ResocaMessage_Response_ResponseType_ERR);
-                resp->set_responseid(rsm->request().requestid());
-                respMsg->set_allocated_response(resp);
+                resp->set_responseid(rsm.request().requestid());
+                respMsg.set_allocated_response(resp);
                 writeRSM(respMsg);
                 return true;
             }
@@ -207,12 +208,12 @@ bool TCPSession::handlePBMessage(std::shared_ptr<ResocaMessage> rsm) {
     return true;
 }
 
-void TCPSession::writeRSM(std::shared_ptr<ResocaMessage> msg) {
-    unsigned short len = msg->ByteSizeLong();
+void TCPSession::writeRSM(ResocaMessage &msg) {
+    unsigned short len = msg.ByteSizeLong();
     BOOST_LOG_TRIVIAL(debug) << "Serialized rsm is " << len << " bytes long";
     uint8_t msgData[2+len];
     *(unsigned short *) msgData = len;
-    msg->SerializeToArray(&(msgData[2]), len);
+    msg.SerializeToArray(&(msgData[2]), len);
     std::stringstream ss;
     for(uint8_t a : msgData) {
         ss << std::hex << (int) a << " ";
@@ -265,11 +266,11 @@ void TCPServer::listen() {
     });
 }
 
-bool TCPServer::sendPBMessage(std::shared_ptr<ResocaMessage> rsm) {
-    BOOST_LOG_TRIVIAL(debug) << "sending PBMessage in TCPServer: " << rsm->DebugString();
+bool TCPServer::sendPBMessage(ResocaMessage &rsm) {
+    BOOST_LOG_TRIVIAL(debug) << "sending PBMessage in TCPServer: " << rsm.DebugString();
     for(auto &pair : sessions) {
         auto session = pair.second;
-        if(rsm->response().ifname() == "" || session->ifNotify.find(rsm->response().ifname()) != session->ifNotify.end()) {
+        if(rsm.response().ifname() == "" || session->ifNotify.find(rsm.response().ifname()) != session->ifNotify.end()) {
             BOOST_LOG_TRIVIAL(trace) << "Sent message to session: " << pair.first;
             session->writeRSM(rsm);
         }
@@ -290,8 +291,8 @@ bool TCPServer::handleCanEvent(CanEvent &ce) {
             }
             BOOST_LOG_TRIVIAL(trace) << "TCPSERVER: handling CanEvent: " << ce.toString();
 
-            auto respMsg = std::make_shared<ResocaMessage>();
-            respMsg->set_isresponse(true);
+            ResocaMessage respMsg;
+            respMsg.set_isresponse(true);
             auto resp = new ResocaMessage_Response();
             if(!ce.err){
                 resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_TX);
@@ -312,15 +313,15 @@ bool TCPServer::handleCanEvent(CanEvent &ce) {
 
             resp->set_allocated_canframe(cf);
             resp->set_ifname(ce.ifName);
-            respMsg->set_allocated_response(resp);
+            respMsg.set_allocated_response(resp);
 
             BOOST_LOG_TRIVIAL(trace) << "Wrote response for FRAME_TX";
             sendPBMessage(respMsg);
             return true;
         }
         case FRAME_RX: {
-            auto respMsg = std::make_shared<ResocaMessage>();
-            respMsg->set_isresponse(true);
+            ResocaMessage respMsg;
+            respMsg.set_isresponse(true);
             auto resp = new ResocaMessage_Response();
             resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_RX);
             auto cf = new ResocaMessage_CanFrame();
@@ -335,36 +336,36 @@ bool TCPServer::handleCanEvent(CanEvent &ce) {
 
             resp->set_allocated_canframe(cf);
             resp->set_ifname(ce.ifName);
-            respMsg->set_allocated_response(resp);
+            respMsg.set_allocated_response(resp);
 
             BOOST_LOG_TRIVIAL(debug) << "Message created for CAN_RX: "
-                << respMsg->DebugString();
+                << respMsg.DebugString();
             sendPBMessage(respMsg);
             return true;
         }
         case IF_CONNECTED: {
-            auto respMsg = std::make_shared<ResocaMessage>();
-            respMsg->set_isresponse(true);
+            ResocaMessage respMsg;
+            respMsg.set_isresponse(true);
             auto resp = new ResocaMessage_Response();
             resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_IF_CONNECTED);
             resp->set_ifname(ce.ifName);
-            respMsg->set_allocated_response(resp);
+            respMsg.set_allocated_response(resp);
 
             BOOST_LOG_TRIVIAL(debug) << "Message created for IF_CONNECTED: "
-                << respMsg->DebugString();
+                << respMsg.DebugString();
             sendPBMessage(respMsg);
             return true;
         }
         case IF_DISCONNECTED: {
-            auto respMsg = std::make_shared<ResocaMessage>();
-            respMsg->set_isresponse(true);
+            ResocaMessage respMsg;
+            respMsg.set_isresponse(true);
             auto resp = new ResocaMessage_Response();
             resp->set_responsetype(ResocaMessage_Response_ResponseType_CAN_IF_DISCONNECTED);
             resp->set_ifname(ce.ifName);
-            respMsg->set_allocated_response(resp);
+            respMsg.set_allocated_response(resp);
 
             BOOST_LOG_TRIVIAL(debug) << "Message created for IF_DISCONNECTED: "
-                << respMsg->DebugString();
+                << respMsg.DebugString();
             sendPBMessage(respMsg);
             return true;
         }
