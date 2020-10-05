@@ -131,7 +131,7 @@ void CanDevice::sendFrame(const CanFrame &cf, int cbid) {
     auto cfcb = new CanFrame(cf);
     writeFrame(frame, cf.getStructSize(), cbid);
     sentFrames[cbid] = cfcb;
-    BOOST_LOG_TRIVIAL(debug) << "SENDFRAME DONEN " << cf.toString();
+    BOOST_LOG_TRIVIAL(debug) << "SENDFRAME DONE " << cf.toString();
     //std::free(frame);
 }
 void CanDevice::sendFrame(const struct canfd_frame &cf) {
@@ -174,4 +174,6 @@ void CanDevice::txCb(int cbid, int error) {
     ce.canFrame = cf;
     BOOST_LOG_TRIVIAL(trace) << "SENDING CALLBACK EVENT: " << ce.toString();
     handleCanEvent(ce);
+    BOOST_LOG_TRIVIAL(trace) << "POST txCb";
+    ce.canFrame = nullptr; //to avoid double-free, because of cf.
 }
