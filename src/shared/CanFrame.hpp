@@ -13,7 +13,7 @@
 
 #include <linux/can.h>
 #include <linux/can/raw.h>
-#include <unitypes.h>
+#include <sys/types.h>
 
 class CanFrame {
 public:
