@@ -17,7 +17,7 @@ make
 ```
 #### Usage:
 ```
-resoca-server v1.0.0 
+resoca-server v1.2.0 
 server options:
   -h [ --help ]          show help message
   -v [ --verbosity ] arg set log level; highest: 0, default: 4
@@ -31,9 +31,14 @@ Written by Péter Bohner (xzvf), 2020
 ## python client
 
 A small testing client, written in python, located in the `python` directory.
+Run with `python -i test_client.py`.
+`stest()` creates a connection to a server on localhost.
 
 ## Windows
-TODO
+Windows client is located in `src/windows/ResocaClient`.
+It consists of `ResocaClientLib`, which is the client shared library (.dll),
+aswell as `ResocaClient`, which is a WPF App, which uses `ResocaClientLib`.
+It serves as a working example for usage of the `ResocaClientLib`.
 
 # Documentation.
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ResocaClientGUI"
         mc:Ignorable="d"
-        Title="Resoca Cient" Height="435" Width="1024">
+        Title="Resoca Cient" Height="435" Width="1024" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left" />
