@@ -21,6 +21,8 @@ public:
 
     explicit CanFrame(const struct canfd_frame &frame);
 
+    explicit CanFrame(const CanFrame &cf);
+
     explicit CanFrame(){}
 
     ~CanFrame();

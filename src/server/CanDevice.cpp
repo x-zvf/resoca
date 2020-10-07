@@ -164,7 +164,7 @@ void CanDevice::txCb(int cbid, int error) {
         BOOST_LOG_TRIVIAL(error) << "Non-existant CBID: " << cbid;
         return;
     }
-    auto cf = sentFrames[cbid];
+    CanFrame *cf = sentFrames[cbid];
     sentFrames.erase(cbid);
 
     CanEvent ce(canIfName, FRAME_TX);

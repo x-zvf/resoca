@@ -38,6 +38,18 @@ CanFrame::CanFrame(const struct canfd_frame &frame) {
     copyData(frame.data, length);
 }
 
+CanFrame::CanFrame(const CanFrame &cf) {
+    this->canID = cf.canID;
+    this->isEFFFrame = cf.isEFFFrame;
+    this->isRTRFrame = cf.isRTRFrame;
+    this->isERRFrame = cf.isERRFrame;
+    this->isCanFd = cf.isCanFd;
+    this->isCanFdESI = cf.isCanFdESI;
+    this->isCanFdBRS = cf.isCanFdBRS;
+    this->length = cf.length;
+    copyData(cf.data, length);
+}
+
 
 void CanFrame::setFlagsFromCanId(uint32_t _canID) {
     isEFFFrame = _canID & CAN_EFF_FLAG;
