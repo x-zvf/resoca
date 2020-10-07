@@ -98,7 +98,7 @@ int CanFrame::getStructSize() const {
 void* CanFrame::asStruct() const {
     if(isCanFd){
         auto frame = new struct canfd_frame;
-        if(canID > 0x1fffffff) {
+        if((isEFFFrame && canID > 0x1fffffff) || (!isEFFFrame && canID > 0x7ff)) {
             throw std::logic_error("CANFD ID is out of range");
         }
         frame->can_id = canID;
@@ -117,7 +117,7 @@ void* CanFrame::asStruct() const {
 
     } else {
         auto frame = new struct can_frame;
-        if(canID > 0x7ff) {
+        if((isEFFFrame && canID > 0x1fffffff) || (!isEFFFrame && canID > 0x7ff)) {
             throw std::logic_error("CAN ID is out of range");
         }
         frame->can_id = canID;
