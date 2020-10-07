@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Diagnostics;
 using System.Threading;
+using Google.Protobuf;
 
 namespace ResocaClientLib
 {
@@ -32,34 +33,31 @@ namespace ResocaClientLib
         public double latestPingTime { get; private set; } = 0;
         private Stopwatch pingWatch = new Stopwatch();
 
-        public delegate void OnConnectionChangedHandler(bool connected);
-        LinkedList<OnConnectionChangedHandler> OnConnectionChangedHandlers;
-
         public delegate void OnInterfaceStateChangeHandler(string ifName, bool connected);
-        LinkedList<OnInterfaceStateChangeHandler> OnInterfaceStateChangeHandlers;
+        public LinkedList<OnInterfaceStateChangeHandler> OnInterfaceStateChangeHandlers = new LinkedList<OnInterfaceStateChangeHandler>();
 
 
         public delegate void OnCanFrameReceivedHandler(string ifName, CanFrame frame);
-        LinkedList<OnCanFrameReceivedHandler> OnCanFrameReceivedHandlers;
+        public LinkedList<OnCanFrameReceivedHandler> OnCanFrameReceivedHandlers = new LinkedList<OnCanFrameReceivedHandler>();
 
         public delegate void OnCanFrameSentHandler(bool success, string err, string ifName, CanFrame frame);
-        LinkedList<OnCanFrameSentHandler> OnCanFrameSentHandlers;
+        public LinkedList<OnCanFrameSentHandler> OnCanFrameSentHandlers = new LinkedList<OnCanFrameSentHandler>();
 
         public delegate void OnPingReceivedHandler(double time);
-        LinkedList<OnPingReceivedHandler> OnPingReceivedHandlers;
+        public LinkedList<OnPingReceivedHandler> OnPingReceivedHandlers = new LinkedList<OnPingReceivedHandler>();
 
         public delegate void OnInfoReceivedHandler();
-        LinkedList<OnInfoReceivedHandler> OnInfoReceivedHandlers;
+        public LinkedList<OnInfoReceivedHandler> OnInfoReceivedHandlers = new LinkedList<OnInfoReceivedHandler>();
 
         public delegate void OnGenericMessageResolveHandler(uint rid, ResocaMessage.Types.Request.Types.RequestType requestType, bool success, string description);
-        LinkedList<OnGenericMessageResolveHandler> OnGenericMessageResolveHandlers;
+        public LinkedList<OnGenericMessageResolveHandler> OnGenericMessageResolveHandlers = new LinkedList<OnGenericMessageResolveHandler>();
 
         private IPEndPoint serverEndPoint;
         private Socket socket;
 
         public ResocaClient()
         {
-
+            MessagesPending = new Dictionary<uint, (ResocaMessage.Types.Request.Types.RequestType, bool)>();
         }
 
         public bool Connect()
@@ -76,11 +74,13 @@ namespace ResocaClientLib
                 IPAddress ipAddr = ipHost.AddressList[0];
                 serverEndPoint = new IPEndPoint(ipAddr, Port);
                 socket = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
+                Console.WriteLine("Connecting");
                 socket.Connect(serverEndPoint);
+                Console.WriteLine("Connected");
                 SendCounter = 0;
                 return true;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 return false;
             }
@@ -88,40 +88,84 @@ namespace ResocaClientLib
 
         public void GetInfo()
         {
+            ResocaMessage rsm = new ResocaMessage
+            {
+                IsResponse = false,
+                Request = new ResocaMessage.Types.Request
+                {
+                    RequestType = ResocaMessage.Types.Request.Types.RequestType.Info
+                }
+            };
 
+            SendMessage(rsm);
         }
 
         public void Ping()
         {
-            ResocaMessage rsm = new ResocaMessage();
-            rsm.IsResponse = false;
-            rsm.Request.RequestType = ResocaMessage.Types.Request.Types.RequestType.Ping;
+            ResocaMessage rsm = new ResocaMessage
+            {
+                IsResponse = false,
+                Request = new ResocaMessage.Types.Request
+                {
+                    RequestType = ResocaMessage.Types.Request.Types.RequestType.Ping
+                }
+            };
             pingWatch.Start();
             SendManaged(rsm);
         }
 
         public void NotifyStart(string ifName)
         {
-            ResocaMessage rsm = new ResocaMessage();
-            rsm.IsResponse = false;
-            rsm.Request.RequestType = ResocaMessage.Types.Request.Types.RequestType.NotifyStart;
-            rsm.Request.IfName = ifName;
+            ResocaMessage rsm = new ResocaMessage
+            {
+                IsResponse = false,
+                Request = new ResocaMessage.Types.Request
+                {
+                    RequestType = ResocaMessage.Types.Request.Types.RequestType.NotifyStart,
+                    IfName = ifName
+                }
+            };
             SendManaged(rsm);
         }
 
-        public void NotifyStop(string ifName)
+        public void NotifyEnd(string ifName)
         {
-            ResocaMessage rsm = new ResocaMessage();
-            rsm.IsResponse = false;
-            rsm.Request.RequestType = ResocaMessage.Types.Request.Types.RequestType.NotifyStart;
-            rsm.Request.IfName = ifName;
+            ResocaMessage rsm = new ResocaMessage
+            {
+                IsResponse = false,
+                Request = new ResocaMessage.Types.Request
+                {
+                    RequestType = ResocaMessage.Types.Request.Types.RequestType.NotifyEnd,
+                    IfName = ifName
+                }
+            };
             SendManaged(rsm);
 
         }
 
         public void SendCanFrame(string ifName, CanFrame frame)
         {
-
+            ResocaMessage rsm = new ResocaMessage
+            {
+                IsResponse = false,
+                Request = new ResocaMessage.Types.Request
+                {
+                    RequestType = ResocaMessage.Types.Request.Types.RequestType.CanTx,
+                    IfName = ifName,
+                    CanFrame = new ResocaMessage.Types.CanFrame
+                    {
+                        CanID = frame.canID,
+                        IsCanFD = frame.isCanFD,
+                        IsEFFFRAME = frame.isEFFFRAME,
+                        IsERRFRAME = frame.isERRFRAME
+                    }
+                }
+            };
+            rsm.Request.CanFrame.IsERRFRAME = frame.isRTRFRAME;
+            rsm.Request.CanFrame.IsCanFDESI = frame.isCanFDESI;
+            rsm.Request.CanFrame.IsCanFDBRS = frame.isCanFDBRS;
+            rsm.Request.CanFrame.Data = ByteString.CopyFrom(frame.data);
+            SendManaged(rsm);
         }
 
         public void ReadPoll()
@@ -138,16 +182,25 @@ namespace ResocaClientLib
 
                 byte[] rbuf = new byte[len];
                 socket.Receive(rbuf);
-                ResocaMessage rsm = ResocaMessage.Parser.ParseFrom(rbuf);
-                ParseRSM(rsm);
+                try
+                {
+                    ResocaMessage rsm = ResocaMessage.Parser.ParseFrom(rbuf);
+                    ParseRSM(rsm);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 
         private void ParseRSM(ResocaMessage rsm)
         {
+            if(rsm == null) return;
             if (rsm.IsResponse)
             {
                 var resp = rsm.Response;
+                if (resp == null) return;
                 if (resp.ResponseType == ResocaMessage.Types.Response.Types.ResponseType.Ack)
                 {
                     (ResocaMessage.Types.Request.Types.RequestType, bool) x;
@@ -156,7 +209,7 @@ namespace ResocaClientLib
                     MessagesPending[resp.ResponseID] = (t, true);
                     return;
                 }
-                
+
                 switch (resp.ResponseType)
                 {
                     case ResocaMessage.Types.Response.Types.ResponseType.Success:
@@ -174,6 +227,7 @@ namespace ResocaClientLib
                         pingWatch.Stop();
                         TimeSpan ts = pingWatch.Elapsed;
                         latestPingTime = ts.TotalSeconds;
+                        pingWatch.Reset();
                         foreach (var handler in OnPingReceivedHandlers)
                         {
                             handler(latestPingTime);
@@ -211,7 +265,9 @@ namespace ResocaClientLib
                         }
                         break;
                 }
-                MessagesPending.Remove(resp.ResponseID);
+                if (MessagesPending.ContainsKey(resp.ResponseID))
+                    MessagesPending.Remove(resp.ResponseID);
+
             }
         }
 
@@ -219,6 +275,7 @@ namespace ResocaClientLib
         {
             CanFrame frame = new CanFrame();
             frame.canID = cf.CanID;
+            frame.isCanFD = cf.IsCanFD;
             frame.isEFFFRAME = cf.IsEFFFRAME;
             frame.isRTRFRAME = cf.IsRTRFRAME;
             frame.isERRFRAME = cf.IsERRFRAME;
@@ -235,11 +292,12 @@ namespace ResocaClientLib
             rsm.Request.RequestID = msgID;
             MessagesPending[msgID] = (rsm.Request.RequestType, false);
             SendCounter++;
-            return true;
+            return SendMessage(rsm);
         }
 
         private bool SendMessage(ResocaMessage rsm)
         {
+            Console.WriteLine("Sending message");
             ushort len = (ushort)rsm.CalculateSize();
             if (!IsConnected()) return false;
 
@@ -253,8 +311,15 @@ namespace ResocaClientLib
             for (int i = 0; i < len; i++)
                 buf[2 + i] = pbuf[i];
 
-            socket.Send(buf);
-            return true;
+            try
+            {
+                socket.Send(buf);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 

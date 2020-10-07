@@ -5,17 +5,115 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ResocaClientGUI"
         mc:Ignorable="d"
-        Title="Resoca Cient" Height="450" Width="800">
+        Title="Resoca Cient" Height="435" Width="1024">
+    <Window.Resources>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <GroupBox Header="Connection" HorizontalAlignment="Left" Height="114" Margin="10,10,0,0" VerticalAlignment="Top" Width="192">
-            <Grid Margin="0,0,0,-12">
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="62,10,-2,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="62,38,-2,0" TextWrapping="Wrap" Text="23636" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.597,-3.659"/>
-                <Label Content="Host:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                <Label Content="Port:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="ConnectBtn" Content="Connect" HorizontalAlignment="Left" Margin="62,66,0,0" VerticalAlignment="Top" Width="118" Click="ConnectBtn_Click"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="62,38,-2,0" TextWrapping="Wrap" Text="23636" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.597,-3.659"/>
+            <Grid Margin="0,0,0,0">
+                <TextBox x:Name="HostTB" HorizontalAlignment="Left" Height="23" Margin="42,10,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="128"/>
+                <TextBox x:Name="PortTB" HorizontalAlignment="Left" Height="23" Margin="42,40,0,0" TextWrapping="Wrap" Text="23636" VerticalAlignment="Top" Width="128" RenderTransformOrigin="0.597,-3.659"/>
+                <Label Content="Host:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                <Label Content="Port:" HorizontalAlignment="Left" Margin="0,36,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="ConnectBtn" Content="connect" HorizontalAlignment="Left" Margin="42,66,0,0" VerticalAlignment="Top" Width="128" Click="ConnectBtn_Click"/>
+
             </Grid>
+        </GroupBox>
+        <GroupBox Header="Info" HorizontalAlignment="Left" Height="107" Margin="10,129,0,0" VerticalAlignment="Top" Width="192">
+            <Grid Margin="0,0,0,0">
+                <Label Content="Server version:" HorizontalAlignment="Left" Margin="3,5,0,0" VerticalAlignment="Top"/>
+                <Label Content="Session prefix:" HorizontalAlignment="Left" Margin="3,31,0,0" VerticalAlignment="Top"/>
+                <Label Content="Ping:" HorizontalAlignment="Left" Margin="3,54,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="PingBtn" Content="ping" Margin="140,58,0,0" VerticalAlignment="Top" Click="PingBtn_Click"/>
+                <Label x:Name="PingLbl" Content="-" HorizontalAlignment="Left" Margin="90,57,0,0" VerticalAlignment="Top" Width="45" FontFamily="Courier New" Background="White" />
+                <Label x:Name="SessionPrefixLbl" Content="-" HorizontalAlignment="Left" Margin="90,34,0,0" VerticalAlignment="Top" Width="75" FontFamily="Courier New" Background="White" />
+                <Label x:Name="ServerVersionLbl" Content="-" HorizontalAlignment="Left" Margin="90,8,0,0" VerticalAlignment="Top" Width="75" FontFamily="Courier New" Background="White" RenderTransformOrigin="0.518,-0.868" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Notify Interfaces" HorizontalAlignment="Left" Height="153" Margin="10,241,0,0" VerticalAlignment="Top" Width="192">
+            <Grid Margin="0,0,0,0">
+                <Label Content="receive frames and confirmation of&#xD;&#xA;sent frames"  HorizontalAlignment="Left" Margin="0,-4,0,0" VerticalAlignment="Top" FontSize="10" RenderTransformOrigin="0.504,-0.13" Height="34" Width="180"></Label>
+                <ListView  HorizontalAlignment="Left" Margin="0,30,0,0" VerticalAlignment="Top" x:Name="NotifyILv" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="100">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Interface" Width="60" DisplayMemberBinding="{Binding}"></GridViewColumn>
+                            <GridViewColumn Width="60" Header="">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="  Start  " DataContext="{Binding}" Click="NotifyStartBtn_OnClick"></Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Width="60">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="  Stop  " DataContext="{Binding}" Click="NotifyEndBtn_OnClick"></Button>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Send CAN message" HorizontalAlignment="Left" Height="393" Margin="207,10,0,0" VerticalAlignment="Top" Width="255">
+            <Grid Margin="0,0,0,0">
+                <Label Content="Interface:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68"/>
+                <Label Content="CAN ID:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68" Margin="0,31,0,0"/>
+                <TextBox x:Name="canIdTb"  HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" Text="1A" VerticalAlignment="Top" Width="160" RenderTransformOrigin="0.597,-3.659" Margin="73,35,0,0" CharacterCasing="Upper"  TextChanged="canIdTb_TextChanged" FontFamily="Courier New" SelectionBrush="{x:Null}"/>
+                <GroupBox Header="Flags" HorizontalAlignment="Left" Height="89" VerticalAlignment="Top" Width="241" Margin="0,88,0,0">
+                    <Grid HorizontalAlignment="Left" Margin="0,0,-2,-3" Width="290">
+                        <CheckBox x:Name="effFrameCb" Content="EFF Frame" HorizontalAlignment="Left" VerticalAlignment="Top" Width="78" Margin="106,10,0,0" RenderTransformOrigin="0.256,0.667"/>
+                        <CheckBox x:Name="errFrameCb" Content="ERR Frame" HorizontalAlignment="Left" Margin="106,30,0,0" VerticalAlignment="Top" Width="102"/>
+                        <CheckBox x:Name="rtrFrameCb" Content="RTR Frame" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="78" RenderTransformOrigin="1.282,10.9"/>
+                        <CheckBox x:Name="canFdCb" Content="CAN FD" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="102" Click="canFdCb_Clicked" RenderTransformOrigin="0.33,0.511"/>
+                        <CheckBox x:Name="canFdESI" Content="CAN FD ESI" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="101"/>
+                        <CheckBox x:Name="canFdBRS" Content="CAN FD BRS" HorizontalAlignment="Left" Margin="106,50,0,0" VerticalAlignment="Top" Width="102"/>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Data" HorizontalAlignment="Left" Height="190" VerticalAlignment="Top" Width="241" Margin="0,177,0,0">
+                    <Grid HorizontalAlignment="Left" Margin="0,0,-2,-3" Width="302">
+                        <TextBox x:Name="DataTb"  HorizontalAlignment="Left" Height="129" TextWrapping="Wrap" Text="1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A 1A " VerticalAlignment="Top" Width="215" RenderTransformOrigin="0.597,-3.659" Margin="10,10,0,0" CharacterCasing="Upper"  FontFamily="Courier New" SelectionBrush="{x:Null}" TextChanged="DataTb_TextChanged"/>
+                        <RadioButton x:Name="HexRb" Content="HEX" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" GroupName="DataEncoding" IsChecked="True" Click="HexRb_Clicked"/>
+                        <RadioButton x:Name="UTF8Rb" Content="UTF-8 encoded" HorizontalAlignment="Left" Margin="56,145,0,0" VerticalAlignment="Top" GroupName="DataEncoding"  Click="HexRb_Clicked"/>
+                        <Label x:Name="BytesUsedLb" Content="64/64 bytes" HorizontalAlignment="Left" Margin="161,139,0,0" VerticalAlignment="Top" Width="75"/>
+
+                    </Grid>
+                </GroupBox>
+                <ComboBox x:Name="InterfaceCb" HorizontalAlignment="Left" Margin="73,4,0,0" VerticalAlignment="Top" Width="160" IsSynchronizedWithCurrentItem="False" SelectedIndex="0"/>
+                <Button x:Name="SendFrameBtn" Content="send" HorizontalAlignment="Left" Margin="4,65,0,0" VerticalAlignment="Top" Width="64" Click="SendFrameBtn_Click"/>
+                <Label x:Name="LastMessageStatusLb" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Margin="73,62,0,0"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Received CAN messages (notify)" HorizontalAlignment="Left" Height="393" Margin="467,10,0,0" VerticalAlignment="Top" Width="539">
+            <ListView x:Name="RxMessagesLv">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="" Width="25" DisplayMemberBinding="{Binding RxTx}"></GridViewColumn>
+                        <GridViewColumn Header="if" Width="50" DisplayMemberBinding="{Binding IfName}"></GridViewColumn>
+                        <GridViewColumn Header="ID" Width="90" DisplayMemberBinding="{Binding CanId}"></GridViewColumn>
+                        <GridViewColumn Header="Flags" Width="120" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Flags}"></Label>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Data" Width="300">
+
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Data}"></Label>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </GroupBox>
 
     </Grid>
