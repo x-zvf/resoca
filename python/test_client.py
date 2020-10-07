@@ -111,5 +111,20 @@ class ResocaClient():
 
 
 
+c = None
+def stest():
+    global c
+    c = ResocaClient(hp)
+    c.getInfo()
 
+def pingTest():
+    while True:
+        c.sendPing()
+        print(c.readRSM())
 
+def sendMsgTest():
+    while True:
+        c.sendCanFrame("vcan0", **testFrame)
+        print(c.readRSM())
+    #print(c.readRSM())
+    

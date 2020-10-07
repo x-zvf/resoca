@@ -13,13 +13,15 @@
 
 #include <linux/can.h>
 #include <linux/can/raw.h>
-#include <unitypes.h>
+#include <sys/types.h>
 
 class CanFrame {
 public:
     explicit CanFrame(const struct can_frame &frame);
 
     explicit CanFrame(const struct canfd_frame &frame);
+
+    explicit CanFrame(const CanFrame &cf);
 
     explicit CanFrame(){}
 

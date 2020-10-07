@@ -8,7 +8,7 @@
 #include "CanDeviceManager.hpp"
 
 #define PROTOBUF_MAX_DATA_LEN 1024
-
+#define MAX_N_UNSENT 128
 
 class TCPServer;
 class CanDeviceManager;
@@ -32,6 +32,8 @@ private:
     uint32_t sid;
     boost::asio::ip::tcp::socket socket;
     TCPServer &server;
+
+    int nUnsentRSM = 0;
 
     uint16_t lengthData[1];
     uint8_t data[PROTOBUF_MAX_DATA_LEN];

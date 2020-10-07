@@ -38,6 +38,18 @@ CanFrame::CanFrame(const struct canfd_frame &frame) {
     copyData(frame.data, length);
 }
 
+CanFrame::CanFrame(const CanFrame &cf) {
+    this->canID = cf.canID;
+    this->isEFFFrame = cf.isEFFFrame;
+    this->isRTRFrame = cf.isRTRFrame;
+    this->isERRFrame = cf.isERRFrame;
+    this->isCanFd = cf.isCanFd;
+    this->isCanFdESI = cf.isCanFdESI;
+    this->isCanFdBRS = cf.isCanFdBRS;
+    this->length = cf.length;
+    copyData(cf.data, length);
+}
+
 
 void CanFrame::setFlagsFromCanId(uint32_t _canID) {
     isEFFFrame = _canID & CAN_EFF_FLAG;
@@ -98,7 +110,7 @@ int CanFrame::getStructSize() const {
 void* CanFrame::asStruct() const {
     if(isCanFd){
         auto frame = new struct canfd_frame;
-        if(canID > 0x1fffffff) {
+        if((isEFFFrame && canID > 0x1fffffff) || (!isEFFFrame && canID > 0x7ff)) {
             throw std::logic_error("CANFD ID is out of range");
         }
         frame->can_id = canID;
@@ -117,7 +129,7 @@ void* CanFrame::asStruct() const {
 
     } else {
         auto frame = new struct can_frame;
-        if(canID > 0x7ff) {
+        if((isEFFFrame && canID > 0x1fffffff) || (!isEFFFrame && canID > 0x7ff)) {
             throw std::logic_error("CAN ID is out of range");
         }
         frame->can_id = canID;

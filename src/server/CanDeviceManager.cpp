@@ -21,4 +21,3 @@ std::vector<std::string> CanDeviceManager::getIfList() {
     }
     return ifl;
 }
-

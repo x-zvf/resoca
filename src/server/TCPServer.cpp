@@ -15,9 +15,10 @@ void TCPSession::start() {
         } else {
             auto messageLength = lengthData[0];
             BOOST_LOG_TRIVIAL(debug) << "Receiving message length: " << messageLength;
-            auto dataBuf = boost::asio::buffer(data, messageLength);
-            async_read(socket, dataBuf,
+            //auto dataBuf = boost::asio::buffer(data, messageLength);
+            async_read(socket, boost::asio::buffer(data, messageLength),
             [=](const boost::system::error_code &errorCode, size_t bytes){
+                //delete dataBuf;
                 if (errorCode || bytes != messageLength) {
                     BOOST_LOG_TRIVIAL(error) << "Error reading body: "
                     << errorCode.message();
@@ -218,11 +219,19 @@ void TCPSession::writeRSM(ResocaMessage &msg) {
     for(uint8_t a : msgData) {
         ss << std::hex << (int) a << " ";
     }
+    
+    if(nUnsentRSM >= MAX_N_UNSENT){
+        BOOST_LOG_TRIVIAL(error) << "Could not send, too many are unsent: " << nUnsentRSM;
+        return;
+    }
+
+    nUnsentRSM ++;
 
     BOOST_LOG_TRIVIAL(debug) << "SENDING: " << ss.str();
 
     boost::asio::async_write(socket, boost::asio::buffer(msgData,2+len),
         [this](const boost::system::error_code &errorCode, size_t bytes){
+            nUnsentRSM--;
             if(errorCode) {
                 BOOST_LOG_TRIVIAL(error)
                 << "Failed to write message to client, terminating session. error: "
@@ -273,6 +282,7 @@ bool TCPServer::sendPBMessage(ResocaMessage &rsm) {
         if(rsm.response().ifname() == "" || session->ifNotify.find(rsm.response().ifname()) != session->ifNotify.end()) {
             BOOST_LOG_TRIVIAL(trace) << "Sent message to session: " << pair.first;
             session->writeRSM(rsm);
+            BOOST_LOG_TRIVIAL(debug) << "POST writeRSM for session";
         }
     }
     return true;
@@ -317,6 +327,7 @@ bool TCPServer::handleCanEvent(CanEvent &ce) {
 
             BOOST_LOG_TRIVIAL(trace) << "Wrote response for FRAME_TX";
             sendPBMessage(respMsg);
+            BOOST_LOG_TRIVIAL(debug) << "POST sendPBMessage";
             return true;
         }
         case FRAME_RX: {
