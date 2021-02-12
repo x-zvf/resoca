@@ -8,7 +8,7 @@
 #include <exception>
 
 #include "CanDevice.hpp"
-#include "../shared/CanFrame.hpp"
+#include "CanFrame.hpp"
 #include "CanDeviceManager.hpp"
 #include "TCPServer.hpp"
 

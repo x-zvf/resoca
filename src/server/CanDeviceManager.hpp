@@ -6,8 +6,8 @@
 
 #include "CanDevice.hpp"
 #include "../shared/protobuf/cpp/ResocaMessage.pb.h"
-#include "../shared/CanFrame.hpp"
-#include "../shared/CanEvent.hpp"
+#include "CanFrame.hpp"
+#include "CanEvent.hpp"
 
 class TCPServer;
 

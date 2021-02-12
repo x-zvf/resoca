@@ -19,8 +19,8 @@
 #include <utility>
 #include <functional>
 
-#include "../shared/CanFrame.hpp"
-#include "../shared/CanEvent.hpp"
+#include "CanFrame.hpp"
+#include "CanEvent.hpp"
 
 class CanDevice {
    public:
