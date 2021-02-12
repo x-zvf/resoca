@@ -27,12 +27,10 @@ class CanDevice {
     CanDevice(std::string canIfName, boost::asio::io_context &ioContext,
               std::function<bool(CanEvent&)> handleCanEvent)
         : canIfName(std::move(canIfName)),
-          can_stream(nullptr),
+          can_stream(new boost::asio::posix::stream_descriptor(ioContext)),
           handleCanEvent(handleCanEvent),
           reconnectTimer(boost::asio::deadline_timer(
-              ioContext, boost::posix_time::seconds(1))) {
-        can_stream = new boost::asio::posix::stream_descriptor(ioContext);
-    }
+              ioContext, boost::posix_time::seconds(1))) { }
 
     bool connect();
 
