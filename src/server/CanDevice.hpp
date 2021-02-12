@@ -26,8 +26,7 @@ class CanDevice {
    public:
     CanDevice(std::string canIfName, boost::asio::io_context &ioContext,
               std::function<bool(CanEvent&)> handleCanEvent)
-        : ioContext(ioContext),
-          canIfName(std::move(canIfName)),
+        : canIfName(std::move(canIfName)),
           can_stream(nullptr),
           handleCanEvent(handleCanEvent),
           reconnectTimer(boost::asio::deadline_timer(
@@ -54,11 +53,8 @@ class CanDevice {
    private:
     void writeFrame(const void *frame, int length, int cbid);
 
-    boost::asio::io_context &ioContext;
-
     std::string canIfName;
     bool _connected;
-    volatile bool running = false;
 
     // used for internal interactions with the socketcan socket.
     int socket_fd;
