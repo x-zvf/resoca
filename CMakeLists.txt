@@ -4,6 +4,8 @@ project(resoca)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
+
 # Fixes for Boost::log
 set(CMAKE_EXE_LINKER_FLAGS -static)
 set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS FALSE)
